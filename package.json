@@ -4,7 +4,7 @@
   "description": "Numeric calculus homework",
   "main": "js/app.js",
   "scripts": {
-	"start": "watchify js/modules/dom.js js/modules/app.js -o js/build.js"
+    "start": "watchify js/modules/dom.js js/modules/app.js -o js/build.js"
   },
   "keywords": [
     "calculus",
@@ -14,6 +14,7 @@
   "author": "Giulitti Salvatore Elio, Calara Ionut",
   "license": "Apache-2.0",
   "devDependencies": {
+    "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
     "jquery": "^2.2.0",
     "watchify": "^3.7.0"
