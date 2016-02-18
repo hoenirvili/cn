@@ -9,7 +9,7 @@ var controller = (function (h1) {
 			case '1':
 				switch(nX) {
 					case '1':
-						h1.Init();
+						h1.Ex1();
 						break;
 					case '2':
 					case '3':
