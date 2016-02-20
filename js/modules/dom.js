@@ -1,3 +1,5 @@
+"use strict";
+
 var ctrl = require('./controller.js');
 var tplate = require('./template.js');
 
@@ -13,7 +15,7 @@ var dom = (function($, controller, template) {
 		// when document is fully loaded
 		$(document).ready( function() {
 			// if button exists
-			if(submitButton) 
+			if(submitButton)
 				// attatch event
 				$(submitButton).on("click", onSubmit);
 		});
@@ -21,6 +23,8 @@ var dom = (function($, controller, template) {
 
 	// when button has been submited
 	var onSubmit = function() {
+		if ($('.table-container').length)
+			$('.table-container').remove();
 		// keep only the vals
 		numberHomework = $('#numberHomework').val();
 		numberExercise = $('#numberExercise').val();

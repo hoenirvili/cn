@@ -7,6 +7,3 @@ var d = require('./dom.js');
 	// init dom
 	dom.Init();
 })(d);
-
-
-

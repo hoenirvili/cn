@@ -8,11 +8,8 @@ var d = require('./dom.js');
 	// init dom
 	dom.Init();
 })(d);
-
-
-
-
 },{"./dom.js":3}],2:[function(require,module,exports){
+"use strict";
 var h1 = require('./homework1');
 var h2 = require('./homework2.js');
 
@@ -20,6 +17,7 @@ var h2 = require('./homework2.js');
 var controller = (function (h1, h2) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
+			// tema 1
 			case '1':
 				switch(nX) {
 					case '1':
@@ -28,24 +26,66 @@ var controller = (function (h1, h2) {
 						template.messages.green("Check console and bootom page");
 						break;
 					case '2':
+						h1.Ex2();
 						template.messages.green("Successfull compiled");
 						template.messages.green("Check console and botom page");
-						h1.Ex2();
 						break;
 					case '3':
+						template.messages.orange("This homework is not implemented yet");
+						h1.Ex3();
+						break;
 					case '4':
-						template.messages.orange("This exercise is not implemented yet");
+						h1.Ex4();
+						template.messages.green("Successfull compiled");
+						template.messages.green("Check console and bottom page");
 						break;
 				}
 				break;
+			// tema 2
 			case '2':
+				switch (nX) {
+					case '1':
+						template.messages.orange("This homework is not implemented yet");
+						h2.Ex1();
+						break;
+					case '2':
+						template.messages.orange("This homework is not implemented yet");
+						h2.Ex2();
+						break;
+					case '3':
+						template.messages.orange("This homework is not implemented yet");
+						h2.Ex3();
+						break;
+					case '4':
+						template.messages.orange("This homework is not implemented yet");
+						break;
+				}
+				break;
+			// tema 3
 			case '3':
+			template.messages.orange("This homework is not implemented yet");
+			break;
+			// tema 4
 			case '4':
+			template.messages.orange("This homework is not implemented yet");
+			break;
+			// tema 5
 			case '5':
+				template.messages.orange("This homework is not implemented yet");
+				break;
+			case '6':
+				template.messages.orange("This homework is not implemented yet");
+				break;
+			case '7':
+				template.messages.orange("This homework is not implemented yet");
+				break;
+			case '8':
 				template.messages.orange("This homework is not implemented yet");
 				break;
 		}
 	};
+
+	//exportam toate functiile, obiectele publice
 	return {
 		fn : fn
 	};
@@ -55,6 +95,8 @@ var controller = (function (h1, h2) {
 module.exports = controller;
 
 },{"./homework1":4,"./homework2.js":5}],3:[function(require,module,exports){
+"use strict";
+
 var ctrl = require('./controller.js');
 var tplate = require('./template.js');
 
@@ -70,7 +112,7 @@ var dom = (function($, controller, template) {
 		// when document is fully loaded
 		$(document).ready( function() {
 			// if button exists
-			if(submitButton) 
+			if(submitButton)
 				// attatch event
 				$(submitButton).on("click", onSubmit);
 		});
@@ -78,6 +120,8 @@ var dom = (function($, controller, template) {
 
 	// when button has been submited
 	var onSubmit = function() {
+		if ($('.table-container').length)
+			$('.table-container').remove();
 		// keep only the vals
 		numberHomework = $('#numberHomework').val();
 		numberExercise = $('#numberExercise').val();
@@ -99,10 +143,12 @@ var dom = (function($, controller, template) {
 module.exports = dom;
 
 },{"./controller.js":2,"./template.js":6}],4:[function(require,module,exports){
-var tableTemplate = require('./template.js');
+"use strict";
 
-var homework1 = (function(template) {
-	
+var templateSystem = require('./template.js');
+
+var homework1 = (function(template, $) {
+	// exercitiu 1
 	var ex1 = function() {
 		var u = 1;
 		var lowest;
@@ -113,22 +159,20 @@ var homework1 = (function(template) {
 			step++;
 			lowest = u;
 		}
+
 		console.log("===========  Homework1 - Ex1 ================");
 		console.log("Cel mai mic numar pozitiv	= ",	lowest);
 		console.log("Numarul de pasi			= ",	step);
 		console.log("=============================================");
 
-		console.log(template);
-		//TODO(error insert tables into DOOM)
 		template.tables.base();
 		template.tables.content(
 			["Cel mai mic numar pozitiv","Numarul de pasi"],
-			[lowest,step]
-		);
+			[lowest,step]);
 	};
 
 	var ex2 = function() {
-		var a = 1.0, b, c;
+		var a = 1.0, b,c;
 		var u = 1;
 		var leftOperand;
 		var rightOperand;
@@ -156,63 +200,99 @@ var homework1 = (function(template) {
 		console.log("b					= ",		c);
 		console.log("c					= ",		c);
 		console.log("=============================================");
-		
+
+		template.tables.base();
+		template.tables.content(
+			["Suma operand stanga","Suma operand dreapta", "Numarul de pasi","a","b","c"],
+			[leftOperand, rightOperand, step, a, b, c]);
+	};
+	//exercitiu 3
+	var ex3 = function() {
+
+	};
+
+	var ex4 = function() {
+		var input = $('#input');
+		var inputContainer;
+		if (input.length)
+			if (input.val().length) {
+				inputContainer = input.val();
+				var re = /\[+(([0-9]*\.[0-9]+|[0-9]+)\,*)+\]/g;
+				var str = '[1,2312,3123123,0]';
+				var m;
+				// (TODO)make this work validate arrays.
+				while ((m = re.exec(str)) !== null) {
+    				if (m.index === re.lastIndex) {
+        			re.lastIndex++;
+					console.log(re.lastIndex);
+					}
+				}
+			}
+			else
+				template.messages.orange("Plase enter some input");
+	};
+
+	// exportam toate functiile publice
+	return {
+		Ex1:ex1,
+		Ex2:ex2,
+		Ex3:ex3,
+		Ex4:ex4
+	};
+
+})(templateSystem, jQuery);
+module.exports = homework1;
+
+},{"./template.js":6}],5:[function(require,module,exports){
+"use strict";
+var homework2 = (function() {
+	var ex1 = function() {
+
+	};
+
+	var ex2 = function() {
+
 	};
 
 	var ex3 = function() {
-		
+
+
+	};
+
+	var ex4 = function() {
+
 	};
 
 	return {
 		Ex1:ex1,
 		Ex2:ex2,
 		Ex3:ex3,
+		Ex4:ex4
 	};
 
-})(tableTemplate);
-
-
-module.exports = homework1;
-
-},{"./template.js":6}],5:[function(require,module,exports){
-var homework2 = (function() {
-	
 })();
 
-
 module.exports = homework2;
-
 },{}],6:[function(require,module,exports){
+"use strict";
 
 var template = (function($) {
-		//object
+	// messages object for creating
+	// message components
 	var messages =  {
-
 		// success message
 		green: function(msg) {
 			$('.status').append(
 				'<div class=\"alert alert-success\" role=\"alert\">'+ msg + '!</div>'
 			);
-
 			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
-			// remove also tables if exists
-			if ($('.table-container').length) {
-				$('.table-container').remove();
-			}
-
 		},
 		// fail message
 		red: function(msg) {
 			$('.status').append(
 				'<div class=\"alert alert-danger\" role=\"alert\">' + msg + '!</div>'
 			);
-
 			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
-			// remove also tables if exists
-			if ($('.table-container').length) {
-				$('.table-container').remove();
-			}
-
 		},
 
 		//warning message
@@ -220,24 +300,24 @@ var template = (function($) {
 			$('.status').append(
 				'<div class=\"alert alert-warning\" role=\"alert\">' + msg + '</div>'
 			);
-
 			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
-			// remove also tables if exists
-			if ($('.table-container').length) {
-				$('.table-container').remove();
-			}
-
 		},
 
 	};
 
+	// remove message with animation set
 	var removeMessage = function() {
 		$(this).remove();
-
 	};
 
+	// tables object for creating
+	// table components
 	var tables = {
+		// construct skeleton table components
 		base: function() {
+			if ($('.table-container').length)
+				$('.table-container').remove();
+				
 			$('.table-spot').append(
 				'<div class="table-container">'+
 				'<h2>Output</h2>'+
@@ -253,17 +333,20 @@ var template = (function($) {
 				'</table>'+
 			'</div>');
 		},
+
+		// add content to the table previously created
 		content: function(heads, options) {
-			var i;
+			var i; // index
 			var tableHead = $('.table > thead > tr');
 			var tableBody = $('.table > tbody > .success');
-			lenHeads = heads.length;
-			lenOpts = options.length;
+			var lenHeads = heads.length;
+			var lenOpts = options.length;
 			if (tableHead.length && tableHead.length)  {
-
+				// for every col in header insert it
 				for (i=0;i<lenHeads; i++ ){
 					tableHead.append('<th>'+ heads[i] + '</th>');
 				}
+				// for every col body insert it
 				for (i=0;i<lenOpts; i++) {
 					tableBody.append('<td>'+ options[i] +'</td>');
 				}
@@ -271,9 +354,9 @@ var template = (function($) {
 			}else {
 				messages.red("Can't construct table");
 			}
-
 		}
 	};
+	// exportam toate functiile/obiectele publice
 	return {
 		messages: messages,
 		tables: tables
