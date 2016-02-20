@@ -1,23 +1,74 @@
-var homework1 = (function() {
+var tableTemplate = require('./template.js');
 
+var homework1 = (function(template) {
+	
 	var ex1 = function() {
-		var h = 1
+		var u = 1;
 		var lowest;
 		var step=0;
-		while(1+h != 1.0) {
-			h = h/10
-			step++
-			lowest = h;
+
+		while(1+u !== 1.0) {
+			u = u/10;
+			step++;
+			lowest = u;
 		}
-		console.log("Cel mai mic numar pozitiv ", lowest);
-		console.log("Numarul de pasi ", step);
-	};
-	
-	return {
-		Ex1:ex1
+		console.log("===========  Homework1 - Ex1 ================");
+		console.log("Cel mai mic numar pozitiv	= ",	lowest);
+		console.log("Numarul de pasi			= ",	step);
+		console.log("=============================================");
+
+		console.log(template);
+		//TODO(error insert tables into DOOM)
+		template.tables.base();
+		template.tables.content(
+			["Cel mai mic numar pozitiv","Numarul de pasi"],
+			[lowest,step]
+		);
 	};
 
-})();
+	var ex2 = function() {
+		var a = 1.0, b, c;
+		var u = 1;
+		var leftOperand;
+		var rightOperand;
+		var step = 0;
+		while(1 + u !== 1.0) {
+			step++;
+			u = u/10;
+			b = u;
+			c = u;
+			leftOperand = (a+b)+c;
+			rightOperand =a+(b+c);
+			if (leftOperand !== rightOperand) {
+				break;
+			}
+			if (step > 20) {
+				break;
+			}
+		}
+
+		console.log("===========  Homework1 - Ex2 ================");
+		console.log("Numarul de pasi	= ",		step);
+		console.log("Operand stanga		= ",		leftOperand);
+		console.log("Operand dreapta	= ",		rightOperand);
+		console.log("a					= ",		a);
+		console.log("b					= ",		c);
+		console.log("c					= ",		c);
+		console.log("=============================================");
+		
+	};
+
+	var ex3 = function() {
+		
+	};
+
+	return {
+		Ex1:ex1,
+		Ex2:ex2,
+		Ex3:ex3,
+	};
+
+})(tableTemplate);
 
 
 module.exports = homework1;
