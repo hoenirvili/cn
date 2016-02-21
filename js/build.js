@@ -212,25 +212,73 @@ var homework1 = (function(template, $) {
 	};
 
 	var ex4 = function() {
-		var input = $('#input');
-		var inputContainer;
-		if (input.length)
-			if (input.val().length) {
+		var input = $('#input'); // va retine inputul dom
+		var inputContainer; // va tine inputul dat din texarea
+		var holder; // holder va tine rezultatul dupa exec la regex mai jos
+		var regexArray; // aici va tine regulile regexului pentru array
+		var parsedArray = []; // aici va fi array-ul parsat din input
+		var n;
+		var flagP = true;
+		// daca exista inputu dom
+		if (input.length) {
+			// daca exista o valoare in input
+			if(input.val().length) {
 				inputContainer = input.val();
-				var re = /\[+(([0-9]*\.[0-9]+|[0-9]+)\,*)+\]/g;
-				var str = '[1,2312,3123123,0]';
-				var m;
-				// (TODO)make this work validate arrays.
-				while ((m = re.exec(str)) !== null) {
-    				if (m.index === re.lastIndex) {
-        			re.lastIndex++;
-					console.log(re.lastIndex);
+				// defineste regulele regexului pentru arrray
+				// e.g [12.23,515,32,412]
+				// fara spatiu
+				regexArray = /[0-9]*\.?[0-9]+/g;
+				while ((holder = regexArray.exec(inputContainer)) !== null) {
+					console.log(holder[0]);
+					if (isNaN((n = parseFloat(holder[0]))) === false) {
+						flagP = false;
+						break;
+					} else {
+						parsedArray.push(n);
 					}
+				}// while
+
+				if (flagP === true) {
+					console.log("The parsed array ===> ",parsedArray);
+					template.tables.base();
+					template.tables.content(
+						["Input array","Parsed Array"],
+						[inputContainer,parsedArray]
+					);
+				} else {
+					template.messages.red("Can't parse the corespoding array");
+					console.log("Can't parse this array ===>",inputContainer);
 				}
-			}
-			else
-				template.messages.orange("Plase enter some input");
-	};
+			}// if
+		}// if
+	}; // ex4
+		// // daca exista inputul
+		// if(input.length){
+		// 	// // daca exista o valoarea in input
+		// 	// if (input.val().length) {
+		// 	// 	// ia acea valoare
+		// 	// 	inputContainer = input.val();
+		// 	// 	// defineste regulele regexului pentru array
+		// 	// 	// e. g. [12.23,512,31,412]
+		// 	// 	// fara spatiu
+		// 	// 	regexArray = /[0-9]*\.?[0-9]+/g;
+		// 	//
+		// 	// 	// while((holder = regexArray.exec(inputContainer))  !== null) {
+		// 	// 	// 	if parseInt(holder[0])
+		// 	// 	// 	{
+		// 	// 	//
+		// 	// 	// 	// }
+		// 	// 	// 	// 	template.messages.red("Can't parse the coresponding array");
+		// 	// 	// 	// 	break;
+		// 	// 	// 	// } else {
+		// 	// 	// 	// 	theActualArray.push(holder[0]);
+		// 	// 	// 	// }
+		// 	// 	// 	}
+		// 	// 	}// if
+		// 	// 	console.log(theActualArray);
+		// 	} else {
+		// 		template.messages.orange("Plase enter some input");
+		// 	}
 
 	// exportam toate functiile publice
 	return {
@@ -285,14 +333,14 @@ var template = (function($) {
 			$('.status').append(
 				'<div class=\"alert alert-success\" role=\"alert\">'+ msg + '!</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 		// fail message
 		red: function(msg) {
 			$('.status').append(
 				'<div class=\"alert alert-danger\" role=\"alert\">' + msg + '!</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 
 		//warning message
@@ -300,7 +348,7 @@ var template = (function($) {
 			$('.status').append(
 				'<div class=\"alert alert-warning\" role=\"alert\">' + msg + '</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 
 	};
@@ -315,9 +363,7 @@ var template = (function($) {
 	var tables = {
 		// construct skeleton table components
 		base: function() {
-			if ($('.table-container').length)
-				$('.table-container').remove();
-				
+
 			$('.table-spot').append(
 				'<div class="table-container">'+
 				'<h2>Output</h2>'+

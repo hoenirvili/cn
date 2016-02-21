@@ -9,14 +9,14 @@ var template = (function($) {
 			$('.status').append(
 				'<div class=\"alert alert-success\" role=\"alert\">'+ msg + '!</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 		// fail message
 		red: function(msg) {
 			$('.status').append(
 				'<div class=\"alert alert-danger\" role=\"alert\">' + msg + '!</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 
 		//warning message
@@ -24,7 +24,7 @@ var template = (function($) {
 			$('.status').append(
 				'<div class=\"alert alert-warning\" role=\"alert\">' + msg + '</div>'
 			);
-			$('.alert').fadeTo(1900, 1).slideUp(500, removeMessage);
+			$('.alert').fadeTo(1900, 1).slideUp(900, removeMessage);
 		},
 
 	};
@@ -39,9 +39,7 @@ var template = (function($) {
 	var tables = {
 		// construct skeleton table components
 		base: function() {
-			if ($('.table-container').length)
-				$('.table-container').remove();
-				
+
 			$('.table-spot').append(
 				'<div class="table-container">'+
 				'<h2>Output</h2>'+
