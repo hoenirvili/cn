@@ -214,11 +214,8 @@ var homework1 = (function(template, $) {
 	var ex4 = function() {
 		var input = $('#input'); // va retine inputul dom
 		var inputContainer; // va tine inputul dat din texarea
-		var holder; // holder va tine rezultatul dupa exec la regex mai jos
 		var regexArray; // aici va tine regulile regexului pentru array
-		var parsedArray = []; // aici va fi array-ul parsat din input
-		var n;
-		var flagP = true;
+		var regexArrayCompile;
 		// daca exista inputu dom
 		if (input.length) {
 			// daca exista o valoare in input
@@ -228,9 +225,21 @@ var homework1 = (function(template, $) {
 				// e.g [12.23,515,32,412]
 				// fara spatiu
 				regexArray = /[0-9]*\.?[0-9]+/g;
+				regexArrayCompile = /\[([0-9]*\.?[0-9]+\,|\s?|[0-9]*\.?[0-9]+)+\]/g;
+				arrayInputOutput(inputContainer, regexArray, regexArrayCompile);
+			}
+		}// if
+	}; // ex4
+
+	// functie privata care se ocupa cu parsarea/validarea si afisarea array-ul de la input.
+	 var arrayInputOutput = function(inputContainer, regexArray, regexArrayCompile) {
+		var holder; // holder va tine rezultatul dupa exec la regex mai jos
+		var n;
+		var flagP = true;
+		var parsedArray = []; // aici va fi array-ul parsat din input
+		if (regexArrayCompile.test(inputContainer)) {
 				while ((holder = regexArray.exec(inputContainer)) !== null) {
-					console.log(holder[0]);
-					if (isNaN((n = parseFloat(holder[0]))) === false) {
+					if (isNaN((n = parseFloat(holder[0]))) === true) {
 						flagP = false;
 						break;
 					} else {
@@ -239,47 +248,28 @@ var homework1 = (function(template, $) {
 				}// while
 
 				if (flagP === true) {
-					console.log("The parsed array ===> ",parsedArray);
+					console.log("===========  Homework1 - Ex4 ================");
+					console.log("The parsed array ===> ",			parsedArray);
+					console.log("=============================================");
+
 					template.tables.base();
 					template.tables.content(
 						["Input array","Parsed Array"],
 						[inputContainer,parsedArray]
 					);
 				} else {
-					template.messages.red("Can't parse the corespoding array");
-					console.log("Can't parse this array ===>",inputContainer);
+					template.messages.red("Can't parse the corespoding array element");
+					console.log("Element Array =>	", holder[0]);
 				}
-			}// if
-		}// if
-	}; // ex4
-		// // daca exista inputul
-		// if(input.length){
-		// 	// // daca exista o valoarea in input
-		// 	// if (input.val().length) {
-		// 	// 	// ia acea valoare
-		// 	// 	inputContainer = input.val();
-		// 	// 	// defineste regulele regexului pentru array
-		// 	// 	// e. g. [12.23,512,31,412]
-		// 	// 	// fara spatiu
-		// 	// 	regexArray = /[0-9]*\.?[0-9]+/g;
-		// 	//
-		// 	// 	// while((holder = regexArray.exec(inputContainer))  !== null) {
-		// 	// 	// 	if parseInt(holder[0])
-		// 	// 	// 	{
-		// 	// 	//
-		// 	// 	// 	// }
-		// 	// 	// 	// 	template.messages.red("Can't parse the coresponding array");
-		// 	// 	// 	// 	break;
-		// 	// 	// 	// } else {
-		// 	// 	// 	// 	theActualArray.push(holder[0]);
-		// 	// 	// 	// }
-		// 	// 	// 	}
-		// 	// 	}// if
-		// 	// 	console.log(theActualArray);
-		// 	} else {
-		// 		template.messages.orange("Plase enter some input");
-		// 	}
+			} else {//regexArrayCompile
+				template.messages.red("Can't parse the array");
+				console.log("Input array =>	", inputContainer);
+			}
+	};
+	// functie privata care se ocupa cu parsarea/validarea matricei de la input.
+	var matrixInputOutput = function() {
 
+	};
 	// exportam toate functiile publice
 	return {
 		Ex1:ex1,
