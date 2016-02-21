@@ -146,8 +146,9 @@ module.exports = dom;
 "use strict";
 
 var templateSystem = require('./template.js');
+var utils = require('./util');
 
-var homework1 = (function(template, $) {
+var homework1 = (function(template, $, util) {
 	// exercitiu 1
 	var ex1 = function() {
 		var u = 1;
@@ -216,6 +217,8 @@ var homework1 = (function(template, $) {
 		var inputContainer; // va tine inputul dat din texarea
 		var regexArray; // aici va tine regulile regexului pentru array
 		var regexArrayCompile;
+		var n = 10; // random arary gen
+		var arr = []; // random container array
 		// daca exista inputu dom
 		if (input.length) {
 			// daca exista o valoare in input
@@ -229,6 +232,16 @@ var homework1 = (function(template, $) {
 				arrayInputOutput(inputContainer, regexArray, regexArrayCompile);
 			}
 		}// if
+
+
+		// RANDOM
+		arr = util.RandomArray(n);
+		console.log("===========  Homework1 - Ex4 ================");
+		console.log("The random gen array ===> ",			arr);
+		console.log("=============================================");
+
+		template.tables.base();
+		template.tables.content(["Parsed Array"],[arr]);
 	}; // ex4
 
 	// functie privata care se ocupa cu parsarea/validarea si afisarea array-ul de la input.
@@ -266,10 +279,7 @@ var homework1 = (function(template, $) {
 				console.log("Input array =>	", inputContainer);
 			}
 	};
-	// functie privata care se ocupa cu parsarea/validarea matricei de la input.
-	var matrixInputOutput = function() {
 
-	};
 	// exportam toate functiile publice
 	return {
 		Ex1:ex1,
@@ -278,10 +288,10 @@ var homework1 = (function(template, $) {
 		Ex4:ex4
 	};
 
-})(templateSystem, jQuery);
+})(templateSystem, jQuery, utils);
 module.exports = homework1;
 
-},{"./template.js":6}],5:[function(require,module,exports){
+},{"./template.js":6,"./util":7}],5:[function(require,module,exports){
 "use strict";
 var homework2 = (function() {
 	var ex1 = function() {
@@ -403,4 +413,34 @@ var template = (function($) {
 
 module.exports = template;
 
+},{}],7:[function(require,module,exports){
+"use strict";
+var util = (function() {
+	var randomArrayInputOutput = function(n) {
+			var array  = [];
+			var i;
+			for (i=0; i<n; i++) {
+				array.push(randomGenInt(15,200));
+			}
+			return array;
+
+	};
+	// returneaza un numar Int arbitrar din intervaulul [min,max];
+	var randomGenInt = function(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+
+	// returneaza un numar flaot arbitrar din intervaulul [min,max];
+	var randomGenFloat = function(min, max) {
+		return Math.random()*(max-min) + min;
+	};
+
+	return {
+		RandomArray: randomArrayInputOutput,
+		RandomGenInt:randomGenInt,
+		RandomGenFloat:randomGenFloat,
+	};
+})();
+
+module.exports = util;
 },{}]},{},[3,1]);
