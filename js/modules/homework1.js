@@ -1,69 +1,62 @@
 "use strict";
 
 var templateSystem = require('./template.js');
-var utils = require('./util');
+var utils = require('./util.js');
 
-var homework1 = (function(template, $, util) {
+var homework1 = (function(template, $, utils) {
 	// exercitiu 1
 	var ex1 = function() {
-		var u = 1;
-		var lowest;
-		var step=0;
 
-		while(1+u !== 1.0) {
-			u = u/10;
-			step++;
-			lowest = u;
-		}
+        $.ajax({
+            type: "POST",
+            url: 'ajax/homework1.php',
+            dataType: "json",
+            data: {action:'ex1'},
+            success: function (data) {
+                console.log("===========  Homework1 - Ex1 ================");
+                console.log("Cel mai mic numar pozitiv	= ",	data['lowest']);
+                console.log("Numarul de pasi			= ",	data['step']);
+                console.log("=============================================");
+                template.tables.base();
+                template.tables.content(
+                    ["Cel mai mic numar pozitiv","Numarul de pasi"],
+                    [data['lowest'],data['step']]);
+            }
+        });
 
-		console.log("===========  Homework1 - Ex1 ================");
-		console.log("Cel mai mic numar pozitiv	= ",	lowest);
-		console.log("Numarul de pasi			= ",	step);
-		console.log("=============================================");
 
-		template.tables.base();
-		template.tables.content(
-			["Cel mai mic numar pozitiv","Numarul de pasi"],
-			[lowest,step]);
+
+
 	};
 
 	var ex2 = function() {
-		var a = 1.0, b,c;
-		var u = 1;
-		var leftOperand;
-		var rightOperand;
-		var step = 0;
-		while(1 + u !== 1.0) {
-			step++;
-			u = u/10;
-			b = u;
-			c = u;
-			leftOperand = (a+b)+c;
-			rightOperand =a+(b+c);
-			if (leftOperand !== rightOperand) {
-				break;
-			}
-			if (step > 20) {
-				break;
-			}
-		}
 
-		console.log("===========  Homework1 - Ex2 ================");
-		console.log("Numarul de pasi	= ",		step);
-		console.log("Operand stanga		= ",		leftOperand);
-		console.log("Operand dreapta	= ",		rightOperand);
-		console.log("a					= ",		a);
-		console.log("b					= ",		c);
-		console.log("c					= ",		c);
-		console.log("=============================================");
+        $.ajax({
+            type: "POST",
+            url: 'ajax/homework1.php',
+            dataType: "json",
+            data: {action:'ex2'},
+            success: function (data) {
+                console.log("===========  Homework1 - Ex2 ================");
+                console.log("Numarul de pasi	= ",		data['step']);
+                console.log("Operand stanga		= ",		data['leftOperand']);
+                console.log("Operand dreapta	= ",		data['rightOperand']);
+                console.log("a					= ",		data['a']);
+                console.log("b					= ",		data['c']);
+                console.log("c					= ",		data['c']);
+                console.log("=============================================");
 
-		template.tables.base();
-		template.tables.content(
-			["Suma operand stanga","Suma operand dreapta", "Numarul de pasi","a","b","c"],
-			[leftOperand, rightOperand, step, a, b, c]);
+                template.tables.base();
+                template.tables.content(
+                    ["Suma operand stanga","Suma operand dreapta", "Numarul de pasi","a","b","c"],
+                    [data['leftOperand'], data['rightOperand'], data['step'], data['a'], data['b'], data['c']]);
+            }
+        });
+
 	};
 	//exercitiu 3
 	var ex3 = function() {
+
 
 	};
 

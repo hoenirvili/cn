@@ -1,4 +1,8 @@
 "use strict";
+if (!window.cfg) {
+    window.cfg = {};
+}
+
 var homework2 = (function() {
 	var ex1 = function() {
 
