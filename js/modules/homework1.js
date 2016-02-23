@@ -83,7 +83,7 @@ var homework1 = (function(template, $, utils) {
 
 
 		// RANDOM
-		arr = util.RandomArray(n);
+		arr = utils.RandomArray(n);
 		console.log("===========  Homework1 - Ex4 ================");
 		console.log("The random gen array ===> ",			arr);
 		console.log("=============================================");
