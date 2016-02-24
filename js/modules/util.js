@@ -10,7 +10,17 @@ var util = (function () {
                 input: ""
             },
             ex3: {
-                input: ""
+                input: {
+                    "x": {
+                        type:"text",
+                        name:"x"
+                    },
+                    "p":
+                    {
+                        type:"text",
+                        name:"p"
+                    }
+                }
             },
             ex4: {
                 input: {

@@ -9,9 +9,9 @@ var homework1 = (function(template, $, utils) {
 
         $.ajax({
             type: "POST",
-            url: 'ajax/homework1.php',
+            url: 'ajax/ajax.php',
             dataType: "json",
-            data: {action:'ex1'},
+            data: {action:'ex1',homework:1},
             success: function (data) {
                 console.log("===========  Homework1 - Ex1 ================");
                 console.log("Cel mai mic numar pozitiv	= ",	data['lowest']);
@@ -33,9 +33,9 @@ var homework1 = (function(template, $, utils) {
 
         $.ajax({
             type: "POST",
-            url: 'ajax/homework1.php',
+            url: 'ajax/ajax.php',
             dataType: "json",
-            data: {action:'ex2'},
+            data: {action:'ex2',homework:1},
             success: function (data) {
                 console.log("===========  Homework1 - Ex2 ================");
                 console.log("Numarul de pasi	= ",		data['step']);
@@ -57,6 +57,26 @@ var homework1 = (function(template, $, utils) {
 	//exercitiu 3
 	var ex3 = function() {
 
+        $.ajax({
+            type: "POST",
+            url: 'ajax/ajax.php',
+            dataType: "json",
+            data: {action:'ex3',homework:1,x:$('input[name="x"]').val(),p:$('input[name="p"]').val()},
+            success: function (data) {
+                console.log("===========  Homework1 - Ex3 ================");
+                console.log("Tan Lentz computed   = ",		data['aprox']);
+                console.log("Tan computed   	  = ",		data['tan']);
+                console.log("pi             	  = ",		data['pi']);
+                console.log("e					  = ",		data['e']);
+                console.log("x					  = ",		data['x']);
+                console.log("=============================================");
+
+                template.tables.base();
+                template.tables.content(
+                    ["Tangenta Lentz","Tangenta php", "pi","e","x"],
+                    [data['aprox'], data['tan'], data['pi'], data['e'], data['x']]);
+            }
+        });
 
 	};
 

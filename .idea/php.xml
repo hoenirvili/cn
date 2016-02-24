@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="sandbox.dev" id="5d6d60c6-94b5-4e54-88c5-f6306402f05b" name="CalculNumeric" port="8080" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$" remote-root="/media/sf_sandbox/calculnumeric" />
+        </path_mappings>
+      </server>
+    </servers>
+  </component>
+</project>
