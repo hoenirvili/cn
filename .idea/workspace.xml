@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5a638bd-903b-4060-9fce-7c0db6d550ea" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ajax/HomeWork1.php" afterPath="$PROJECT_DIR$/ajax/HomeWork1.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/modules/app.js" afterPath="$PROJECT_DIR$/js/modules/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/modules/dom.js" afterPath="$PROJECT_DIR$/js/modules/dom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/modules/homework1.js" afterPath="$PROJECT_DIR$/js/modules/homework1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/modules/util.js" afterPath="$PROJECT_DIR$/js/modules/util.js" />
+      <change type="MOVED" beforePath="E:\sandbox\calculnumeric\ajax\homework1.php" afterPath="$PROJECT_DIR$/ajax/HomeWork1.php" />
     </list>
     <ignored path="teme.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +33,7 @@
         <entry file="file://$PROJECT_DIR$/js/modules/homework1.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="75" column="66" selection-start-line="75" selection-start-column="66" selection-end-line="75" selection-end-column="66" />
+              <caret line="76" column="66" selection-start-line="76" selection-start-column="66" selection-end-line="76" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -47,7 +52,7 @@
       <file leaf-file-name="HomeWork1.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ajax/HomeWork1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.64430577">
+            <state vertical-scroll-proportion="-1.925117">
               <caret line="66" column="28" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
               <folding />
             </state>
@@ -68,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/js/modules/util.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -98,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/js/modules/dom.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="84" selection-start-line="48" selection-start-column="84" selection-end-line="48" selection-end-column="84" />
+              <caret line="49" column="84" selection-start-line="49" selection-start-column="84" selection-end-line="49" selection-end-column="84" />
               <folding />
             </state>
           </provider>
@@ -602,7 +607,7 @@
     <entry file="file://$PROJECT_DIR$/js/modules/util.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="13" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -610,7 +615,7 @@
     <entry file="file://$PROJECT_DIR$/js/modules/dom.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="84" selection-start-line="48" selection-start-column="84" selection-end-line="48" selection-end-column="84" />
+          <caret line="49" column="84" selection-start-line="49" selection-start-column="84" selection-end-line="49" selection-end-column="84" />
           <folding />
         </state>
       </provider>
@@ -626,7 +631,7 @@
     <entry file="file://$PROJECT_DIR$/js/modules/homework1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="66" selection-start-line="75" selection-start-column="66" selection-end-line="75" selection-end-column="66" />
+          <caret line="76" column="66" selection-start-line="76" selection-start-column="66" selection-end-line="76" selection-end-column="66" />
           <folding />
         </state>
       </provider>
@@ -641,7 +646,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ajax/HomeWork1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.64430577">
+        <state vertical-scroll-proportion="-1.925117">
           <caret line="66" column="28" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
           <folding />
         </state>

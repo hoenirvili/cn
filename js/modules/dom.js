@@ -5,7 +5,8 @@ var tplate = require('./template.js');
 var utils=require('./util.js');
 var h1=require('./homework1.js');
 var $input= $('#input');
-var dom = (function($, controller, template,utils,h1) {
+
+var dom = (function($, controller, template,utils) {
 	var submitButton;
 	// keep only the vals
 	var numberHomework;
@@ -24,10 +25,10 @@ var dom = (function($, controller, template,utils,h1) {
 				$(submitButton).on("click", onSubmit);
 
             if($homeworkSelect)
-                $homeworkSelect.on('change',selectChange)
+                $homeworkSelect.on('change',selectChange);
 
             if($exerciseSelect)
-                $exerciseSelect.on('change',selectChange)
+                $exerciseSelect.on('change',selectChange);
 		});
 	};//init
 
@@ -44,17 +45,17 @@ var dom = (function($, controller, template,utils,h1) {
             for( var key in inputs)
             {
                 var inp=inputs[key];
-                if(inp['type']=='text')
+                if(inp['type']==='text')
                 {
-                    $input.append('<label>'+key+'</label><input class="form-control" name="'+inp['name']+'" type="'+inp['type']+'"/>')
+                    $input.append('<label>'+key+'</label><input class="form-control" name="'+inp['name']+'" type="'+inp['type']+'"/>');
                 }
-                if(inp['type']=='textarea')
+                if(inp['type']==='textarea')
                 {
-                    $input.append('<label>'+key+'</label><textarea class="form-control" name="'+inp['name']+'"></textarea>')
+                    $input.append('<label>'+key+'</label><textarea class="form-control" name="'+inp['name']+'"></textarea>');
                 }
             }
         }
-    }
+    };
 
 	// when button has been submited
 	var onSubmit = function() {
