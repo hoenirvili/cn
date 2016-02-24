@@ -54,7 +54,7 @@ class HomeWork1
                 $e = pow(10, -$p);
                 if ($x > -M_PI && $x < M_PI) {
                     $aprox = self::LentzAlgorithm($x, $e);
-                    $tan = tan(deg2rad($x));
+                    $tan = tan($x);
                     echo json_encode(array('aprox' => $aprox, 'tan' => $tan, 'pi' => M_PI, 'e' => $e, 'x' => $x));
                     exit();
                 } elseif ($x < -M_PI || $x > M_PI) {
@@ -63,8 +63,8 @@ class HomeWork1
                     } else {
                         (float)$real_x = fmod($x , (M_PI / 2));
                     }
-                    $aprox = self::LentzAlgorithm($real_x, $e);
-                    $tan = -tan(deg2rad($x));
+                    $aprox = -self::LentzAlgorithm($real_x, $e);
+                    $tan = -tan($real_x);
                     echo json_encode(array('aprox' => $aprox, 'tan' => $tan, 'pi' => M_PI, 'e' => $e, 'x' => $x));
                     exit();
                 } else {
@@ -88,7 +88,9 @@ class HomeWork1
         if ($j == 0) {
             return 0;
         }
-        return (2 * $j) - 1;
+        if($j==1)
+            return 1;
+        return -(($j*2)-1);
     }
 
     public static function lGetAForTan($j, $x)
@@ -113,11 +115,11 @@ class HomeWork1
         $D = 0;
         $j = 1;
         do {
-            $D = self::lGetBForTan($j) + (float)(self::lGetAForTan($x, $j) * $D);
+            $D = self::lGetBForTan($j) + (float)(self::lGetAForTan($j, $x) * $D);
             if ($D == 0) {
                 $D = $mic;
             }
-            $C = self::lGetBForTan($j) + (float)(self::lGetAForTan($x, $j) / $C);
+            $C = self::lGetBForTan($j) + (float)(self::lGetAForTan($j, $x) / $C);
             if ($C == 0) {
                 $C = $mic;
             }
