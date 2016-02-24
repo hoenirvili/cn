@@ -59,12 +59,12 @@ class HomeWork1
                     exit();
                 } elseif ($x < -M_PI || $x > M_PI) {
                     if ($x < 0) {
-                        (float)$real_x = fmod($x,(-M_PI / 2));
+                        (float)$real_x = fmod($x, (-M_PI / 2));
                     } else {
-                        (float)$real_x = fmod($x , (M_PI / 2));
+                        (float)$real_x = fmod($x, (M_PI / 2));
                     }
                     $aprox = -self::LentzAlgorithm($real_x, $e);
-                    $tan = -tan($real_x);
+                    $tan = tan($x);
                     echo json_encode(array('aprox' => $aprox, 'tan' => $tan, 'pi' => M_PI, 'e' => $e, 'x' => $x));
                     exit();
                 } else {
@@ -80,6 +80,107 @@ class HomeWork1
 
     public static function ex4()
     {
+        $iarray = $_POST['arr'];
+        $array = self::getArrayFromString($iarray);
+
+        $imatrix = $_POST['matrice'];
+        $matrix = self::getMatrixFromString($imatrix);
+
+        $vectorf = file_get_contents('../input/homework1/ex4/vector.txt');
+        $vectorf = self::getArrayFromString($vectorf);
+
+        $matricef= file_get_contents('../input/homework1/ex4/matrice.txt');
+        $matricef = self::getMatrixFromString($matricef);
+
+        $vectorr=self::randVector();
+        $matricer=self::randMatrix();
+
+        echo json_encode(
+            array('matrice' => self::getStringFromMatrix($matrix),
+                  'vector' => self::getStringFromArray($array),
+                  'matricef' => self::getStringFromMatrix($matricef),
+                  'vectorf' => self::getStringFromArray($vectorf),
+                  'matricer'=>self::getStringFromMatrix($matricer),
+                  'vectorr'=>self::getStringFromArray($vectorr)
+                ));
+        exit();
+
+    }
+
+    public static function getArrayFromString($string)
+    {
+        return json_decode($string);
+    }
+
+    public static function getStringFromArray($array)
+    {
+
+        if (!is_array($array)) {
+            return "Nu s-a putut parsa.";
+        }
+        return json_encode($array);
+    }
+
+
+    public static function getMatrixFromString($string)
+    {
+        $result = array();
+        $strings = explode(']', $string);
+        if (is_array($strings)) ;
+        foreach ($strings as $str) {
+            if($str)
+            $result[] = self::getArrayFromString($str . ']');
+        }
+        return $result;
+    }
+
+    public static function getStringFromMatrix($matrix)
+    {
+        if (!is_array($matrix)||empty($matrix)) {
+            return "Nu s-a putut parsa.";
+        }
+        foreach ($matrix as $key => $vector) {
+            $str=self::getStringFromArray($vector);
+            if($str)
+            $matrix[$key] = $str;
+        }
+        $string = implode('<br/>', $matrix);
+        return $string;
+    }
+
+    public static function randMatrix($maxn=10,$maxVn=10,$maxNum=10)
+    {
+        $n=rand(1,$maxn);
+        $m=rand(1,$maxVn);
+        $result=array();
+        for($i=0;$i<$n;$i++)
+        {
+            $result[]=self::randVectorFixedSize($m);
+        }
+        return $result;
+
+    }
+
+    public static function randVectorFixedSize($n,$maxNum=10)
+    {
+        $result=array();
+        for($i=0;$i<$n;$i++)
+        {
+            $result[]=rand(0,$maxNum);
+        }
+        return $result;
+
+    }
+
+    public static function randVector($maxn=10,$maxNum=10)
+    {
+        $n=rand(1,$maxn);
+        $result=array();
+        for($i=0;$i<$n;$i++)
+        {
+            $result[]=rand(0,$maxNum);
+        }
+        return $result;
 
     }
 
@@ -88,9 +189,9 @@ class HomeWork1
         if ($j == 0) {
             return 0;
         }
-        if($j==1)
+        if ($j == 1)
             return 1;
-        return -(($j*2)-1);
+        return -(($j * 2) - 1);
     }
 
     public static function lGetAForTan($j, $x)

@@ -24,9 +24,15 @@ var util = (function () {
             },
             ex4: {
                 input: {
-                    Input: {
+                    Vector: {
                         type: 'textarea',
-                        name: 'input',
+                        name: 'array',
+                        placeholder:"[x,y,z]"
+                    },
+                    Matrice: {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder:"[x,y][x,y]"
                     }
                 }
             },

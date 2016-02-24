@@ -20,7 +20,7 @@ var controller = (function (h1, h2) {
 						template.messages.green("Check console and botom page");
 						break;
 					case '3':
-						template.messages.orange("This homework is not implemented yet");
+						template.messages.orange("Check console and botom page");
 						h1.Ex3();
 						break;
 					case '4':
