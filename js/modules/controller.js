@@ -1,5 +1,5 @@
 "use strict";
-var h1 = require('./homework1');
+var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 
 // here we import all our homeworks modules
@@ -11,22 +11,15 @@ var controller = (function (h1, h2) {
 				switch(nX) {
 					case '1':
 						h1.Ex1();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and bootom page");
 						break;
 					case '2':
 						h1.Ex2();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and botom page");
 						break;
 					case '3':
-						template.messages.orange("Check console and botom page");
 						h1.Ex3();
 						break;
 					case '4':
 						h1.Ex4();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and bottom page");
 						break;
 				}
 				break;

@@ -8,7 +8,7 @@
     <meta name="nc">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" href="css/app.css" type="text/css" charset="utf-8">
 </head>
 <body>
 <div class="container">
@@ -16,7 +16,6 @@
         <div class="status">
         </div>
         <br>
-
         <form class="form-group">
             <h3> Tema
                 <h3>

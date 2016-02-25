@@ -1,85 +1,103 @@
 "use strict";
 
-var ctrl = require('./controller.js');
-var tplate = require('./template.js');
-var utils = require('./util.js');
-var h1 = require('./homework1.js');
-var $input = $('#input');
+// Toate modulele care le vom importa in modulul dom
+var ctrl 	= require('./controller.js');
+var tplate 	= require('./template.js');
+var utils 	= require('./util.js');
+var h1 		= require('./homework1.js');
 
 var dom = (function ($, controller, template, utils) {
-    var submitButton;
-    // keep only the vals
-    var numberHomework;
-    var numberExercise;
+	// variabile globale ale modulului
+	var submitButton, 			// butonul de submit
+		numberHomework, 		// numarul temei
+		numberExercise, 		// numarul exercitiului
+		$input = $('#input'); 	// inputul <div class="input"></div>
 
-    // init function
-    var Init = function () {
-        submitButton = ($('#button-submit').length) ? $('#button-submit') : false;
-        var $homeworkSelect = ($('#numberHomework').length) ? $('#numberHomework') : false;
-        var $exerciseSelect = ($('#numberExercise').length) ? $('#numberExercise') : false;
-        // when document is fully loaded
-        $(document).ready(function () {
-            // if button exists
-            if (submitButton)
-            // attatch event
-                $(submitButton).on("click", onSubmit);
 
-            if ($homeworkSelect)
-                $homeworkSelect.on('change', selectChange);
+	// Init function care va fi singura functie exportat de modulul.
+	// Initializarea modulului, pregatirea butonului de compile/submit +
+	// atasarea de eventuri.
+	var Init = function () {
+		submitButton = ($('#button-submit').length) ? $('#button-submit') : false;
+		var $homeworkSelect = ($('#numberHomework').length) ? $('#numberHomework') : false;
+		var $exerciseSelect = ($('#numberExercise').length) ? $('#numberExercise') : false;
+		// when document is fully loaded
+		$(document).ready(function () {
+			// if button exists
+			if (submitButton)
+				// adauga event la click, executand callbackul la onSubmit
+				$(submitButton).on("click", onSubmit);
+			
+			if ($homeworkSelect)
+				$homeworkSelect.on('change', selectChange);
 
-            if ($exerciseSelect)
-                $exerciseSelect.on('change', selectChange);
-        });
-    };//init
+			if ($exerciseSelect)
+				$exerciseSelect.on('change', selectChange);
+			});
+	};//init
 
     var selectChange = function () {
-        console.log(utils);
-        numberHomework = $('#numberHomework').val();
-        numberExercise = $('#numberExercise').val();
-        $input.html("");
-        var inputs = utils.inputCfg['h' + numberHomework]['ex' + numberExercise]['input'];
-        //console.log(inputs);
-        if (inputs) {
-            for (var key in inputs) {
-                var inp = inputs[key];
-                var placeholder;
-                if (inp['placeholder']) {
-                    placeholder = " placeholder='" + inp['placeholder'] + "' ";
-                }
-                else {
-                    placeholder = "";
-                }
-                if (inp['type'] === 'text') {
-                    $input.append('<label>' + key + '</label><input '+placeholder+' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>');
-                }
-                if (inp['type'] === 'textarea') {
+		var inputs, // tempalte pentru input in functie de tema
+			key, // index pentru atribute din util.inputCfg
+			inp, // container pentru obiecte din util.inputCfg
+			placeholder; // stocheaza atributul placeholder din util.inputCfg
 
-                    $input.append('<label>' + key + '</label><textarea '+placeholder+' class="form-control" name="' + inp['name'] + '"></textarea>');
-                }
-            }
-        }
+		// adaugam valorile corespunzatoare
+		numberHomework = $('#numberHomework').val();
+		numberExercise = $('#numberExercise').val();
+		// in prima faza un html gol
+		$input.html("");
+		// primeste configul din modulul util.
+		// fiecare config e diferit pentru fiecare exercitiu in parte
+		inputs = utils.inputCfg['h' + numberHomework]['ex' + numberExercise]['input'];
+		// testeaza daca trebuie adaugat un cam nou.
+		if (inputs) {
+			for (key in inputs) {
+				// stocheaza atributele x, p din obiectul input:{}
+				inp = inputs[key];
+				// stocheaza trageturile din atributul placeholder
+				if (inp['placeholder'])
+					placeholder = " placeholder='" + inp['placeholder'] + "' ";
+				else
+					placeholder = "";
+				// daca containerul e de tip text
+				if (inp['type'] === 'text')
+					// introdu in html
+					$input.append(
+						'<label>' + key + '</label>'+
+						'<input '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
+					);
+				// daca containerul e de tip textarea
+				if (inp['type'] === 'textarea')
+					// introdu in html
+					$input.append(
+					 '<label>' + key + '</label><textarea '+placeholder+
+					' class="form-control" name="' + inp['name'] + '"></textarea>'
+					);
+			}// for
+		}// if
+	};// function
+
+	// when button has been submited
+	var onSubmit = function () {
+		if ($('.table-container').length)
+			$('.table-container').remove();
+			// stoccheaza doar variabilele
+		numberHomework = $('#numberHomework').val();
+		numberExercise = $('#numberExercise').val();
+		if (numberExercise && numberHomework) {
+			controller.fn(numberHomework, numberExercise, template);
+		} else {
+			template.messages.orange("Please set exercise number and homework");
+		}
     };
 
-    // when button has been submited
-    var onSubmit = function () {
-        if ($('.table-container').length)
-            $('.table-container').remove();
-        // keep only the vals
-        numberHomework = $('#numberHomework').val();
-        numberExercise = $('#numberExercise').val();
-        if (numberExercise && numberHomework) {
-            controller.fn(numberHomework, numberExercise, template);
-        } else {
-            template.messages.orange("Please set exercise number and homework");
-        }
-    };
-
-
-    return {
-        Init: Init
-    };
-
+	return {
+		Init: Init
+	};
+	
+// import aici toate modulele de sus de care am dat require
 })(jQuery, ctrl, tplate, utils, h1);
 
-
+// exportam modulul dom
 module.exports = dom;

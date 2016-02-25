@@ -12,7 +12,7 @@ var d = require('./dom.js');
 
 },{"./dom.js":3}],2:[function(require,module,exports){
 "use strict";
-var h1 = require('./homework1');
+var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 
 // here we import all our homeworks modules
@@ -24,22 +24,15 @@ var controller = (function (h1, h2) {
 				switch(nX) {
 					case '1':
 						h1.Ex1();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and bootom page");
 						break;
 					case '2':
 						h1.Ex2();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and botom page");
 						break;
 					case '3':
-						template.messages.orange("Check console and botom page");
 						h1.Ex3();
 						break;
 					case '4':
 						h1.Ex4();
-						template.messages.green("Successfull compiled");
-						template.messages.green("Check console and bottom page");
 						break;
 				}
 				break;
@@ -96,113 +89,133 @@ var controller = (function (h1, h2) {
 
 module.exports = controller;
 
-},{"./homework1":4,"./homework2.js":5}],3:[function(require,module,exports){
+},{"./homework1.js":4,"./homework2.js":5}],3:[function(require,module,exports){
 "use strict";
 
-var ctrl = require('./controller.js');
-var tplate = require('./template.js');
-var utils = require('./util.js');
-var h1 = require('./homework1.js');
-var $input = $('#input');
+// Toate modulele care le vom importa in modulul dom
+var ctrl 	= require('./controller.js');
+var tplate 	= require('./template.js');
+var utils 	= require('./util.js');
+var h1 		= require('./homework1.js');
 
 var dom = (function ($, controller, template, utils) {
-    var submitButton;
-    // keep only the vals
-    var numberHomework;
-    var numberExercise;
+	// variabile globale ale modulului
+	var submitButton, 			// butonul de submit
+		numberHomework, 		// numarul temei
+		numberExercise, 		// numarul exercitiului
+		$input = $('#input'); 	// inputul <div class="input"></div>
 
-    // init function
-    var Init = function () {
-        submitButton = ($('#button-submit').length) ? $('#button-submit') : false;
-        var $homeworkSelect = ($('#numberHomework').length) ? $('#numberHomework') : false;
-        var $exerciseSelect = ($('#numberExercise').length) ? $('#numberExercise') : false;
-        // when document is fully loaded
-        $(document).ready(function () {
-            // if button exists
-            if (submitButton)
-            // attatch event
-                $(submitButton).on("click", onSubmit);
 
-            if ($homeworkSelect)
-                $homeworkSelect.on('change', selectChange);
+	// Init function care va fi singura functie exportat de modulul.
+	// Initializarea modulului, pregatirea butonului de compile/submit +
+	// atasarea de eventuri.
+	var Init = function () {
+		submitButton = ($('#button-submit').length) ? $('#button-submit') : false;
+		var $homeworkSelect = ($('#numberHomework').length) ? $('#numberHomework') : false;
+		var $exerciseSelect = ($('#numberExercise').length) ? $('#numberExercise') : false;
+		// when document is fully loaded
+		$(document).ready(function () {
+			// if button exists
+			if (submitButton)
+				// adauga event la click, executand callbackul la onSubmit
+				$(submitButton).on("click", onSubmit);
+			
+			if ($homeworkSelect)
+				$homeworkSelect.on('change', selectChange);
 
-            if ($exerciseSelect)
-                $exerciseSelect.on('change', selectChange);
-        });
-    };//init
+			if ($exerciseSelect)
+				$exerciseSelect.on('change', selectChange);
+			});
+	};//init
 
     var selectChange = function () {
-        console.log(utils);
-        numberHomework = $('#numberHomework').val();
-        numberExercise = $('#numberExercise').val();
-        $input.html("");
-        var inputs = utils.inputCfg['h' + numberHomework]['ex' + numberExercise]['input'];
-        //console.log(inputs);
-        if (inputs) {
-            for (var key in inputs) {
-                var inp = inputs[key];
-                var placeholder;
-                if (inp['placeholder']) {
-                    placeholder = " placeholder='" + inp['placeholder'] + "' ";
-                }
-                else {
-                    placeholder = "";
-                }
-                if (inp['type'] === 'text') {
-                    $input.append('<label>' + key + '</label><input '+placeholder+' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>');
-                }
-                if (inp['type'] === 'textarea') {
+		var inputs, // tempalte pentru input in functie de tema
+			key, // index pentru atribute din util.inputCfg
+			inp, // container pentru obiecte din util.inputCfg
+			placeholder; // stocheaza atributul placeholder din util.inputCfg
 
-                    $input.append('<label>' + key + '</label><textarea '+placeholder+' class="form-control" name="' + inp['name'] + '"></textarea>');
-                }
-            }
-        }
+		// adaugam valorile corespunzatoare
+		numberHomework = $('#numberHomework').val();
+		numberExercise = $('#numberExercise').val();
+		// in prima faza un html gol
+		$input.html("");
+		// primeste configul din modulul util.
+		// fiecare config e diferit pentru fiecare exercitiu in parte
+		inputs = utils.inputCfg['h' + numberHomework]['ex' + numberExercise]['input'];
+		// testeaza daca trebuie adaugat un cam nou.
+		if (inputs) {
+			for (key in inputs) {
+				// stocheaza atributele x, p din obiectul input:{}
+				inp = inputs[key];
+				// stocheaza trageturile din atributul placeholder
+				if (inp['placeholder'])
+					placeholder = " placeholder='" + inp['placeholder'] + "' ";
+				else
+					placeholder = "";
+				// daca containerul e de tip text
+				if (inp['type'] === 'text')
+					// introdu in html
+					$input.append(
+						'<label>' + key + '</label>'+
+						'<input '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
+					);
+				// daca containerul e de tip textarea
+				if (inp['type'] === 'textarea')
+					// introdu in html
+					$input.append(
+					 '<label>' + key + '</label><textarea '+placeholder+
+					' class="form-control" name="' + inp['name'] + '"></textarea>'
+					);
+			}// for
+		}// if
+	};// function
+
+	// when button has been submited
+	var onSubmit = function () {
+		if ($('.table-container').length)
+			$('.table-container').remove();
+			// stoccheaza doar variabilele
+		numberHomework = $('#numberHomework').val();
+		numberExercise = $('#numberExercise').val();
+		if (numberExercise && numberHomework) {
+			controller.fn(numberHomework, numberExercise, template);
+		} else {
+			template.messages.orange("Please set exercise number and homework");
+		}
     };
 
-    // when button has been submited
-    var onSubmit = function () {
-        if ($('.table-container').length)
-            $('.table-container').remove();
-        // keep only the vals
-        numberHomework = $('#numberHomework').val();
-        numberExercise = $('#numberExercise').val();
-        if (numberExercise && numberHomework) {
-            controller.fn(numberHomework, numberExercise, template);
-        } else {
-            template.messages.orange("Please set exercise number and homework");
-        }
-    };
-
-
-    return {
-        Init: Init
-    };
-
+	return {
+		Init: Init
+	};
+	
+// import aici toate modulele de sus de care am dat require
 })(jQuery, ctrl, tplate, utils, h1);
 
-
+// exportam modulul dom
 module.exports = dom;
-
 },{"./controller.js":2,"./homework1.js":4,"./template.js":6,"./util.js":7}],4:[function(require,module,exports){
 "use strict";
 
-var templateSystem = require('./template.js');
-var utils = require('./util.js');
+var templateSystem 	= require('./template.js');
 
-var homework1 = (function (template, $, utils) {
+var homework1 = (function (template, $) {
     // exercitiu 1
     var ex1 = function () {
-
         $.ajax({
             type: "POST",
             url: 'ajax/ajax.php',
             dataType: "json",
-            data: {action: 'ex1', homework: 1},
+            data: {
+				action: 'ex1',
+				homework: 1
+			},
             success: function (data) {
                 console.log("===========  Homework1 - Ex1 ================");
-                console.log("Cel mai mic numar pozitiv	= ", data['lowest']);
-                console.log("Numarul de pasi			= ", data['step']);
+                console.log("Cel mai mic numar pozitiv\t= ", data['lowest']);
+                console.log("Numarul de pasi\t\t\t= ", data['step']);
                 console.log("=============================================");
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
                     ["Cel mai mic numar pozitiv", "Numarul de pasi"],
@@ -212,24 +225,28 @@ var homework1 = (function (template, $, utils) {
 
 
     };
-
+	// exercitiu 2
     var ex2 = function () {
 
         $.ajax({
             type: "POST",
             url: 'ajax/ajax.php',
             dataType: "json",
-            data: {action: 'ex2', homework: 1},
+            data: {
+				action: 'ex2',
+				homework: 1
+			},
             success: function (data) {
                 console.log("===========  Homework1 - Ex2 ================");
-                console.log("Numarul de pasi	= ", data['step']);
-                console.log("Operand stanga		= ", data['leftOperand']);
-                console.log("Operand dreapta	= ", data['rightOperand']);
-                console.log("a					= ", data['a']);
-                console.log("b					= ", data['c']);
-                console.log("c					= ", data['c']);
+                console.log("Numarul de pasi\t = ", data['step']);
+                console.log("Operand stanga\t = ", data['leftOperand']);
+                console.log("Operand dreapta\t =", data['rightOperand']);
+                console.log("a\t\t = ", data['a']);
+                console.log("b\t\t = ", data['c']);
+                console.log("c\t\t = ", data['c']);
                 console.log("=============================================");
-
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
                     ["Suma operand stanga", "Suma operand dreapta", "Numarul de pasi", "a", "b", "c"],
@@ -238,6 +255,7 @@ var homework1 = (function (template, $, utils) {
         });
 
     };
+	
     //exercitiu 3
     var ex3 = function () {
 
@@ -245,25 +263,30 @@ var homework1 = (function (template, $, utils) {
             type: "POST",
             url: 'ajax/ajax.php',
             dataType: "json",
-            data: {action: 'ex3', homework: 1, x: $('input[name="x"]').val(), p: $('input[name="p"]').val()},
+            data: {
+				action: 'ex3',
+				homework: 1,
+				x: $('input[name="x"]').val(),
+				p: $('input[name="p"]').val()
+			},
             success: function (data) {
                 console.log("===========  Homework1 - Ex3 ================");
-                console.log("Tan Lentz computed   = ", data['aprox']);
-                console.log("Tan computed   	  = ", data['tan']);
-                console.log("pi             	  = ", data['pi']);
-                console.log("e					  = ", data['e']);
-                console.log("x					  = ", data['x']);
+                console.log("Tan Lentz computed\t = ", data['aprox']);
+                console.log("Tan computed\t\t = ", data['tan']);
+                console.log("pi\t\t\t = ", data['pi']);
+                console.log("e\t\t\t = ", data['e']);
+                console.log("x\t\t\t = ", data['x']);
                 console.log("=============================================");
-
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
                     ["Tangenta Lentz", "Tangenta php", "pi", "e", "x"],
                     [data['aprox'], data['tan'], data['pi'], data['e'], data['x']]);
             }
         });
-
     };
-
+	// exercitiu 4
     var ex4 = function () {
 
         $.ajax({
@@ -278,18 +301,19 @@ var homework1 = (function (template, $, utils) {
             },
             success: function (data) {
                 console.log("===========  Homework1 - Ex3 ================");
-                console.log("Vector               = ", data['vector']);
-                console.log("Matrice  	          = ", data['matrice']);
-                console.log("Vector Fisier        = ", data['vectorf']);
-                console.log("Matrice Fisier		  = ", data['matricef']);
-                console.log("Vector Random		  = ", data['vectorr']);
-                console.log("Matrice Random		  = ", data['matricer']);
+                console.log("Vector\t\t = ", data['vector']);
+                console.log("Matrice\t\t = ", data['matrice']);
+                console.log("Vector Fisier\t = ", data['vectorf']);
+                console.log("Matrice Fisier\t = ", data['matricef']);
+                console.log("Vector Random\t = ", data['vectorr']);
+                console.log("Matrice Random\t = ", data['matricer']);
                 console.log("=============================================");
-
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
                     ["Vector", "Matrice", "Vector Fisier", "Matrice Fisier", "Vector Random", "Matrice Random"],
-                    [data['vector'], data['matrice'], data['vectorf'], data['matricef'], data['vectorr'], data['matricer']]
+					[data['vector'], data['matrice'], data['vectorf'], data['matricef'], data['vectorr'], data['matricer']]
                 );
             }
         });
@@ -304,11 +328,12 @@ var homework1 = (function (template, $, utils) {
         Ex3: ex3,
         Ex4: ex4
     };
-
-})(templateSystem, jQuery, utils);
+// importam modulele folosite in modulul homework1
+})(templateSystem, jQuery);
+// exportam modulul homework1
 module.exports = homework1;
 
-},{"./template.js":6,"./util.js":7}],5:[function(require,module,exports){
+},{"./template.js":6}],5:[function(require,module,exports){
 "use strict";
 if (!window.cfg) {
     window.cfg = {};
@@ -436,8 +461,10 @@ module.exports = template;
 
 },{}],7:[function(require,module,exports){
 "use strict";
-var util = (function () {
 
+var util = (function () {
+	
+	// configurari pentru fiecare tema in parte
     var inputCfg = {
         h1: {
             ex1: {
@@ -475,33 +502,15 @@ var util = (function () {
             },
         }
     };
-    var randomArrayInputOutput = function (n) {
-        var array = [];
-        var i;
-        for (i = 0; i < n; i++) {
-            array.push(randomGenInt(15, 200));
-        }
-        return array;
-
-    };
-    // returneaza un numar Int arbitrar din intervaulul [min,max];
-    var randomGenInt = function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-    // returneaza un numar flaot arbitrar din intervaulul [min,max];
-    var randomGenFloat = function (min, max) {
-        return Math.random() * (max - min) + min;
-    };
-
+	
+	// metode publice ale modulului util
     return {
-        RandomArray: randomArrayInputOutput,
-        RandomGenInt: randomGenInt,
-        RandomGenFloat: randomGenFloat,
         inputCfg: inputCfg
     };
+
 })();
 
+// exportam modulul util
 module.exports = util;
 
 },{}]},{},[3,1]);
