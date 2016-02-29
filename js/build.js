@@ -40,7 +40,6 @@ var controller = (function (h1, h2) {
 			case '2':
 				switch (nX) {
 					case '1':
-						template.messages.orange("This homework is not implemented yet");
 						h2.Ex1();
 						break;
 					case '2':
@@ -96,7 +95,6 @@ module.exports = controller;
 var ctrl 	= require('./controller.js');
 var tplate 	= require('./template.js');
 var utils 	= require('./util.js');
-var h1 		= require('./homework1.js');
 
 var dom = (function ($, controller, template, utils) {
 	// variabile globale ale modulului
@@ -170,16 +168,19 @@ var dom = (function ($, controller, template, utils) {
 		}// if
 	};// function
 
-	// when button has been submited
+	// cand s-a dat click pe buttonul de submit
 	var onSubmit = function () {
 		if ($('.table-container').length)
 			$('.table-container').remove();
 			// stoccheaza doar variabilele
 		numberHomework = $('#numberHomework').val();
 		numberExercise = $('#numberExercise').val();
+		// daca sunt valori 
 		if (numberExercise && numberHomework) {
+			// executa controllerul
 			controller.fn(numberHomework, numberExercise, template);
 		} else {
+			// afiseaza un mesaj corespunzator
 			template.messages.orange("Please set exercise number and homework");
 		}
     };
@@ -188,12 +189,13 @@ var dom = (function ($, controller, template, utils) {
 		Init: Init
 	};
 	
-// import aici toate modulele de sus de care am dat require
-})(jQuery, ctrl, tplate, utils, h1);
+// importa toate modulele de sus de care am dat require
+})(jQuery, ctrl, tplate, utils);
 
 // exportam modulul dom
 module.exports = dom;
-},{"./controller.js":2,"./homework1.js":4,"./template.js":6,"./util.js":7}],4:[function(require,module,exports){
+
+},{"./controller.js":2,"./template.js":6,"./util.js":7}],4:[function(require,module,exports){
 "use strict";
 
 var templateSystem 	= require('./template.js');
@@ -300,7 +302,7 @@ var homework1 = (function (template, $) {
                 matrice: $('textarea[name="matrice"]').val()
             },
             success: function (data) {
-                console.log("===========  Homework1 - Ex3 ================");
+                console.log("===========  Homework1 - Ex4 ================");
                 console.log("Vector\t\t = ", data['vector']);
                 console.log("Matrice\t\t = ", data['matrice']);
                 console.log("Vector Fisier\t = ", data['vectorf']);
@@ -339,9 +341,26 @@ if (!window.cfg) {
     window.cfg = {};
 }
 
-var homework2 = (function() {
-	var ex1 = function() {
+var templateSystem = require('./template.js');
 
+var homework2 = (function(template, $) {
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
+				action: 'ex1',
+				homework: 2
+			},
+			// procesam aici raspunsul
+			success: function(data) {
+				console.log(data);
+			}
+		});
 	};
 
 	var ex2 = function() {
@@ -364,10 +383,11 @@ var homework2 = (function() {
 		Ex4:ex4
 	};
 
-})();
+})(templateSystem, $);
 
 module.exports = homework2;
-},{}],6:[function(require,module,exports){
+
+},{"./template.js":6}],6:[function(require,module,exports){
 "use strict";
 
 var template = (function($) {
@@ -500,7 +520,12 @@ var util = (function () {
                     }
                 }
             },
-        }
+        },//h1
+		h2: {
+			ex1: {
+				input: ""
+			}
+		}
     };
 	
 	// metode publice ale modulului util
@@ -513,4 +538,4 @@ var util = (function () {
 // exportam modulul util
 module.exports = util;
 
-},{}]},{},[3,1]);
+},{}]},{},[3,1,2,6,7,4,5]);

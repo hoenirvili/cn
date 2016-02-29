@@ -13,6 +13,8 @@ class HomeWork1
 			$step++;
 			$lowest = $u;
 		}
+
+		header('Content-type: application/json');
 		// make json
 		echo json_encode(
 			array(
@@ -39,6 +41,8 @@ class HomeWork1
 			if (($leftOperand !== $rightOperand) || $step > 20)
 				break;
 		}//while
+
+		header('Content-type: application/json');
 		echo json_encode(
 			array(
 				'step' => $step,
@@ -54,6 +58,8 @@ class HomeWork1
 	}
 
 	public static function ex3() {
+		header('Content-type: application/json');	
+
 		if (is_numeric($_POST['x'])) {
 			$x = $_POST['x'];
 			$p = $_POST['p'];
@@ -103,6 +109,8 @@ class HomeWork1
 
 	public static function ex4()
 	{
+		
+		header('Content-type: application/json');	
 		$iarray = $_POST['arr'];
 		$array = self::getArrayFromString($iarray);
 

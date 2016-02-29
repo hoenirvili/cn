@@ -4,7 +4,6 @@
 var ctrl 	= require('./controller.js');
 var tplate 	= require('./template.js');
 var utils 	= require('./util.js');
-var h1 		= require('./homework1.js');
 
 var dom = (function ($, controller, template, utils) {
 	// variabile globale ale modulului
@@ -78,16 +77,19 @@ var dom = (function ($, controller, template, utils) {
 		}// if
 	};// function
 
-	// when button has been submited
+	// cand s-a dat click pe buttonul de submit
 	var onSubmit = function () {
 		if ($('.table-container').length)
 			$('.table-container').remove();
 			// stoccheaza doar variabilele
 		numberHomework = $('#numberHomework').val();
 		numberExercise = $('#numberExercise').val();
+		// daca sunt valori 
 		if (numberExercise && numberHomework) {
+			// executa controllerul
 			controller.fn(numberHomework, numberExercise, template);
 		} else {
+			// afiseaza un mesaj corespunzator
 			template.messages.orange("Please set exercise number and homework");
 		}
     };
@@ -96,8 +98,8 @@ var dom = (function ($, controller, template, utils) {
 		Init: Init
 	};
 	
-// import aici toate modulele de sus de care am dat require
-})(jQuery, ctrl, tplate, utils, h1);
+// importa toate modulele de sus de care am dat require
+})(jQuery, ctrl, tplate, utils);
 
 // exportam modulul dom
 module.exports = dom;

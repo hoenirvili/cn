@@ -104,7 +104,7 @@ var homework1 = (function (template, $) {
                 matrice: $('textarea[name="matrice"]').val()
             },
             success: function (data) {
-                console.log("===========  Homework1 - Ex3 ================");
+                console.log("===========  Homework1 - Ex4 ================");
                 console.log("Vector\t\t = ", data['vector']);
                 console.log("Matrice\t\t = ", data['matrice']);
                 console.log("Vector Fisier\t = ", data['vectorf']);

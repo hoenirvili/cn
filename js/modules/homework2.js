@@ -3,9 +3,26 @@ if (!window.cfg) {
     window.cfg = {};
 }
 
-var homework2 = (function() {
-	var ex1 = function() {
+var templateSystem = require('./template.js');
 
+var homework2 = (function(template, $) {
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
+				action: 'ex1',
+				homework: 2
+			},
+			// procesam aici raspunsul
+			success: function(data) {
+				console.log(data);
+			}
+		});
 	};
 
 	var ex2 = function() {
@@ -28,6 +45,6 @@ var homework2 = (function() {
 		Ex4:ex4
 	};
 
-})();
+})(templateSystem, $);
 
 module.exports = homework2;

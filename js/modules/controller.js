@@ -27,7 +27,6 @@ var controller = (function (h1, h2) {
 			case '2':
 				switch (nX) {
 					case '1':
-						template.messages.orange("This homework is not implemented yet");
 						h2.Ex1();
 						break;
 					case '2':

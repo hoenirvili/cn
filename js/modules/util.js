@@ -38,7 +38,12 @@ var util = (function () {
                     }
                 }
             },
-        }
+        },//h1
+		h2: {
+			ex1: {
+				input: ""
+			}
+		}
     };
 	
 	// metode publice ale modulului util
