@@ -41,16 +41,34 @@ var util = (function () {
         },//h1
 		h2: {
 			ex1: {
-				input: ""
+				input: {
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"epsilon": {
+						type:"text",
+						name:"epsilon"
+					},
+					"s": {
+						type: 'textarea',
+						name: 'array',
+						placeholder: "[x,y,z]"
+					},
+					"matrice patratica":{
+						type: 'textarea',
+						name: 'matrice',
+						placeholder: "[x,y][x,y]"
+					},
+				}
 			}
 		}
-    };
-	
-	// metode publice ale modulului util
-    return {
-        inputCfg: inputCfg
-    };
+	};
 
+	// metode publice ale modulului util
+	return {
+		inputCfg: inputCfg
+	};
 })();
 
 // exportam modulul util

@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en">
+<!doctype html> <html lang="en">
 <head>
     <title>NC</title>
     <meta name="description" content="Numeric Calculus Homework">
@@ -14,8 +13,7 @@
 <div class="container">
     <div class="col-xm-12 col-sm-12 col-lg-12 col-md-12">
         <div class="status">
-        </div>
-        <br>
+        </div> <br>
         <form class="form-group">
             <h3> Tema
                 <h3>

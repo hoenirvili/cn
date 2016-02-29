@@ -349,12 +349,16 @@ var homework2 = (function(template, $) {
 		// body-ul va contine data serializata
 		// json cu numarul execitiului si numarul temei
 		$.ajax({
-			type: "POST",
+			type: 'POST',
 			url: 'ajax/ajax.php',
-			dataType: "json",
+			dataType: 'json',
 			data: {
-				action: 'ex1',
-				homework: 2
+				action:		'ex1',
+				homework:	2,
+				n:			$('input[name="n"]').val(),
+				epsilon:	$('input[name="epsilon"]').val(),
+				arr:		$('textarea[name="array"]').val(),
+				matrice:	$('textarea[name="matrice"]').val()
 			},
 			// procesam aici raspunsul
 			success: function(data) {
@@ -523,16 +527,34 @@ var util = (function () {
         },//h1
 		h2: {
 			ex1: {
-				input: ""
+				input: {
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"epsilon": {
+						type:"text",
+						name:"epsilon"
+					},
+					"s": {
+						type: 'textarea',
+						name: 'array',
+						placeholder: "[x,y,z]"
+					},
+					"matrice patratica":{
+						type: 'textarea',
+						name: 'matrice',
+						placeholder: "[x,y][x,y]"
+					},
+				}
 			}
 		}
-    };
-	
-	// metode publice ale modulului util
-    return {
-        inputCfg: inputCfg
-    };
+	};
 
+	// metode publice ale modulului util
+	return {
+		inputCfg: inputCfg
+	};
 })();
 
 // exportam modulul util
