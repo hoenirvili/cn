@@ -24,7 +24,19 @@ var homework2 = (function(template, $) {
 			},
 			// procesam aici raspunsul
 			success: function(data) {
-				console.log(data);
+				console.log("===========  Homework2 - Ex1 ================");
+				console.log("Dimensiunea sistemului \t= ", data['n']);
+				console.log("Precizia \t\t\t= ", data['epsilon']);
+				console.log("matricea \t\t= ", data['A']);
+				console.log("vectorul s \t\t= ", data['s']);
+				console.log("vectorul b\t\t= ",data['b']);
+				console.log("=============================================");
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
+				template.tables.base();
+				template.tables.content(
+					["Dimensiunea sistemului", "Precizia","Matricea","Vectorul S","Vectorul B"],
+					[data['n'], data['epsilon'],data['A'], data['s'], data['b']]);
 			}
 		});
 	};

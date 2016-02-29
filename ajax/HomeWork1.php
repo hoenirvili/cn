@@ -58,7 +58,7 @@ class HomeWork1
 	}
 
 	public static function ex3() {
-		header('Content-type: application/json');	
+		header('Content-type: application/json');
 
 		if (is_numeric($_POST['x'])) {
 			$x = $_POST['x'];
@@ -79,7 +79,6 @@ class HomeWork1
 						);
 						exit();
 					} elseif ($x < -M_PI || $x > M_PI) {
-						
 						if ($x < 0)
 							(float)$real_x = fmod($x, (-M_PI / 2));
 						else
@@ -100,7 +99,15 @@ class HomeWork1
 					} else {
 						//$aprox=self::LentzAlgorithm($x,$e);
 						//$tan=tan($x);
-						echo json_encode(array('aprox' => 0, 'tan' => 0, 'pi' => 0, 'e' => 0, 'x' => 0));
+						echo json_encode(
+							array(
+								'aprox' => 0,
+								'tan' => 0,
+								'pi' => 0,
+								'e' => 0,
+								'x' => 0
+								)
+							);
 						exit();
 					}
 			}//if
@@ -110,7 +117,7 @@ class HomeWork1
 	public static function ex4()
 	{
 		
-		header('Content-type: application/json');	
+		header('Content-type: application/json');
 		$iarray = $_POST['arr'];
 		$array = self::getArrayFromString($iarray);
 
@@ -148,7 +155,8 @@ class HomeWork1
 					'vectorf' 	=> self::getStringFromArray($vectorf),
 					'matricer'	=> self::getStringFromMatrix($matricer),
 					'vectorr'	=> self::getStringFromArray($vectorr)
-				));
+				)
+			);
 			exit();
 	}
 
@@ -230,7 +238,7 @@ class HomeWork1
 		}
 		if ($j == 1)
 			return 1;
-		return -(($j * 2) - 1);
+		return (($j * 2) - 1);
 	}
 
 	public static function lGetAForTan($j, $x)
@@ -241,7 +249,7 @@ class HomeWork1
 		if ($j == 1) {
 			return $x;
 		}
-		return pow($x, 2);
+		return -pow($x, 2);
 	}
 
 	public static function LentzAlgorithm($x, $e)
