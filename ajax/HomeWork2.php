@@ -40,6 +40,10 @@ class HomeWork2 extends Util {
 		}
 		exit();
 	}
+	public static function ex2() {
+		header('Conent-type: application/json; charset=utf-8');
+		// produsul dintre M= Q*R
+		$M;
+	}
 }
-
 ?>
