@@ -1,6 +1,8 @@
 "use strict";
-var util = (function () {
 
+var util = (function () {
+	
+	// configurari pentru fiecare tema in parte
     var inputCfg = {
         h1: {
             ex1: {
@@ -10,43 +12,64 @@ var util = (function () {
                 input: ""
             },
             ex3: {
-                input: ""
-            },
-            ex4: {
                 input: {
-                    Input: {
-                        type: 'textarea',
-                        name: 'input',
+                    "x": {
+                        type:"text",
+                        name:"x"
+                    },
+                    "p":
+                    {
+                        type:"text",
+                        name:"p"
                     }
                 }
             },
-        }
-    };
-    var randomArrayInputOutput = function (n) {
-        var array = [];
-        var i;
-        for (i = 0; i < n; i++) {
-            array.push(randomGenInt(15, 200));
-        }
-        return array;
+            ex4: {
+                input: {
+                    Vector: {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder:"[x,y,z]"
+                    },
+                    Matrice: {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder:"[x,y][x,y]"
+                    }
+                }
+            },
+        },//h1
+		h2: {
+			ex1: {
+				input: {
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"epsilon": {
+						type:"text",
+						name:"epsilon"
+					},
+					"s": {
+						type: 'textarea',
+						name: 'array',
+						placeholder: "[x,y,z]"
+					},
+					"matrice patratica":{
+						type: 'textarea',
+						name: 'matrice',
+						placeholder: "[x,y][x,y]"
+					},
+				}
+			}
+		}
+	};
 
-    };
-    // returneaza un numar Int arbitrar din intervaulul [min,max];
-    var randomGenInt = function (min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-    // returneaza un numar flaot arbitrar din intervaulul [min,max];
-    var randomGenFloat = function (min, max) {
-        return Math.random() * (max - min) + min;
-    };
-
-    return {
-        RandomArray: randomArrayInputOutput,
-        RandomGenInt: randomGenInt,
-        RandomGenFloat: randomGenFloat,
-        inputCfg: inputCfg
-    };
+	// metode publice ale modulului util
+	return {
+		inputCfg: inputCfg
+	};
 })();
 
+// exportam modulul util
 module.exports = util;

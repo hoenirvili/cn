@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="en">
+<!doctype html> <html lang="en">
 <head>
     <title>NC</title>
     <meta name="description" content="Numeric Calculus Homework">
@@ -8,15 +7,13 @@
     <meta name="nc">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" href="css/app.css" type="text/css" charset="utf-8">
 </head>
 <body>
 <div class="container">
     <div class="col-xm-12 col-sm-12 col-lg-12 col-md-12">
         <div class="status">
-        </div>
-        <br>
-
+        </div> <br>
         <form class="form-group">
             <h3> Tema
                 <h3>

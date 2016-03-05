@@ -1,3 +1,4 @@
+"use strict";
 // all includes
 var d = require('./dom.js');
 
