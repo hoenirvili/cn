@@ -42,7 +42,35 @@ var homework2 = (function(template, $) {
 	};
 
 	var ex2 = function() {
-
+// trimite un POST request
+        // body-ul va contine data serializata
+        // json cu numarul execitiului si numarul temei
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:		'ex2',
+                homework:	2,
+                epsilon:	$('input[name="epsilon"]').val(),
+                matrice:	$('textarea[name="matrice"]').val()
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework2 - Ex1 ================");
+                console.log("A \t= ", data['A']);
+                console.log("Precizia \t\t\t= ", data['epsilon']);
+                console.log("Q \t\t= ", data['Q']);
+                console.log("R \t\t= ", data['r']);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A", "Precizia","Q","R"],
+                    [data['A'], data['epsilon'],data['Q'],  data['r']]);
+            }
+        });
 	};
 
 	var ex3 = function() {
