@@ -448,7 +448,36 @@ var homework2 = (function(template, $) {
 	};
 
 	var ex4 = function() {
-
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:		'ex4',
+                homework:	2,
+                epsilon:	$('input[name="epsilon"]').val(),
+                matrice:	$('textarea[name="matrice"]').val()
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework2 - Ex4 ================");
+                console.log("A \t= ", data['A']);
+                console.log("Precizia \t\t\t= ", data['epsilon']);
+                console.log("Q \t\t= ", data['Q']);
+                console.log("R \t\t= ", data['r']);
+                console.log("Qlib \t\t= ", data['Qlib']);
+                console.log("Rlib \t\t= ", data['rlib']);
+                console.log("TimeH \t\t= ", data['timeH']);
+                console.log("TimeQr \t\t= ", data['timeQr']);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A","timeH","timeQR"],
+                    [data['A'],data['timeH'],data['timeQr']]);
+            }
+        });
 	};
 
 	return {
@@ -629,7 +658,7 @@ var util = (function () {
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to which power?"
+                        placeholder: "10 to (-) what power?"
                     },
                 }
             },
@@ -643,7 +672,21 @@ var util = (function () {
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to which power?"
+                        placeholder: "10 to (-) what power?"
+                    },
+                }
+            },
+            ex4: {
+                input: {
+                    "A":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        placeholder: "10 to (-) what power?"
                     },
                 }
             }

@@ -102,7 +102,19 @@ class HomeWork2 extends Util
 
     }
 
+	public static function ex4() {
+		header('Content-type: application/json; charset=utf-8');
+		//input matricea A , A init
+        $A = self::getMatrixFromString($_POST['matrice']); 
+        //$QR=self::HouseholderDecomposition($A, $_POST['epsilon']);
 
+		echo json_encode(
+			array(
+				"A" => Util::getStringFromMatrix($A),
+				"epsilon" => $_POST['epsilon']
+			)
+		);
+	}
     public static function HouseholderDecomposition($A, $epsilon)
     {
         $n = Util::getMatrixColumnLength($A);
