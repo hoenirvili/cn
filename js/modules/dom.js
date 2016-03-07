@@ -59,6 +59,7 @@ var dom = (function ($, controller, template, utils) {
 					placeholder = " placeholder='" + inp['placeholder'] + "' ";
 				else
 					placeholder = "";
+
 				// daca containerul e de tip text
 				if (inp['type'] === 'text')
 					// introdu in html

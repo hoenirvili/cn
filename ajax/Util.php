@@ -52,6 +52,15 @@ class Util
         return $result;
     }
 
+    protected static function randsquareMatrix($m, $maxNum = 10)
+    {
+        $result = array();
+        for ($i = 0; $i < $m; $i++) {
+            $result[] = self::randVectorFixedSize($m,$maxNum);
+        }
+        return $result;
+    }
+
     protected static function randVectorFixedSize($n, $maxNum = 10)
     {
         $result = array();
@@ -105,6 +114,17 @@ class Util
         }
         return $vector;
     }
+
+    protected static function round_array($n)
+    {
+        $vector=array();
+        for($i=0;$i<$n;$i++)
+        {
+            $vector[$i]=0;
+        }
+        return $vector;
+    }
+
 
     protected static function getTransposed($matrix)
     {

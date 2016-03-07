@@ -33,7 +33,6 @@ var controller = (function (h1, h2) {
 						h2.Ex2();
 						break;
 					case '3':
-						template.messages.orange("This homework is not implemented yet");
 						h2.Ex3();
 						break;
 					case '4':

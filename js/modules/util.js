@@ -72,7 +72,35 @@ var util = (function () {
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to which power?"
+                        placeholder: "10 to (-) what power?"
+                    },
+                }
+            },
+            ex3: {
+                input: {
+                    "A":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        placeholder: "10 to (-) what power?"
+                    },
+                }
+            },
+            ex4: {
+                input: {
+                    "A":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        placeholder: "10 to (-) what power?"
                     },
                 }
             }

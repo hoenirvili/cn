@@ -50,9 +50,52 @@ class HomeWork2 extends Util
         echo json_encode(
             array(
                 "A" => Util::getStringFromMatrix($A),
-                "epsilon" => pow(10,$_POST['epsilon']),
+                "epsilon" => pow(10,-$_POST['epsilon']),
                 "Q" => self::getStringFromMatrix($QR['Q']),
                 "r" => self::getStringFromMatrix($QR['r'])
+            )
+        );
+
+    }
+
+    public static function ex3()
+    {
+        header('Content-type: application/json; charset=utf-8');
+        // produsul dintre M= Q*R
+        $A = self::getMatrixFromString($_POST['matrice']);
+        $QR=self::HouseholderDecomposition($A, $_POST['epsilon']);
+
+        $n=Util::getMatrixLineLength($A);
+        $m=Util::getMatrixColumnLength($A);
+        $matrix=new Matrix($n,$m);
+        $matrix->fromArray($A);
+
+
+        // perf test
+        $randomMatrix=Util::randsquareMatrix(50,3);
+        $n=Util::getMatrixLineLength($randomMatrix);
+        $m=Util::getMatrixColumnLength($randomMatrix);
+        $matrix2=new Matrix($n,$m);
+        $matrix2->fromArray($randomMatrix);
+        $time_start = microtime(true);
+        $QR2=self::HouseholderDecomposition($randomMatrix, $_POST['epsilon']);
+        $time_end = microtime(true);
+        $extime1=$time_end - $time_start;
+        $time_start = microtime(true);
+        $QRlib=new QRGivens($matrix2);
+        $QRlib2['Qlib']=$QRlib->getQ()->asArray();
+        $QRlib2['rlib']=$QRlib->getR()->asArray();
+        $time_end = microtime(true);
+        $extime2=$time_end - $time_start;
+        echo json_encode(
+            array(
+                "A"      => Util::getStringFromMatrix($A),
+                "Q"      => self::getStringFromMatrix($QR['Q']),
+                "r"      => self::getStringFromMatrix($QR['r']),
+                "Qlib"   =>self::getStringFromMatrix($QRlib->getQ()->asArray()),
+                "rlib"   =>self::getStringFromMatrix($QRlib->getR()->asArray()),
+                "timeH"  =>$extime1,
+                "timeQr" =>$extime2
             )
         );
 
@@ -64,7 +107,7 @@ class HomeWork2 extends Util
         $n = Util::getMatrixColumnLength($A);
         $I = Util::genI($n);
         $Q=$I;
-        $epsilon=pow(10,$epsilon);
+        $epsilon=pow(10,-$epsilon);
         for ($r = 0; $r < $n; $r++) {
             $delta = 0;
             for ($i = $r; $i < $n; $i++) {
