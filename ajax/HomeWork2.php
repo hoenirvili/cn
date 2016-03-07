@@ -90,6 +90,7 @@ class HomeWork2 extends Util
         echo json_encode(
             array(
                 "A"      => Util::getStringFromMatrix($A),
+				"epsilon" => $_POST['epsilon'],
                 "Q"      => self::getStringFromMatrix($QR['Q']),
                 "r"      => self::getStringFromMatrix($QR['r']),
                 "Qlib"   =>self::getStringFromMatrix($QRlib->getQ()->asArray()),

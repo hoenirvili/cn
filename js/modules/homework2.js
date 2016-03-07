@@ -123,7 +123,7 @@ var homework2 = (function(template, $) {
             },
             // procesam aici raspunsul
             success: function(data) {
-                console.log("===========  Homework2 - Ex3 ================");
+                console.log("===========  Homework2 - Ex4 ================");
                 console.log("A \t= ", data['A']);
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
