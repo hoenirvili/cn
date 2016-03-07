@@ -18,7 +18,9 @@ class HomeWork2 extends Util {
 		// va returna 0 si daca o negam cu ! va returna true
 		// deci daca amandoua numere is numerice(int/float/etc)
 		// atunci merge pe condiata respectiva
-		if (!(is_numeric($n) <=> is_numeric($epsilon))) {
+        // ionut -> ce rost are sa inlocuiesti in cazul asta, ca sa pierdem compatibilitatea cu php 5 ? ai adaugat 4 caractere fata de 2 cate necesita &&
+
+		if ((is_numeric($n) && is_numeric($epsilon))) {
 			// i=0,....n)
 			$sumArray = 0;
 			for($i=0; $i<$n; $i++) {
