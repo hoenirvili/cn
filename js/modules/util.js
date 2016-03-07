@@ -104,6 +104,26 @@ var util = (function () {
                     },
                 }
             }
+		},
+		h3: {
+			ex1:{
+				input:{
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"A":{
+						type:'textarea',
+						name: 'matrice',
+						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+					},
+					"epsilon":{
+						type:"text",
+						name:"epsilon",
+						placeholder: "10 to (-) what power?"
+					}
+				}
+			}
 		}
 	};
 

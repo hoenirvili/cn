@@ -14,9 +14,9 @@ var d = require('./dom.js');
 "use strict";
 var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
-
+var h3 = require("./homework3.js");
 // here we import all our homeworks modules
-var controller = (function (h1, h2) {
+var controller = (function (h1, h2, h3) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -55,7 +55,15 @@ var controller = (function (h1, h2) {
 				break;
 			// tema 3
 			case '3':
-			template.messages.orange("This homework is not implemented yet");
+				switch(nX) {
+					case '1':
+						h3.Ex1();
+						break;
+					case '2':
+					case '3':
+					template.messages.orange("This homework is not implemented yet");
+					break;
+				}
 			break;
 			// tema 4
 			case '4':
@@ -82,11 +90,11 @@ var controller = (function (h1, h2) {
 		fn : fn
 	};
 
-})(h1,h2);
+})(h1,h2,h3);
 
 module.exports = controller;
 
-},{"./homework1.js":4,"./homework2.js":5}],3:[function(require,module,exports){
+},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6}],3:[function(require,module,exports){
 "use strict";
 
 // Toate modulele care le vom importa in modulul dom
@@ -194,7 +202,7 @@ var dom = (function ($, controller, template, utils) {
 // exportam modulul dom
 module.exports = dom;
 
-},{"./controller.js":2,"./template.js":6,"./util.js":7}],4:[function(require,module,exports){
+},{"./controller.js":2,"./template.js":7,"./util.js":8}],4:[function(require,module,exports){
 "use strict";
 
 var templateSystem 	= require('./template.js');
@@ -334,7 +342,7 @@ var homework1 = (function (template, $) {
 // exportam modulul homework1
 module.exports = homework1;
 
-},{"./template.js":6}],5:[function(require,module,exports){
+},{"./template.js":7}],5:[function(require,module,exports){
 "use strict";
 if (!window.cfg) {
     window.cfg = {};
@@ -491,7 +499,58 @@ var homework2 = (function(template, $) {
 
 module.exports = homework2;
 
-},{"./template.js":6}],6:[function(require,module,exports){
+},{"./template.js":7}],6:[function(require,module,exports){
+"use strict";
+var tS = require('./template.js');
+
+var homework3 = (function(template, $) {
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/ajax.php',
+			dataType: 'json',
+			data: {
+				action:		'ex1',
+				homework:	3,
+				n:			$('input[name="n"]').val(),
+				epsilon:	$('input[name="epsilon"]').val(),
+				matrice:	$('textarea[name="matrice"]').val()
+			},
+			// procesam aici raspunsul
+			success: function(data) {
+				console.log("===========  Homework2 - Ex1 ================");
+				console.log("Dimensiunea sistemului \t= ", data['n']);
+				console.log("Precizia \t\t\t= ", data['epsilon']);
+				console.log("matricea \t\t= ", data['A']);
+				console.log("=============================================");
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
+				template.tables.base();
+				template.tables.content(
+					["Dimensiunea sistemului", "Precizia","Matricea"],
+					[data['n'], data['epsilon'],data['A']]);
+			}
+		});
+	};
+	var ex2 = function() {
+		
+	};
+	var ex3 = function() {
+		
+	};
+	return {
+		Ex1: ex1,
+		Ex2: ex2,
+		Ex3: ex3
+	};
+	
+})(tS,jQuery);
+// export module
+module.exports = homework3;
+},{"./template.js":7}],7:[function(require,module,exports){
 "use strict";
 
 var template = (function($) {
@@ -583,7 +642,7 @@ var template = (function($) {
 
 module.exports = template;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 var util = (function () {
@@ -690,6 +749,26 @@ var util = (function () {
                     },
                 }
             }
+		},
+		h3: {
+			ex1:{
+				input:{
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"A":{
+						type:'textarea',
+						name: 'matrice',
+						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+					},
+					"epsilon":{
+						type:"text",
+						name:"epsilon",
+						placeholder: "10 to (-) what power?"
+					}
+				}
+			}
 		}
 	};
 
@@ -702,4 +781,4 @@ var util = (function () {
 // exportam modulul util
 module.exports = util;
 
-},{}]},{},[3,1,2,6,7,4,5]);
+},{}]},{},[3,1,2,7,8,4,5]);

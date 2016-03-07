@@ -1,9 +1,9 @@
 "use strict";
 var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
-
+var h3 = require("./homework3.js");
 // here we import all our homeworks modules
-var controller = (function (h1, h2) {
+var controller = (function (h1, h2, h3) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -42,7 +42,15 @@ var controller = (function (h1, h2) {
 				break;
 			// tema 3
 			case '3':
-			template.messages.orange("This homework is not implemented yet");
+				switch(nX) {
+					case '1':
+						h3.Ex1();
+						break;
+					case '2':
+					case '3':
+					template.messages.orange("This homework is not implemented yet");
+					break;
+				}
 			break;
 			// tema 4
 			case '4':
@@ -69,6 +77,6 @@ var controller = (function (h1, h2) {
 		fn : fn
 	};
 
-})(h1,h2);
+})(h1,h2,h3);
 
 module.exports = controller;
