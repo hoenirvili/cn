@@ -6,9 +6,11 @@ class HomeWork3 extends Util {
 		// initializam variabilele
 		$n = $_POST['n'];
 		$A = self::getMatrixFromString($_POST['matrice']);
-		
 		$epsilon = $_POST['epsilon'];
-		$resultArray = array();
+		// un array cu $n elemente pornind de la 0 pan la $n
+		// iar fiecare element va lua valoarea $mixed value= null
+		// in cazul nostru
+		$resultArray = array_fill(0, $n, null);
 		// verifica daca inputurile sunt numerice
 		// $n , $epsilon si daca matricea e nxn
 		if((is_numeric($n)) && (is_numeric($epsilon))) {
@@ -45,9 +47,6 @@ class HomeWork3 extends Util {
 				}
 			}
 			
-			self::dumpMatrix($A);
-			var_dump($resultArray);
-
 			// returnam raspunsul sub forma de json
 			// completant headerul
 			header('Content-type: application/json');
