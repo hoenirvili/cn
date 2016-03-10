@@ -3,17 +3,15 @@
 class Util
 {
 
-    protected static function getArrayFromString($string)
-    {
-        return json_decode($string);
-    }
+	protected static function getArrayFromString($string) {
+		return json_decode($string);
+	}
 
-    protected static function getStringFromArray($array)
-    {
-        if (!is_array($array))
-            return "Nu s-a putut parsa.";
-        return json_encode($array);
-    }
+	protected static function getStringFromArray($array) {
+		if (!is_array($array))
+			return "Nu s-a putut parsa.";
+		return json_encode($array);
+	}
 
     protected static function getMatrixFromString($string)
     {
@@ -115,31 +113,66 @@ class Util
         return $vector;
     }
 
-    protected static function round_array($n)
-    {
-        $vector=array();
-        for($i=0;$i<$n;$i++)
-        {
-            $vector[$i]=0;
-        }
-        return $vector;
-    }
+	protected static function round_array($n) {
+		$vector=array();
+		for($i=0;$i<$n;$i++) {
+			$vector[$i]=0;
+		}
+		return $vector;
+	}
 
 
-    protected static function getTransposed($matrix)
-    {
-        $m=self::getMatrixColumnLength($matrix);
-        $n=self::getMatrixLineLength($matrix);
-        $transposed=array();
-        for($i=0;$i<$n;$i++)
-        {
-            for($j=0;$j<$n;$j++)
-            {
-                $transposed[$j][$i]=$matrix[$i][$j];
-            }
-        }
-        return $transposed;
-    }
+	protected static function getTransposed($matrix) {
+		$m=self::getMatrixColumnLength($matrix);
+		$n=self::getMatrixLineLength($matrix);
+		$transposed=array();
+		for($i=0;$i<$n;$i++) {
+			for($j=0;$j<$n;$j++) {
+				$transposed[$j][$i]=$matrix[$i][$j];
+			}
+		}
+		return $transposed;
+	}
+
+	// getUnityMatrix
+	// @return array(array())
+	protected static function getUnityMatrix($n) {
+		// alloc lines
+		$unityMatrix = array();
+		// pentru fiecare linie
+		for($i=0; $i<$n; $i++) {
+			// alloc colls
+			$unityMatrix[$i] = array();
+			// pentru fiecare coloana
+			for($j=0; $j<$n; $j++) {
+				
+				if ($i == $j) {
+					$unityMatrix[$i][$j] = 1;
+				}else
+					$unityMatrix[$i][$j] = 0;
+			}
+		}
+		
+		return $unityMatrix;
+	}
+	// dumpMatrix
+	// @return void
+	protected static function dumpMatrix($matrix) {
+		$n = count($matrix);
+		$m = count($matrix[0]);
+		
+		for ($i=0; $i<$n; $i++) {
+			for($j=0; $j<$m; $j++) {
+				echo "\t" . $matrix[$i][$j] . "\t";
+			}
+			echo "\n";
+		}
+		
+		echo "\n";
+	
+	}
+	
+
 }
 
 ?>

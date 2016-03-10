@@ -4,7 +4,7 @@
   "description": "Numeric calculus homework",
   "main": "js/app.js",
   "scripts": {
-    "start": "watchify js/modules/dom.js js/modules/app.js js/modules/controller.js js/modules/template.js js/modules/util.js js/modules/homework1.js js/modules/homework2.js -o js/build.js"
+    "start": "watchify js/modules/dom.js js/modules/app.js js/modules/controller.js js/modules/template.js js/modules/util.js js/modules/homework1.js js/modules/homework2.js js/modules/homework3.js -o js/build.js"
   },
   "keywords": [
     "calculus",
