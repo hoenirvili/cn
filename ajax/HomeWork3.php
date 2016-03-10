@@ -6,25 +6,47 @@ class HomeWork3 extends Util {
 		// initializam variabilele
 		$n = $_POST['n'];
 		$A = self::getMatrixFromString($_POST['matrice']);
+		
 		$epsilon = $_POST['epsilon'];
+		$resultArray = array();
 		// verifica daca inputurile sunt numerice
 		// $n , $epsilon si daca matricea e nxn
-		if( (is_numeric($n)) &&
-			(is_numeric($epsilon)) &&
-			($n == count($A)) &&
-			($n == count($A[0]))) {
-
-			// fiecare linie incepand de la a doua
-			for($i=1; $i<$n-1; $i++){
-				// fiecare coloana incepand de la prima
-				for($j=0; $j<$n; $j++) {
-					$A[$i][$j] = $A[$i][$j] * (-$A[$i][1] * pow($A[1][1], -1)) * $A[1][$j];
-					// $b[$i] = $b[$i] - $A[$i][1] * pow($A[1][1], -1)
+		if((is_numeric($n)) && (is_numeric($epsilon))) {
+			for($i = 0; $i<$n; $i++){
+				for($k=$i+1; $k<$n; $k++) {
+					if($A[$i][$i] < $A[$k][$i])
+						for($j=0; $j<=$n; $j++){
+							$A[$i][$j] ^= $A[$k][$j];
+							$A[$k][$j] ^= $A[$i][$j];
+							$A[$i][$j] ^= $A[$k][$j];
+						}
 				}
-				
+			}
+			
+			//algoritmul  guass elimination
+			for($i = 0; $i<$n-1; $i++) {
+				for($k=$i+1; $k<$n; $k++) {
+						$t = floatval( $A[$k][$i] / $A[$i][$i] );
+						for($j=0; $j<=$n; $j++) {
+							// facem fiecare element mai jos de pivot sa fie 0
+							// sau eliminal variabilele
+							$A[$k][$j] = $A[$k][$j] - $t * $A[$i][$j];
+						}
+				}
+			}
+			
+			// back subsituttion
+			for($i=$n-1; $i>=0; $i--) {
+				$resultArray[$i] = $A[$i][$n];
+				for( $j=0; $j<$n; $j++) {
+					if($j != $i)
+						$resultArray[$i] = $resultArray[$i] - $A[$i][$j] * $resultArray[$j];
+					$resultArray[$i] = $resultArray[$i] / $A[$i][$i];
+				}
 			}
 			
 			self::dumpMatrix($A);
+			var_dump($resultArray);
 
 			// returnam raspunsul sub forma de json
 			// completant headerul
@@ -33,15 +55,13 @@ class HomeWork3 extends Util {
 				array(
 					"n" => $n,
 					"epsilon" =>pow(10, -$epsilon),
-					"A" => self::getStringFromArray($A),
+					"A" => self::getStringFromArray($A)
 				)
 			);
 		}// if
 	}// Ex1
 	
-	private static function inversa() {
-			
-	}
+	
 }
 
 

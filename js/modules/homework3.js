@@ -33,6 +33,7 @@ var homework3 = (function(template, $) {
 			}
 		});
 	};
+	
 	var ex2 = function() {
 		
 	};
