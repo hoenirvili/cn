@@ -49,7 +49,7 @@ var controller = (function (h1, h2, h3) {
 						h2.Ex3();
 						break;
 					case '4':
-						template.messages.orange("This homework is not implemented yet");
+                        h2.Ex4();
 						break;
 				}
 				break;
@@ -136,6 +136,7 @@ var dom = (function ($, controller, template, utils) {
 		var inputs, // tempalte pentru input in functie de tema
 			key, // index pentru atribute din util.inputCfg
 			inp, // container pentru obiecte din util.inputCfg
+            value,// predefined value
 			placeholder; // stocheaza atributul placeholder din util.inputCfg
 
 		// adaugam valorile corespunzatoare
@@ -157,19 +158,24 @@ var dom = (function ($, controller, template, utils) {
 				else
 					placeholder = "";
 
+                if (inp['value'])
+                    value = inp['value'];
+                else
+                    value = "";
+
 				// daca containerul e de tip text
 				if (inp['type'] === 'text')
 					// introdu in html
 					$input.append(
 						'<label>' + key + '</label>'+
-						'<input '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
+						'<input value="'+value+'" '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
 					);
 				// daca containerul e de tip textarea
 				if (inp['type'] === 'textarea')
 					// introdu in html
 					$input.append(
 					 '<label>' + key + '</label><textarea '+placeholder+
-					' class="form-control" name="' + inp['name'] + '"></textarea>'
+					' class="form-control" name="' + inp['name'] + '">'+value+'</textarea>'
 					);
 			}// for
 		}// if
@@ -397,7 +403,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex2',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -430,7 +438,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex3',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -440,17 +450,19 @@ var homework2 = (function(template, $) {
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
                 console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
                 console.log("Qlib \t\t= ", data['Qlib']);
                 console.log("Rlib \t\t= ", data['rlib']);
-                console.log("TimeH \t\t= ", data['timeH']);
-                console.log("TimeQr \t\t= ", data['timeQr']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("TimeH(n=25) \t\t= ", data['timeH']);
+                console.log("TimeQr(n=25) \t\t= ", data['timeQr']);
                 console.log("=============================================");
                 template.messages.green("Successfull compiled");
                 template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
-                    ["A","timeH","timeQR"],
-                    [data['A'],data['timeH'],data['timeQr']]);
+                    ["A","x","xlib","timeH(n=25)","timeQR(n=25)"],
+                    [data['A'],data["x"],data["xlib"],data['timeH'],data['timeQr']]);
             }
         });
 	};
@@ -463,7 +475,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex4',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -473,17 +487,21 @@ var homework2 = (function(template, $) {
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
                 console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
                 console.log("Qlib \t\t= ", data['Qlib']);
                 console.log("Rlib \t\t= ", data['rlib']);
-                console.log("TimeH \t\t= ", data['timeH']);
-                console.log("TimeQr \t\t= ", data['timeQr']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("norm1 \t\t= ", data['norm1']);
+                console.log("norm2 \t\t= ", data['norm2']);
+                console.log("norm3 \t\t= ", data['norm3']);
+                console.log("norm4 \t\t= ", data['norm4']);
                 console.log("=============================================");
                 template.messages.green("Successfull compiled");
                 template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
-                    ["A","timeH","timeQR"],
-                    [data['A'],data['timeH'],data['timeQr']]);
+                    ["A","x","Norm","Norm 2","Norm 3","Norm 4"],
+                    [data['A'],data["x"],data["norm1"],data['norm2'],data['norm3'],data['norm4']]);
             }
         });
 	};
@@ -688,65 +706,105 @@ var util = (function () {
 		h2: {
 			ex1: {
 				input: {
-					"n": {
-						type:"text",
-						name:"n"
-					},
-					"epsilon": {
-						type:"text",
-						name:"epsilon"
-					},
-					"s": {
-						type: 'textarea',
-						name: 'array',
-						placeholder: "[x,y,z]"
-					},
-					"matrice patratica":{
-						type: 'textarea',
-						name: 'matrice',
-						placeholder: "[x,y][x,y]"
-					},
-				}
-			},
-            ex2: {
-                input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]"
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+				}
+			},
+            ex2: {
+                input: {
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             },
             ex3: {
                 input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             },
             ex4: {
                 input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             }

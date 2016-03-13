@@ -39,6 +39,7 @@ var dom = (function ($, controller, template, utils) {
 		var inputs, // tempalte pentru input in functie de tema
 			key, // index pentru atribute din util.inputCfg
 			inp, // container pentru obiecte din util.inputCfg
+            value,// predefined value
 			placeholder; // stocheaza atributul placeholder din util.inputCfg
 
 		// adaugam valorile corespunzatoare
@@ -60,19 +61,24 @@ var dom = (function ($, controller, template, utils) {
 				else
 					placeholder = "";
 
+                if (inp['value'])
+                    value = inp['value'];
+                else
+                    value = "";
+
 				// daca containerul e de tip text
 				if (inp['type'] === 'text')
 					// introdu in html
 					$input.append(
 						'<label>' + key + '</label>'+
-						'<input '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
+						'<input value="'+value+'" '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
 					);
 				// daca containerul e de tip textarea
 				if (inp['type'] === 'textarea')
 					// introdu in html
 					$input.append(
 					 '<label>' + key + '</label><textarea '+placeholder+
-					' class="form-control" name="' + inp['name'] + '"></textarea>'
+					' class="form-control" name="' + inp['name'] + '">'+value+'</textarea>'
 					);
 			}// for
 		}// if

@@ -42,65 +42,105 @@ var util = (function () {
 		h2: {
 			ex1: {
 				input: {
-					"n": {
-						type:"text",
-						name:"n"
-					},
-					"epsilon": {
-						type:"text",
-						name:"epsilon"
-					},
-					"s": {
-						type: 'textarea',
-						name: 'array',
-						placeholder: "[x,y,z]"
-					},
-					"matrice patratica":{
-						type: 'textarea',
-						name: 'matrice',
-						placeholder: "[x,y][x,y]"
-					},
-				}
-			},
-            ex2: {
-                input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]"
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+				}
+			},
+            ex2: {
+                input: {
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             },
             ex3: {
                 input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             },
             ex4: {
                 input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+                    "n": {
+                        type:"text",
+                        name:"n",
+                        value:3
                     },
                     "epsilon": {
                         type:"text",
                         name:"epsilon",
-                        placeholder: "10 to (-) what power?"
+                        value:2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value:"[1,3,4]"
+                    },
+                    "matrice patratica":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value:"[2,2,4]\n[2,4,2]\n[4,4,2]"
                     },
                 }
             }

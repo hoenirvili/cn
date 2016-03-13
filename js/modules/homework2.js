@@ -52,7 +52,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex2',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -85,7 +87,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex3',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -95,17 +99,19 @@ var homework2 = (function(template, $) {
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
                 console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
                 console.log("Qlib \t\t= ", data['Qlib']);
                 console.log("Rlib \t\t= ", data['rlib']);
-                console.log("TimeH \t\t= ", data['timeH']);
-                console.log("TimeQr \t\t= ", data['timeQr']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("TimeH(n=25) \t\t= ", data['timeH']);
+                console.log("TimeQr(n=25) \t\t= ", data['timeQr']);
                 console.log("=============================================");
                 template.messages.green("Successfull compiled");
                 template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
-                    ["A","timeH","timeQR"],
-                    [data['A'],data['timeH'],data['timeQr']]);
+                    ["A","x","xlib","timeH(n=25)","timeQR(n=25)"],
+                    [data['A'],data["x"],data["xlib"],data['timeH'],data['timeQr']]);
             }
         });
 	};
@@ -118,7 +124,9 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex4',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
@@ -128,17 +136,21 @@ var homework2 = (function(template, $) {
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
                 console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
                 console.log("Qlib \t\t= ", data['Qlib']);
                 console.log("Rlib \t\t= ", data['rlib']);
-                console.log("TimeH \t\t= ", data['timeH']);
-                console.log("TimeQr \t\t= ", data['timeQr']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("norm1 \t\t= ", data['norm1']);
+                console.log("norm2 \t\t= ", data['norm2']);
+                console.log("norm3 \t\t= ", data['norm3']);
+                console.log("norm4 \t\t= ", data['norm4']);
                 console.log("=============================================");
                 template.messages.green("Successfull compiled");
                 template.messages.green("Check console and bottom page");
                 template.tables.base();
                 template.tables.content(
-                    ["A","timeH","timeQR"],
-                    [data['A'],data['timeH'],data['timeQr']]);
+                    ["A","x","Norm","Norm 2","Norm 3","Norm 4"],
+                    [data['A'],data["x"],data["norm1"],data['norm2'],data['norm3'],data['norm4']]);
             }
         });
 	};

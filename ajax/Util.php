@@ -121,6 +121,44 @@ class Util
 		return $vector;
 	}
 
+    protected static function getDeterminant($squarematrix)
+    {
+        $m=self::getMatrixColumnLength($squarematrix);
+        $n=self::getMatrixLineLength($squarematrix);
+        if($n!=$m)
+            return 0;
+        $det=1;
+        for($i=0;$i<$n;$i++) {
+                $det*=$squarematrix[$i][$i];
+
+        }
+        return $det;
+    }
+
+
+    protected static function getInit($squarematrix)
+    {
+        $m=self::getMatrixColumnLength($squarematrix);
+        $n=self::getMatrixLineLength($squarematrix);
+        if($n!=$m)
+            return 0;
+        $array=array();
+        for($i=0;$i<$n;$i++) {
+            $array[]=$squarematrix[$i][$i];
+
+        }
+        return $array;
+    }
+
+    protected static function getNorm($vector,$n)
+    {
+        $sum=0;
+        for($i=0;$i<$n;$i++)
+        {
+            $sum+=pow($vector[$i],2);
+        }
+        return sqrt($sum);
+    }
 
 	protected static function getTransposed($matrix) {
 		$m=self::getMatrixColumnLength($matrix);
