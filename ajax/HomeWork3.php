@@ -3,6 +3,9 @@
 
 class HomeWork3 extends Util {
 	public static function Ex1() {
+		// returnam raspunsul sub forma de json
+		// completant headerul
+		header('Content-type: application/json');
 		// initializam variabilele
 		$n = $_POST['n'];
 		$A = self::getMatrixFromString($_POST['matrice']);
@@ -11,10 +14,20 @@ class HomeWork3 extends Util {
 		// $n , $epsilon si daca matricea e nxn
 		if((is_numeric($n)) && (is_numeric($epsilon))) {
 		
-			$resultArray = GaussPivot($A, $n);
-			// returnam raspunsul sub forma de json
-			// completant headerul
-			header('Content-type: application/json');
+			// matrice nesingulara
+			if($det = self::determ($A, $n)) > 0) {
+				echo json_encode(
+					array(
+						"n" => $n,
+						"epsilon" =>pow(10, -$epsilon),
+						"A" => self::getStringFromArray($A),
+						"detA" => $det
+					)
+				);
+			} else { // matrice singulara
+				
+			}
+			
 			echo json_encode(
 				array(
 					"n" => $n,
@@ -72,6 +85,8 @@ class HomeWork3 extends Util {
 				$resultArray[$i] = $resultArray[$i] / $A[$i][$i];
 			}
 		}
+	
+		return $resultArray;
 	}
 	
 	
@@ -80,9 +95,80 @@ class HomeWork3 extends Util {
 	// $A = > matricea
 	// $n = > elementele
 	private static function getDet($A, $n) {
-		echo "Test";
+		
+		switch ($n) {
+			// matrice patratica de ordin 2
+			case 2:
+				break;
+			// amtrice patratica de ordin 3
+			case 3:
+			// matrice patratica de ordin mai mare ca 3
+			// poate fi 4, 5, 7 etc..
+			default:
+				// pentru fiecare coloana din linia 1
+				for($step=0; $step<$n; $step++) {
+					echo "Primul pas cand A[0,".$step."] =". $A[0][$step]."\n";
+					if ($step == 0) {
+						for ($i=$step + 1; $i<$n; $i++) {
+							for ($j=$step + 1; $j<$n; $j++) {
+								echo "\t ". $A[$i][$j] . "\t";
+							}
+							echo "\n";
+						}
+						// asta inseamna ca incepem cu cursorul din stanga in dreapta
+						// facand skip la cel curent
+					} elseif ($step > 0) {
+						for($i=1; $i < $n; $i++) {
+							for ($j=0; $j < $n; $j++) {
+								if ($j != $step){
+									echo "\t ". $A[$i][$j] . "\t";
+								}
+							}
+							echo "\n";
+						}
+					}
+					
+					// doar de treaba asa
+					break;
+				}
+		}
+		
+		
+
 	}
+	private static function determ($A, $n) {
+		$det=0; $p=0; $h = 0; $k = 0; $i = 0; $j = 0;
+		$temp = array_fill(0, $n, null);
+		
+		if($n == 1)
+			return $A[0][0];
+		else
+			if($n==2) {
+				$det = ($A[0][0]*$A[1][1]-$A[0][1]*$A[1][0]);
+				return $det;
+			}
+		else {
+			for ($p=0; $p<$n; $p++) {
+				$h = 0; $k = 0;
+				for($i=1;$i<$n;$i++) {
+					for( $j=0;$j<$n;$j++) {
+						if (!($j==$p)) {
+							$temp[$h][$k] = $A[$i][$j];
+							$k++;
+							if($k==$n-1) {
+ 								$h++;
+								$k = 0;
+							}
+						}
+					}
+				}
+			$det=$det+$A[0][$p] * pow(-1,$p)*self::determ($temp,$n-1);
+			}
+		return $det;
+		}
+	}
+
+	private static function($A) 
+
 }
-
-
 ?>
