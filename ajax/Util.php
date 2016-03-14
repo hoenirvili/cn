@@ -171,6 +171,7 @@ class Util
 		echo "\n";
 	
 	}
+	
 	// method update
 	protected static function getDeterminant($squarematrix) {
 	 $m=self::getMatrixColumnLength($squarematrix);

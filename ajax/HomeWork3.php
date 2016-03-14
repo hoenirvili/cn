@@ -111,6 +111,7 @@ class HomeWork3 extends Util {
 							$l++;
 						}
 					} // for
+					
 					$m++;
 					$l = 0;
 				} // for
@@ -139,10 +140,9 @@ class HomeWork3 extends Util {
 	}
 
 	private static function inverseMatrix($n, $A)  {
-		$det = $self::detMatrix($n, $A)
+		$det = $self::detMatrix($n, $A);
 		$trans = $self::getTransposed($A);
-		// TODO: adjuncta
-	
+		// $adjuncta = $self::getAdjiant
 	}
 }
 ?>
