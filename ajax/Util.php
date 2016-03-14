@@ -193,8 +193,8 @@ class Util
 	
 	}
 	
-	// method update
-	protected static function getDeterminant($squarematrix) {
+	// only for triangular matrix
+	protected static function getDeterminantT($squarematrix) {
 	 $m=self::getMatrixColumnLength($squarematrix);
 	 $n=self::getMatrixLineLength($squarematrix);
 	 if($n!=$m)
