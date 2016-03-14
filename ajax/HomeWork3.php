@@ -136,39 +136,53 @@ class HomeWork3 extends Util {
 		
 
 	}
-	private static function determ($A, $n) {
-		$det=0; $p=0; $h = 0; $k = 0; $i = 0; $j = 0;
-		$temp = array_fill(0, $n, null);
+	
+	// det Matrix
+	private static detMatrix($n, $A) {
+		$l = 0; $m = 0; $k = 0; $d=0;
+		$tmp = array_fill(0, $n-1, null);
 		
-		if($n == 1)
-			return $A[0][0];
-		else
-			if($n==2) {
-				$det = ($A[0][0]*$A[1][1]-$A[0][1]*$A[1][0]);
-				return $det;
-			}
-		else {
-			for ($p=0; $p<$n; $p++) {
-				$h = 0; $k = 0;
-				for($i=1;$i<$n;$i++) {
-					for( $j=0;$j<$n;$j++) {
-						if (!($j==$p)) {
-							$temp[$h][$k] = $A[$i][$j];
-							$k++;
-							if($k==$n-1) {
- 								$h++;
-								$k = 0;
-							}
+		if ($n == 2) {
+			return $A[0][0] * $A[1][1] - $A[0][1] * $A[1][0];
+		}
+		
+		for($k=0; $k<$n; $k++) {
+			if ($k>0) {
+				for($i=1; $i<$n; $i++) {
+					for($j=0; $j<$n; $j++) {
+						if ($k!=$j) {
+							$tmp[$m][$l] = $A[$i][$j];
+							l++;
 						}
-					}
-				}
-			$det=$det+$A[0][$p] * pow(-1,$p)*self::determ($temp,$n-1);
-			}
-		return $det;
+					} // for
+					$m++;
+					$l = 0;
+				} // for
+				$m = 0;
+			} else if ($k == 0) {
+				for($i=1; $i<$n; $i++) {
+					for($j=1; $j<$n; $j++) {
+						if ($k!=$j) {
+							$tmp[$m][$l] = $A[$i][$j];
+							$l++;
+						}
+					} // for
+					$m++;
+				} // for
+				$l = 0;
+				$m = 0;
+			}// else if
+
+			if ($k % 2 == 0)
+				$d += $A[0][$k] * self::detMatrix($n-1, $tmp);
+			else
+				$d -= $A[0][$k] * self::detMatrix($n-1, $tmp);
+		}
+		return $d;
 		}
 	}
 
-	private static function($A) 
+
 
 }
 ?>
