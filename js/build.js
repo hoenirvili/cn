@@ -539,17 +539,18 @@ var homework3 = (function(template, $) {
 			},
 			// procesam aici raspunsul
 			success: function(data) {
-				console.log("===========  Homework2 - Ex1 ================");
+				console.log("===========  Homework3 - Ex1 ================");
 				console.log("Dimensiunea sistemului \t= ", data['n']);
 				console.log("Precizia \t\t\t= ", data['epsilon']);
 				console.log("matricea \t\t= ", data['A']);
+				console.log("val determinat \t\t= ", data['detA']);
 				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
 				template.tables.base();
 				template.tables.content(
-					["Dimensiunea sistemului", "Precizia","Matricea"],
-					[data['n'], data['epsilon'],data['A']]);
+					["Dimensiunea sistemului", "Precizia","Matricea", "Determinat"],
+					[data['n'], data['epsilon'],data['A'], data['detA']]);
 			}
 		});
 	};

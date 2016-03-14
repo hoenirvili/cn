@@ -15,7 +15,7 @@ class HomeWork3 extends Util {
 		if((is_numeric($n)) && (is_numeric($epsilon))) {
 		
 			// matrice nesingulara
-			if($det = self::determ($A, $n)) > 0) {
+			if(($det = self::detMatrix($n, $A)) != 0) {
 				echo json_encode(
 					array(
 						"n" => $n,
@@ -32,7 +32,8 @@ class HomeWork3 extends Util {
 				array(
 					"n" => $n,
 					"epsilon" =>pow(10, -$epsilon),
-					"A" => self::getStringFromArray($A)
+					"A" => self::getStringFromArray($A),
+					"detA" => self::detMatrix($n, $A)
 				)
 			);
 		}// if
@@ -51,7 +52,7 @@ class HomeWork3 extends Util {
 		$resultArray = array_fill(0, $n, null);
 		// interschimbam toate elementele care sun mai mici ca
 		// cele de pe diagonala principala.
-		for($i = 0; $i<$n; $i++){
+		for($i = 0; $i<$n; $i++) {
 			for($k=$i+1; $k<$n; $k++) {
 				if($A[$i][$i] < $A[$k][$i])
 					for($j=0; $j<=$n; $j++){
@@ -91,54 +92,8 @@ class HomeWork3 extends Util {
 	
 	
 	// metoda incapsulata pentru a obtine un determinat
-	// a unei matrici patratice
-	// $A = > matricea
-	// $n = > elementele
-	private static function getDet($A, $n) {
-		
-		switch ($n) {
-			// matrice patratica de ordin 2
-			case 2:
-				break;
-			// amtrice patratica de ordin 3
-			case 3:
-			// matrice patratica de ordin mai mare ca 3
-			// poate fi 4, 5, 7 etc..
-			default:
-				// pentru fiecare coloana din linia 1
-				for($step=0; $step<$n; $step++) {
-					echo "Primul pas cand A[0,".$step."] =". $A[0][$step]."\n";
-					if ($step == 0) {
-						for ($i=$step + 1; $i<$n; $i++) {
-							for ($j=$step + 1; $j<$n; $j++) {
-								echo "\t ". $A[$i][$j] . "\t";
-							}
-							echo "\n";
-						}
-						// asta inseamna ca incepem cu cursorul din stanga in dreapta
-						// facand skip la cel curent
-					} elseif ($step > 0) {
-						for($i=1; $i < $n; $i++) {
-							for ($j=0; $j < $n; $j++) {
-								if ($j != $step){
-									echo "\t ". $A[$i][$j] . "\t";
-								}
-							}
-							echo "\n";
-						}
-					}
-					
-					// doar de treaba asa
-					break;
-				}
-		}
-		
-		
-
-	}
-	
 	// det Matrix
-	private static detMatrix($n, $A) {
+	private static function detMatrix($n, $A) {
 		$l = 0; $m = 0; $k = 0; $d=0;
 		$tmp = array_fill(0, $n-1, null);
 		
@@ -147,12 +102,13 @@ class HomeWork3 extends Util {
 		}
 		
 		for($k=0; $k<$n; $k++) {
-			if ($k>0) {
+			
+			if ($k > 0) {
 				for($i=1; $i<$n; $i++) {
 					for($j=0; $j<$n; $j++) {
 						if ($k!=$j) {
 							$tmp[$m][$l] = $A[$i][$j];
-							l++;
+							$l++;
 						}
 					} // for
 					$m++;
@@ -168,8 +124,8 @@ class HomeWork3 extends Util {
 						}
 					} // for
 					$m++;
+					$l = 0;
 				} // for
-				$l = 0;
 				$m = 0;
 			}// else if
 
@@ -177,12 +133,16 @@ class HomeWork3 extends Util {
 				$d += $A[0][$k] * self::detMatrix($n-1, $tmp);
 			else
 				$d -= $A[0][$k] * self::detMatrix($n-1, $tmp);
-		}
+		
+		}//for
 		return $d;
-		}
 	}
 
-
-
+	private static function inverseMatrix($n, $A)  {
+		$det = $self::detMatrix($n, $A)
+		$trans = $self::getTransposed($A);
+		// TODO: adjuncta
+	
+	}
 }
 ?>
