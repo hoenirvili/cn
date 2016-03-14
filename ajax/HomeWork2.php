@@ -242,7 +242,7 @@ class HomeWork2 extends Util
 
     public static function getX($A, $n, $b)
     {
-        $det = Util::getDeterminant($A);
+        $det = Util::getDeterminantT($A);
         $x = array();
         if ($det > 0) {
             $x[$n - 1] = $b[$n - 1] / $A[$n - 1][$n - 1];
