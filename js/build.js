@@ -544,13 +544,14 @@ var homework3 = (function(template, $) {
 				console.log("Precizia \t\t\t= ", data['epsilon']);
 				console.log("matricea \t\t= ", data['A']);
 				console.log("val determinat \t\t= ", data['detA']);
+				console.log("val inversa \t\t= ", data["invA"]);
 				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
 				template.tables.base();
 				template.tables.content(
-					["Dimensiunea sistemului", "Precizia","Matricea", "Determinat"],
-					[data['n'], data['epsilon'],data['A'], data['detA']]);
+					["Dimensiunea sistemului", "Precizia","Matricea", "Determinat", "Inversa"],
+					[data['n'], data['epsilon'],data['A'], data['detA'], data["invA"]]);
 			}
 		});
 	};

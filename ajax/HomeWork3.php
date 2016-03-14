@@ -16,26 +16,27 @@ class HomeWork3 extends Util {
 		
 			// matrice nesingulara
 			if(($det = self::detMatrix($n, $A)) != 0) {
+				$inverse = self::inverseMatrix($n, $A);
 				echo json_encode(
 					array(
 						"n" => $n,
 						"epsilon" =>pow(10, -$epsilon),
 						"A" => self::getStringFromArray($A),
-						"detA" => $det
+						"detA" => $det,
+						"invA" => self::getStringFromMatrix($inverse)
 					)
 				);
 			} else { // matrice singulara
-				
+				echo json_encode(
+					array(
+						"n" => $n,
+						"epsilon" =>pow(10, -$epsilon),
+						"A" => self::getStringFromArray($A),
+						"detA" => $det,
+						"invA" => "Nu exista",
+					)
+				);
 			}
-			
-			echo json_encode(
-				array(
-					"n" => $n,
-					"epsilon" =>pow(10, -$epsilon),
-					"A" => self::getStringFromArray($A),
-					"detA" => self::detMatrix($n, $A)
-				)
-			);
 		}// if
 	}// Ex1
 	
@@ -138,17 +139,33 @@ class HomeWork3 extends Util {
 		}//for
 		return $d;
 	}
-
+	
+	// get inverse Matrix
 	private static function inverseMatrix($n, $A)  {
-		$det = $self::detMatrix($n, $A);
-		$trans = $self::getTransposed($A);
-		$adjuncta = $self::getAdj($trans);
+		$tmp = array_fill(0, $n, null);
+		// we need to get the determinat of the matrix first
+		$det = self::detMatrix($n, $A);
+		// get the transpose of the matrix
+		$trans = self::getTransposed($A);
+		// in order to computhe the adj of the matrix we need to pass
+		// it the trans
+		$adjuncta = self::getAdj($trans, $n);
 		
-		return 1/det * self::multiplyMatrix($A, $B);
+		// return it with the special form
+		
+		$aux = 1 / $det;
+		for($i=0; $i<$n; $i++) {
+			for($j=0; $j<$n; $j++) {
+				$tmp[$i][$j] = $aux * $A[$i][$j];
+			}
+		}
+
+		return $tmp;
 	}
 
-	private static function getAdj($trans){
-		$tmp = array_fill(0, $n-1, null)
+	private static function getAdj($trans, $n){
+		$tmp = array_fill(0, $n-1, null);
+		
 		for($i=0; $i<$n; $i++) {
 			for($j=0; $j<$n; $j++) {
 				$tmp[$i][$j] = pow(-1, ($i+$j)+1 ) * $trans[$i][$j];
@@ -158,8 +175,23 @@ class HomeWork3 extends Util {
 		return $tmp;
 	}
 	
-	// private static function () {
-	//
-	// }
+
+	private static function multiplyMatrix($A, $B, $n) {
+		$i=0; $j=0; $k=0; $l=0;
+		$sum = 0;
+		$tmp = array_fill(0, $n, null);
+
+		for($i=0; $i<$n; $i++) {
+			for($j=0; $j<$n; $j++) {
+				for($k=0; $k<$n; $k++) {
+					$sum += $A[$i][$k] * $B[$k][$j];
+				}
+				$tmp[$i][$j] = $sum;
+				$sum = 0;
+			}
+		}
+		
+		return $tmp;
+	}
 }
 ?>
