@@ -9,6 +9,7 @@ class HomeWork2 extends Util
         header('Content-type: application/json');
         // daca numerele din json N si epsilon sunt numerice
         $n = $_POST['n'];
+
         $epsilon = $_POST['epsilon'];
         // parse array and matrice
         $arrayS = self::getArrayFromString($_POST['arr']);
@@ -62,14 +63,14 @@ class HomeWork2 extends Util
         $arrayS = self::getArrayFromString($_POST['arr']);
         $b = self::getB($A, $arrayS, $n, $epsilon);
         $QR = self::HouseholderDecomposition($A, $epsilon, $n, $b);
-        $x = self::getX($A, $n, $b);
+        $x = self::getX($QR["r"], $n, $QR["b"]);
         $matrix = new Matrix($n, $n);
         $matrix->fromArray($A);
         $QRlibf = array();
         $QRlib = new QRGivens($matrix);
         $QRlibf['Qlib'] = $QRlib->getQ()->asArray();
         $QRlibf['rlib'] = $QRlib->getR()->asArray();
-        $xlib = self::getX($A, $n, $b);
+        $xlib = self::getX($QR["r"], $n,  $QR["b"]);
         // perf test
         $randomMatrix = Util::randsquareMatrix(25, 10);
         $n = Util::getMatrixLineLength($randomMatrix);
@@ -113,14 +114,14 @@ class HomeWork2 extends Util
         $arrayS = self::getArrayFromString($_POST['arr']);
         $b = self::getB($A, $arrayS, $n, $epsilon);
         $QR = self::HouseholderDecomposition($A, $epsilon, $n, $b);
-        $x = self::getX($A, $n, $b);
+        $x = self::getX($QR["r"], $n, $QR["b"]);
         $matrix = new Matrix($n, $n);
         $matrix->fromArray($A);
         $QRlibf = array();
         $QRlib = new QRGivens($matrix);
         $QRlibf['Qlib'] = $QRlib->getQ()->asArray();
         $QRlibf['rlib'] = $QRlib->getR()->asArray();
-        $xlib = self::getX($A, $n, $b);
+        $xlib = self::getX($QR["r"], $n,  $QR["b"]);
         $vector1 = array();
         $ainit = Util::getInit($A);
         for ($i = 0; $i < $n; $i++) {
@@ -132,18 +133,16 @@ class HomeWork2 extends Util
             $vector2[$i] = $ainit[$i] * $xlib[$i] - $b[$i];
         }
         $norm2 = Util::getNorm($vector2, $n);
-
         $vector3 = array();
         for ($i = 0; $i < $n; $i++) {
-            $vector3[$i] = $x[$i]  - $arrayS[$i];
+            $vector3[$i] = $x[$i] - $arrayS[$i];
         }
-        $norm3 = Util::getNorm($vector3, $n)/Util::getNorm($arrayS,$n);
-
+        $norm3 = Util::getNorm($vector3, $n) / Util::getNorm($arrayS, $n);
         $vector4 = array();
         for ($i = 0; $i < $n; $i++) {
-            $vector4[$i] = $xlib[$i]  - $arrayS[$i];
+            $vector4[$i] = $xlib[$i] - $arrayS[$i];
         }
-        $norm4 = Util::getNorm($vector4, $n)/Util::getNorm($arrayS,$n);
+        $norm4 = Util::getNorm($vector4, $n) / Util::getNorm($arrayS, $n);
         echo json_encode(
             array(
                 "A" => Util::getStringFromMatrix($A),
@@ -168,19 +167,20 @@ class HomeWork2 extends Util
         for ($i = 0; $i < $n; $i++) {
             $b[$i] = 0;
             for ($j = 0; $j < $n; $j++) {
-                $b[$i] += round($s[$i] * $A[$i][$j], $epsilon);
+                $b[$i] += $s[$j]* $A[$i][$j];
             }
         }
         return $b;
     }
 
-    public static function HouseholderDecomposition($A, $epsilon, $n, $b = array())
+    public static function HouseholderDecomposition($A, $epsilon, $n, $b="")
     {
         $I = Util::genI($n);
         $Q = $I;
         $epsilon = pow(10, -$epsilon);
-        if (empty($b))
+        if ($b=="")
             $b = Util::getZeroedVector($n);
+
         for ($r = 0; $r < $n; $r++) {
             $delta = 0;
             for ($i = $r; $i < $n; $i++) {
@@ -235,7 +235,7 @@ class HomeWork2 extends Util
             }
 
         }
-        return array("Q" => Util::getTransposed($Q), "r" => $A);
+        return array("Q" => Util::getTransposed($Q), "r" => $A,"b"=>$b);
 
     }
 

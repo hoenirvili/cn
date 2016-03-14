@@ -3,15 +3,17 @@
 class Util
 {
 
-	protected static function getArrayFromString($string) {
-		return json_decode($string);
-	}
+    protected static function getArrayFromString($string)
+    {
+        return json_decode($string);
+    }
 
-	protected static function getStringFromArray($array) {
-		if (!is_array($array))
-			return "Nu s-a putut parsa.";
-		return json_encode($array);
-	}
+    protected static function getStringFromArray($array)
+    {
+        if (!is_array($array))
+            return "Nu s-a putut parsa.";
+        return json_encode($array);
+    }
 
     protected static function getMatrixFromString($string)
     {
@@ -54,7 +56,7 @@ class Util
     {
         $result = array();
         for ($i = 0; $i < $m; $i++) {
-            $result[] = self::randVectorFixedSize($m,$maxNum);
+            $result[] = self::randVectorFixedSize($m, $maxNum);
         }
         return $result;
     }
@@ -105,107 +107,107 @@ class Util
 
     protected static function getZeroedVector($n)
     {
-        $vector=array();
-        for($i=0;$i<$n;$i++)
-        {
-            $vector[$i]=0;
+        $vector = array();
+        for ($i = 0; $i < $n; $i++) {
+            $vector[$i] = 0;
         }
         return $vector;
     }
 
-	protected static function round_array($n) {
-		$vector=array();
-		for($i=0;$i<$n;$i++) {
-			$vector[$i]=0;
-		}
-		return $vector;
-	}
+    protected static function round_array($n)
+    {
+        $vector = array();
+        for ($i = 0; $i < $n; $i++) {
+            $vector[$i] = 0;
+        }
+        return $vector;
+    }
 
-	protected static function getInit($squarematrix)
-	{
-        $m=self::getMatrixColumnLength($squarematrix);
-        $n=self::getMatrixLineLength($squarematrix);
-        if($n!=$m)
+    protected static function getInit($squarematrix)
+    {
+        $m = self::getMatrixColumnLength($squarematrix);
+        $n = self::getMatrixLineLength($squarematrix);
+        if ($n != $m)
             return 0;
-        $array=array();
-        for($i=0;$i<$n;$i++) {
-            $array[]=$squarematrix[$i][$i];
+        $array = array();
+        for ($i = 0; $i < $n; $i++) {
+            $array[] = $squarematrix[$i][$i];
         }
         return $array;
-	}
-	protected static function getNorm($vector,$n)
-	{
-        $sum=0;
-        for($i=0;$i<$n;$i++)
-        {
-            $sum+=pow($vector[$i],2);
+    }
+
+    protected static function getNorm($vector, $n)
+    {
+        $sum = 0;
+        for ($i = 0; $i < $n; $i++) {
+            $sum += pow($vector[$i], 2);
         }
         return sqrt($sum);
-	}
-		
-	protected static function getTransposed($matrix) {
-		$m=self::getMatrixColumnLength($matrix);
-		$n=self::getMatrixLineLength($matrix);
-		$transposed=array();
-		for($i=0;$i<$n;$i++) {
-			for($j=0;$j<$n;$j++) {
-				$transposed[$j][$i]=$matrix[$i][$j];
-			}
-		}
-		return $transposed;
-	}
+    }
 
-	// getUnityMatrix
-	// @return array(array())
-	protected static function getUnityMatrix($n) {
-		// alloc lines
-		$unityMatrix = array();
-		// pentru fiecare linie
-		for($i=0; $i<$n; $i++) {
-			// alloc colls
-			$unityMatrix[$i] = array();
-			// pentru fiecare coloana
-			for($j=0; $j<$n; $j++) {
-				
-				if ($i == $j) {
-					$unityMatrix[$i][$j] = 1;
-				}else
-					$unityMatrix[$i][$j] = 0;
-			}
-		}
-		
-		return $unityMatrix;
-	}
-	// dumpMatrix
-	// @return void
-	protected static function dumpMatrix($matrix) {
-		$n = count($matrix);
-		$m = count($matrix[0]);
-		
-		for ($i=0; $i<$n; $i++) {
-			for($j=0; $j<$m; $j++) {
-				echo "\t" . $matrix[$i][$j] . "\t";
-			}
-			echo "\n";
-		}
-		
-		echo "\n";
-	
-	}
-	
-	// only for triangular matrix
-	protected static function getDeterminantT($squarematrix) {
-	 $m=self::getMatrixColumnLength($squarematrix);
-	 $n=self::getMatrixLineLength($squarematrix);
-	 if($n!=$m)
-		 return 0;
-	 $det=1;
-	 for($i=0;$i<$n;$i++) {
-			 $det*=$squarematrix[$i][$i];
-	 }
-	 return $det;
- 	}
-	
+    protected static function getTransposed($matrix)
+    {
+        $m = self::getMatrixColumnLength($matrix);
+        $n = self::getMatrixLineLength($matrix);
+        $transposed = array();
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                $transposed[$j][$i] = $matrix[$i][$j];
+            }
+        }
+        return $transposed;
+    }
+
+    // getUnityMatrix
+    // @return array(array())
+    protected static function getUnityMatrix($n)
+    {
+        // alloc lines
+        $unityMatrix = array();
+        // pentru fiecare linie
+        for ($i = 0; $i < $n; $i++) {
+            // alloc colls
+            $unityMatrix[$i] = array();
+            // pentru fiecare coloana
+            for ($j = 0; $j < $n; $j++) {
+                if ($i == $j) {
+                    $unityMatrix[$i][$j] = 1;
+                } else
+                    $unityMatrix[$i][$j] = 0;
+            }
+        }
+        return $unityMatrix;
+    }
+    // dumpMatrix
+    // @return void
+    protected static function dumpMatrix($matrix)
+    {
+        $n = count($matrix);
+        $m = count($matrix[0]);
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $m; $j++) {
+                echo "\t" . $matrix[$i][$j] . "\t";
+            }
+            echo "\n";
+        }
+        echo "\n";
+
+    }
+
+    // only for triangular matrix
+    protected static function getDeterminantT($squarematrix)
+    {
+        $m = self::getMatrixColumnLength($squarematrix);
+        $n = self::getMatrixLineLength($squarematrix);
+        if ($n != $m)
+            return 0;
+        $det = 1;
+        for ($i = 0; $i < $n; $i++) {
+            $det *= $squarematrix[$i][$i];
+        }
+        return $det;
+    }
+
 
 }
 
