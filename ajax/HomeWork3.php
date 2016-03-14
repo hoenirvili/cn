@@ -157,6 +157,9 @@ class HomeWork3 extends Util {
 		
 		return $tmp;
 	}
-	private static function
+	
+	// private static function () {
+	//
+	// }
 }
 ?>
