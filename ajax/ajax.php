@@ -45,7 +45,10 @@ if (isset($_POST['action'])) {
 					case 'ex1':
 						HomeWork3::ex1();
 						break;
+					case 'ex2':
+						HomeWork3::ex2();
+						break;
 				}
-        }
-    }
+		}
+	}
 }
