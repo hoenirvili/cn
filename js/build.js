@@ -542,56 +542,45 @@ var homework3 = (function(template, $) {
 			},
 			// procesam aici raspunsul
 			success: function(data) {
-				console.log("===========  Homework3 - Ex1 ================");
-				console.log("Dimensiunea sistemului \t= ", data['n']);
-				console.log("Precizia \t\t\t= ", data['epsilon']);
-				console.log("matricea \t\t= ", data['A']);
-				console.log("val determinat \t\t= ", data['detA']);
-				console.log("val inversa \t\t= ", data["invA"]);
-				console.log("=============================================");
-				template.messages.green("Successfull compiled");
-				template.messages.green("Check console and bottom page");
-				template.tables.base();
-				template.tables.content(
-					["Dimensiunea sistemului", "Precizia","Matricea", "Determinat", "Inversa"],
-					[data['n'], data['epsilon'],data['A'], data['detA'], data["invA"]]);
-			}
+                if (data['sts'] == 0) {
+                    console.log("===========  Homework3 - Ex1 ================");
+                    console.log("N\t= ", data['n']);
+                    console.log("Precizia \t\t\t= ", data['epsilon']);
+                    console.log("A \t\t= ", data['A']);
+                    console.log("Ae \t\t= ", data['Ae']);
+                    console.log("Inv \t\t= ", data["invA"]);
+                    console.log("=============================================");
+                    template.messages.green("Successfull compiled");
+                    template.messages.green("Check console and bottom page");
+                    template.tables.base();
+                    template.tables.content(
+                        ["N", "Precizia", "A", "Ae", "Inv"],
+                        [data['n'], data['epsilon'], data['A'], data['Ae'], data["invA"]]);
+                }else
+                {
+                    console.log("===========  Homework3 - Ex1 ================");
+                    console.log("N\t= ", data['n']);
+                    console.log("Precizia \t\t\t= ", data['epsilon']);
+                    console.log("A \t\t= ", data['A']);
+                    console.log("Ae \t\t= ", data['Ae']);
+                    console.log("Inv \t\t= ", data["invA"]);
+                    console.log("Det \t\t= ", data["det"]);
+                    console.log("Norm \t\t= ", data["norm"]);
+                    console.log("=============================================");
+                    template.messages.green("Successfull compiled");
+                    template.messages.green("Check console and bottom page");
+                    template.tables.base();
+                    template.tables.content(
+                        ["N", "Precizia", "A", "Ae", "Inv","Det","Norm"],
+                        [data['n'], data['epsilon'], data['A'], data['Ae'], data["invA"],data["det"],data["norm"]]);
+                }
+            }
+
 		});
 	};
 
 	var ex2 = function() {
-		// trimite un POST request
-		// body-ul va contine data serializata
-		// json cu numarul execitiului si numarul temei
-		$.ajax({
-			type: 'POST',
-			url: 'ajax/ajax.php',
-			dataType: 'json',
-			data: {
-				action:		'ex2',
-				homework:	3,
-				n:			$('input[name="n"]').val(),
-				matrice:	$('textarea[name="matrice"]').val()
-			},
 
-			// procesam aici raspunsul
-			success: function(data) {
-				console.log("===========  Homework3 - Ex1 ================");
-				console.log("Dimensiunea sistemului \t= ", data['n']);
-				console.log("matricea \t\t= ", data['A']);
-				console.log("val determinat \t\t= ", data['detA']);
-				console.log("valoare gauss \t\t= ", data['gauss']);
-				console.log("valoare determinant de gauss\t\t", data['detGauss']);
-				console.log("valorile sunt egale ?\t\t", data['egale']);
-				console.log("=============================================");
-				template.messages.green("Successfull compiled");
-				template.messages.green("Check console and bottom page");
-				template.tables.base();
-				template.tables.content(
-					["Dimensiunea sistemului", "Matricea", "Determinant de A", "Gauss", "Determinant de Gauss", "Sunt egale?"],
-					[data['n'], data['A'], data['detA'], data['gauss'], data['detGauss'], data["egale"]]);
-			}
-		});
 	};
 	var ex3 = function() {
 
@@ -849,26 +838,28 @@ var util = (function () {
 		h3: {
 			ex1: {
 				input:{
-					"n": {
-						type:"text",
-						name:"n"
-					},
-					"A":{
-						type:'textarea',
-						name: 'matrice',
-						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
-					},
-					"epsilon":{
-						type:"text",
-						name:"epsilon",
-						placeholder: "10 to (-) what power?"
-					}
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[1,0,2]\n[0,1,0]\n[1,1,1]"
+                    },
 				}
 			},
 			ex2: {
 				input:{
 					"n": {
-						type:"te",
+						type:"text",
 						name:"n"
 					},
 					"A":{

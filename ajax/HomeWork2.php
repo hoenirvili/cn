@@ -244,8 +244,9 @@ class HomeWork2 extends Util
     {
         $det = Util::getDeterminantT($A);
         $x = array();
-        if ($det > 0) {
-            $x[$n - 1] = $b[$n - 1] / $A[$n - 1][$n - 1];
+        if ($det != 0) {
+            $x[$n - 1] =
+                $b[$n - 1] / $A[$n - 1][$n - 1];
             for ($i = $n - 2; $i >= 0; $i--) {
                 $sum = 0;
                 for ($j = $i + 1; $j < $n; $j++) {

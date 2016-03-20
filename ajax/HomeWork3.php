@@ -1,282 +1,110 @@
 <?php
 
 
-class HomeWork3 extends Util {
-	public static function Ex1() {
-		// returnam raspunsul sub forma de json
-		// completant headerul
-		header('Content-Type: application/json');
-		// initializam variabilele
-		$n = $_POST['n'];
-		$A = self::getMatrixFromString($_POST['matrice']);
-		$epsilon = $_POST['epsilon'];
+class HomeWork3 extends Util
+{
+    public static function Ex1()
+    {
+        // returnam raspunsul sub forma de json
+        // completant headerul
+        header('Content-Type: application/json');
+        // initializam variabilele
+        $n = $_POST['n'];
+        $A = self::getMatrixFromString($_POST['matrice']);
+        $epsilon = $_POST['epsilon'];
+        $Ae = self::appendIn($A, $n);
 
-		// verifica daca inputurile sunt numerice
-		// $n , $epsilon si daca matricea e nxn
-		if((is_numeric($n)) && (is_numeric($epsilon))) {
-			// matrice nesingulara
-			if(($det = self::detMatrix($n, $A)) != 0) {
-				$inverse = self::inverseMatrix($n, $A);
-				echo json_encode(
-					array(
-						"n" 		=> $n,
-						"epsilon" 	=>pow(10, -$epsilon),
-						"A" 		=> self::getStringFromArray($A),
-						"detA" 		=> $det,
-						"invA" 		=> self::getStringFromMatrix($inverse)
-					)
-				);
-			} else { // matrice singulara
-				echo json_encode(
-					array(
-						"n" 		=> $n,
-						"epsilon" 	=>pow(10, -$epsilon),
-						"A" 		=> self::getStringFromArray($A),
-						"detA" 		=> $det,
-						"invA" 		=> "Nu exista",
-					)
-				);
-			}
-		}// if
-	}// Ex1
+        $gauss=self::GaussElimination($Ae,$n,$epsilon);
+        if($gauss[1]) //matrice singulara
+        {
 
-	public static function Ex2() {
-		header('Content-Type: application/json');
-		// initializam variabilele
-		$n = $_POST['n'];
-		$A = self::getMatrixFromString($_POST['matrice']);
-		// verifica daca inputurile sunt numerice
-		// $n
-		echo "test";
-		if (is_numeric($n)) {
-			$gauss 		= self::GaussPivot($A, $n);
-			$gaussOpt   = self::gaussPartialPivot($A);
+            echo json_encode(
+                array(
+                    "sts"=>0,
+                    "n" => $n,
+                    "epsilon" => pow(10, -$epsilon),
+                    "A" => self::getStringFromArray($A),
+                    "Ae" => self::getStringFromArray($gauss[0]),
+                    "invA" => "Matrice Singulara",
+                )
+            );
+        }
+        else
+        {
+            $divide=self::divideIn($gauss[0],$n);
+            $R=$divide[0];
+            $B=$divide[1];
+            $Ai=array();
+            for($i=0;$i<$n;$i++)
+            {
+                $x = HomeWork2::getX($R, $n, $B[$i]);
+                $Ai[$i]=$x;
+            }
+            $AxAi=self::multiplyMatrixes($A,$Ai);
+            $In=self::genI($n);
+            $norm=self::getNorm1(self::subtractMatrices($AxAi,$In,$n),$n);
+            echo json_encode(
+                array(
+                    "sts"=>1,
+                    "n" => $n,
+                    "epsilon" => pow(10, -$epsilon),
+                    "A" => self::getStringFromMatrix($A),
+                    "Ae" => self::getStringFromMatrix($gauss[0]),
+                    "invA" =>self::getStringFromMatrix($Ai),
+                    "det"=>self::getDeterminantT($R),
+                    "norm"=>self::getStringFromArray($norm)
+                )
+            );
 
-			var_dump($gaussOpt);
-			var_dump($gauss);
-
-			//$gaussDet 	= self::detMatrix($n, $gauss);
-			$detA 		= self::detMatrix($n, $A);
-			echo json_encode(
-				array(
-					"n" 		=> $n,
-					"A" 		=> self::getStringFromArray($A),
-					"detA" 		=> $detA,
-					"gauss" 	=> self::getStringFromArray($gauss),
-					//"detGauss" 	=> $gaussDet,
-					//"egale" 	=> ($gaussDet == $detA)? "Da": "Nu",
-				)
-			);
-		}
-	}
+        }
 
 
-	// Incapsulam metoda GaussPivot
-	// aceasta metoda calculeaza gauss pivotat
-	// si ne da rezultatele sub forma de vector a
-	// lui x, y , z spre exemplui
-	// @param $A = array multidimensional care va reprezenta matricea noastra
-	// @n este numarul nxn de cate linii si coloane este declarata matricea
-	private static function GaussPivot($A, $n) {
-		$n--;
-		// un array cu $n elemente pornind de la 0 pan la $n
-		// iar fiecare element va lua valoarea $mixed value= null
-		// in cazul nostru
-		$resultArray = array_fill(0, $n, null);
-		// interschimbam toate elementele care sun mai mici ca
-		// cele de pe diagonala principala.
-		for($i = 0; $i<$n; $i++) {
-			for($k=$i+1; $k<$n; $k++) {
-				if($A[$i][$i] < $A[$k][$i])
-					for($j=0; $j<=$n; $j++){
-						// interschimbam fara sa folosim
-						// a treia variabila
-						$A[$i][$j] ^= $A[$k][$j];
-						$A[$k][$j] ^= $A[$i][$j];
-						$A[$i][$j] ^= $A[$k][$j];
-					}
-			}
-		}
-
-		// algoritmul  guass elimination
-		for($i = 0; $i<$n-1; $i++) {
-			for($k=$i+1; $k<$n; $k++) {
-					$t = floatval( $A[$k][$i] / $A[$i][$i] );
-					for($j=0; $j<=$n; $j++) {
-						// facem fiecare element mai jos de pivot sa fie 0
-						// sau eliminal variabilele
-						$A[$k][$j] = $A[$k][$j] - $t * $A[$i][$j];
-					}
-			}
-		}
-
-		// back subsituttion
-		for($i=$n-1; $i>=0; $i--) {
-			$resultArray[$i] = $A[$i][$n];
-			for( $j=0; $j<$n; $j++) {
-				if($j != $i)
-					$resultArray[$i] = $resultArray[$i] - $A[$i][$j] * $resultArray[$j];
-				$resultArray[$i] = $resultArray[$i] / $A[$i][$i];
-			}
-		}
-
-		return $resultArray;
-	}
+    }// Ex1
 
 
-	// metoda incapsulata pentru a obtine un determinat
-	// det Matrix
-	private static function detMatrix($n, $A) {
-		$l = 0; $m = 0; $k = 0; $d=0;
-		$tmp = array_fill(0, $n-1, null);
 
-		if ($n == 2) {
-			return $A[0][0] * $A[1][1] - $A[0][1] * $A[1][0];
-		}
 
-		for($k=0; $k<$n; $k++) {
+    private static function GaussElimination($Ae, $n,$e)
+    {
+        $l = 0;
+        $epsilon=pow(10, -$e);
+        $Ae=self::gaussPartialPivot($l,$Ae,$n);
+        while(($l<$n-1)&&($Ae[$l][$l]>$epsilon))
+        {
+            for($i=$l+1;$i<$n;$i++)
+            {
+                $f=-($Ae[$i][$l]/$Ae[$l][$l]);
+                for($j=$l+1;$j<$n*2;$j++)
+                {
+                    $Ae[$i][$j]=$Ae[$i][$j]+$f*$Ae[$l][$j];
+                }
+                $Ae[$i][$l]=0;
+            }
+            $l++;
+            $Ae=self::gaussPartialPivot($l,$Ae,$n);
+        }
+        return array($Ae,$Ae[$l][$l]>$epsilon);
 
-			if ($k > 0) {
-				for($i=1; $i<$n; $i++) {
-					for($j=0; $j<$n; $j++) {
-						if ($k!=$j) {
-							$tmp[$m][$l] = $A[$i][$j];
-							$l++;
-						}
-					} // for
+    }
 
-					$m++;
-					$l = 0;
-				} // for
-				$m = 0;
-			} else if ($k == 0) {
-				for($i=1; $i<$n; $i++) {
-					for($j=1; $j<$n; $j++) {
-						if ($k!=$j) {
-							$tmp[$m][$l] = $A[$i][$j];
-							$l++;
-						}
-					} // for
-					$m++;
-					$l = 0;
-				} // for
-				$m = 0;
-			}// else if
 
-			if ($k % 2 == 0)
-				$d += $A[0][$k] * self::detMatrix($n-1, $tmp);
-			else
-				$d -= $A[0][$k] * self::detMatrix($n-1, $tmp);
+    public static function gaussPartialPivot($l, $A, $n)
+    {
+        $max = $A[$l][$l];
+        $i0 = $l;
+        for ($i = $l; $i < $n; $i++) {
+            if ($A[$i][$l] > $max) {
+                $i0 = $i;
+                $max = $A[$i][$l];
+            }
+        }
+        if ($l != $i0) {
+            $A = self::swapLines($A, $i0, $l, $n);
+        }
+        return $A;
 
-		}//for
-		return $d;
-	}
+    }
 
-	// get inverse Matrix
-	private static function inverseMatrix($n, $A) {
-		$tmp = array_fill(0, $n, null);
-		// we need to get the determinat of the matrix first
-		$det = self::detMatrix($n, $A);
-		// get the transpose of the matrix
-		$trans = self::getTransposed($A);
-		// in order to computhe the adj of the matrix we need to pass
-		// it the trans
-		$adjuncta = self::getAdj($trans, $n);
 
-		// return it with the special form
 
-		$aux = 1 / $det;
-
-		for($i=0; $i<$n; $i++) {
-			for($j=0; $j<$n; $j++) {
-				$tmp[$i][$j] = $aux * $A[$i][$j];
-			}
-		}
-
-		return $tmp;
-	}
-
-	private static function getAdj($trans, $n){
-		$tmp = array_fill(0, $n-1, null);
-
-		for($i=0; $i<$n; $i++) {
-			for($j=0; $j<$n; $j++) {
-				$tmp[$i][$j] = pow(-1, ($i+$j)+1 ) * $trans[$i][$j];
-			}
-		}
-
-		return $tmp;
-	}
-
-	private static function multiplyMatrix($A, $B, $n) {
-		$i=0; $j=0; $k=0; $l=0;
-		$sum = 0;
-		$tmp = array_fill(0, $n, null);
-
-		for($i=0; $i<$n; $i++) {
-			for($j=0; $j<$n; $j++) {
-				for($k=0; $k<$n; $k++) {
-					$sum += $A[$i][$k] * $B[$k][$j];
-				}
-				$tmp[$i][$j] = $sum;
-				$sum = 0;
-			}
-		}
-
-		return $tmp;
-	}
-
-	public static function gaussPartialPivot($matrix) {
-		$n = count($matrix[0]);
-
-		for ($k = 0; $k < $n;  $n++) { //for k = 1:n
-
-			$max = 0; //used to track pivot point
-
-			if (($k + 1) < $n) { //zero indexed, so it checks if there is another row
-				$max = self::findLargestPivot($matrix, $k); //choose ip(k) such that |A(ip,k)|= max{|A(i,k)|: i >= k}
-			}
-
-			if ($max == -1) { // if A(ipk,k) = 0
-				return $matrix;
-			} else if ($max != 0) { //wap A(k,k),..., A(k,n) with A(ipk,k),..., A(ipk,n)
-				$matrix = self::swap($matrix, $k, $max); 
-			}
-
-			for ($i = $k + 1; $i < $n; $i++) { //for i = k + 1:n
-				$matrix[$i][$k] = $matrix[$i][$k] / $matrix[$k][$k]; //A(i,k) = A(i,k)/A(k,k)
-				for ($j = $k + 1; $j < $n; $j++) { //for j = k + 1:n
-					$matrix[$i][$j] = $matrix[$i][$j] - $matrix[$i][$k] * $matrix[$k][$j]; //A(i,j) = A(i,j) - A(i,k) * A(k,j)
-				}
-			}
-
-		}
-		return $matrix;
-		
-	}
-
-	public static function findLargestPivot($matrix, $col) {
-		$maxRow = - 1;
-		$maxValue = 0;
-		$n = count($matrix[0]);
-		for($row = $col; $row <$n; $row++) {
-			if (abs($matrix[$row][$col]) > $maxValue && abs($matrix[$row][$col]) > 0) {
-				$maxRow = $row;
-				$maxValue = abs($matrix[$row][$col]);
-			}
-		}
-		return $maxRow;
-	}
-
-	public static function swap($matrix, $col, $row) {
-		$n = count($matrix[$col]);
-
-		for ($i = $col; $i < $n; $i++) {
-			$temp = $matrix[$col][$i];
-			$matrix[$col][$i] = $matrix[$row][$i];
-			$matrix[$row][$i] = $temp;
-		}
-
-		return $matrix;
-	}
 }

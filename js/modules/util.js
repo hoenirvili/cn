@@ -148,26 +148,28 @@ var util = (function () {
 		h3: {
 			ex1: {
 				input:{
-					"n": {
-						type:"text",
-						name:"n"
-					},
-					"A":{
-						type:'textarea',
-						name: 'matrice',
-						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
-					},
-					"epsilon":{
-						type:"text",
-						name:"epsilon",
-						placeholder: "10 to (-) what power?"
-					}
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[1,0,2]\n[0,1,0]\n[1,1,1]"
+                    },
 				}
 			},
 			ex2: {
 				input:{
 					"n": {
-						type:"te",
+						type:"text",
 						name:"n"
 					},
 					"A":{

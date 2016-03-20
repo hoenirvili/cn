@@ -145,6 +145,20 @@ class Util
         return sqrt($sum);
     }
 
+    protected static function getNorm1($matrix, $n)
+    {
+        $vector = array();
+        for ($i = 0; $i < $n; $i++) {
+            $max = 0;
+            for ($j = 0; $j < $n; $j++) {
+                if ($matrix[$i][$j] > $max)
+                    $max = $matrix[$i][$j];
+            }
+            $vector[$i] = $max;
+        }
+        return $vector;
+    }
+
     protected static function getTransposed($matrix)
     {
         $m = self::getMatrixColumnLength($matrix);
@@ -206,6 +220,77 @@ class Util
             $det *= $squarematrix[$i][$i];
         }
         return $det;
+    }
+
+    protected static function appendIn($A, $n)
+    {
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                if ($j == $i)
+                    $A[$i][$j + $n] = 1;
+                else
+                    $A[$i][$j + $n] = 0;
+            }
+        }
+        return $A;
+    }
+
+    protected static function divideIn($Ae, $n)
+    {
+        $A = array();
+        $B = array();
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                $A[$i][$j] = $Ae[$i][$j];
+                $B[$i][$j] = $Ae[$j][$i+$n];
+            }
+        }
+        return array($A, $B);
+    }
+
+    public static function swapLines($A, $line1, $line2, $n)
+    {
+        for ($i = 0; $i < $n; $i++) {
+            {
+                $temp = $A[$line1][$i];
+                $A[$line1][$i] = $A[$line2][$i];
+                $A[$line2][$i] = $temp;
+            }
+
+        }
+        return $A;
+    }
+
+    public static function multiplyMatrixes($A, $B)
+    {
+        $r = count($A);
+        $c = count($B[0]);
+        $in = count($B);
+        $C = array();
+        if ($in != count($A[0])) {
+            return 0;
+        }
+        for ($ri = 0; $ri < $r; $ri++) {
+            for ($ci = 0; $ci < $c; $ci++) {
+                $C[$ri][$ci] = 0.0;
+                for ($j = 0; $j < $in; $j++) {
+                    $C[$ri][$ci] += $A[$ri][$j] * $B[$j][$ci];
+                }
+            }
+        }
+        return $C;
+
+    }
+
+    public static function subtractMatrices($A, $B, $n)
+    {
+        $C = array();
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                $C[$i][$j] = $A[$i][$j] - $B[$i][$j];
+            }
+        }
+        return $C;
     }
 
 
