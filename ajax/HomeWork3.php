@@ -47,10 +47,15 @@ class HomeWork3 extends Util {
 		$A = self::getMatrixFromString($_POST['matrice']);
 		// verifica daca inputurile sunt numerice
 		// $n
+		echo "test";
 		if (is_numeric($n)) {
 			$gauss 		= self::GaussPivot($A, $n);
-			//TODO
-			// $gaussDet 	= self::detMatrix($n, $gauss);
+			$gaussOpt   = self::gaussPartialPivot($A);
+
+			var_dump($gaussOpt);
+			var_dump($gauss);
+
+			//$gaussDet 	= self::detMatrix($n, $gauss);
 			$detA 		= self::detMatrix($n, $A);
 			echo json_encode(
 				array(
@@ -58,8 +63,8 @@ class HomeWork3 extends Util {
 					"A" 		=> self::getStringFromArray($A),
 					"detA" 		=> $detA,
 					"gauss" 	=> self::getStringFromArray($gauss),
-					"detGauss" 	=> $gaussDet,
-					"egale" 	=> ($gaussDet == $detA)? "Da": "Nu",
+					//"detGauss" 	=> $gaussDet,
+					//"egale" 	=> ($gaussDet == $detA)? "Da": "Nu",
 				)
 			);
 		}
@@ -202,7 +207,7 @@ class HomeWork3 extends Util {
 
 		return $tmp;
 	}
-
+	
 	private static function multiplyMatrix($A, $B, $n) {
 		$i=0; $j=0; $k=0; $l=0;
 		$sum = 0;
@@ -220,5 +225,59 @@ class HomeWork3 extends Util {
 
 		return $tmp;
 	}
+
+	public static function gaussPartialPivot($matrix) {
+		$n = count($matrix[0]);
+
+		for ($k = 0; $k < $n;  $n++) { //for k = 1:n
+
+			$max = 0; //used to track pivot point
+
+			if (($k + 1) < $n) { //zero indexed, so it checks if there is another row
+				$max = self::findLargestPivot($matrix, $k); //choose ip(k) such that |A(ip,k)|= max{|A(i,k)|: i >= k}
+			}
+
+			if ($max == -1) { // if A(ipk,k) = 0
+				return $matrix;
+			} else if ($max != 0) { //wap A(k,k),..., A(k,n) with A(ipk,k),..., A(ipk,n)
+				$matrix = self::swap($matrix, $k, $max); 
+			}
+
+			for ($i = $k + 1; $i < $n; $i++) { //for i = k + 1:n
+				$matrix[$i][$k] = $matrix[$i][$k] / $matrix[$k][$k]; //A(i,k) = A(i,k)/A(k,k)
+				for ($j = $k + 1; $j < $n; $j++) { //for j = k + 1:n
+					$matrix[$i][$j] = $matrix[$i][$j] - $matrix[$i][$k] * $matrix[$k][$j]; //A(i,j) = A(i,j) - A(i,k) * A(k,j)
+				}
+			}
+
+		}
+		return $matrix;
+		
+	}
+
+	public static function findLargestPivot($matrix, $col) {
+		$maxRow = - 1;
+		$maxValue = 0;
+		$n = count($matrix[0]);
+		for($row = $col; $row <$n; $row++) {
+			if (abs($matrix[$row][$col]) > $maxValue && abs($matrix[$row][$col]) > 0) {
+				$maxRow = $row;
+				$maxValue = abs($matrix[$row][$col]);
+			}
+		}
+		return $maxRow;
+	}
+
+	public static function swap($matrix, $col, $row) {
+		$tmp;
+		$n = count($matrix[$col]);
+
+		for ($i = $col; $i < $n; $i++) {
+			$temp = $matrix[$col][$i];
+			$matrix[$col][$i] = $matrix[$row][$i];
+			$matrix[$row][$i] = $temp;
+		}
+
+		return $matrix;
+	}
 }
-?>
