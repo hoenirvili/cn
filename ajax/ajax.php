@@ -37,13 +37,16 @@ if (isset($_POST['action'])) {
                         HomeWork2::ex4();
                         break;
                 }
-                break;
-            case 3:
-                switch ($_POST['action']) {
-                    case 'ex1':
-                        HomeWork3::ex1();
-                        break;
-                }
-        }
-    }
+				break;
+			case 3:
+				switch($_POST['action']){
+					case 'ex1':
+						HomeWork3::ex1();
+						break;
+					case 'ex2':
+						HomeWork3::ex2();
+						break;
+				}
+		}
+	}
 }

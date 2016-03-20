@@ -2,7 +2,8 @@
 
 var util = (function () {
 
-    // configurari pentru fiecare tema in parte
+
+	// configurari pentru fiecare tema in parte
     var inputCfg = {
         h1: {
             ex1: {
@@ -144,28 +145,40 @@ var util = (function () {
                 }
             }
         },
-        h3: {
-            ex1: {
-                input: {
-                    "n": {
-                        type: "text",
-                        name: "n"
-                    },
-                    "A": {
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
-                    },
-                    "epsilon": {
-                        type: "text",
-                        name: "epsilon",
-                        placeholder: "10 to (-) what power?"
-                    }
-                }
-            }
-        }
-    };
-
+		h3: {
+			ex1: {
+				input:{
+					"n": {
+						type:"text",
+						name:"n"
+					},
+					"A":{
+						type:'textarea',
+						name: 'matrice',
+						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+					},
+					"epsilon":{
+						type:"text",
+						name:"epsilon",
+						placeholder: "10 to (-) what power?"
+					}
+				}
+			},
+			ex2: {
+				input:{
+					"n": {
+						type:"te",
+						name:"n"
+					},
+					"A":{
+						type:'textarea',
+						name: 'matrice',
+						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+					}
+				}
+			}
+		}
+	};
     // metode publice ale modulului util
     return {
         inputCfg: inputCfg

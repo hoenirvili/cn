@@ -6,22 +6,22 @@ var homework1 = (function (template, $) {
     // exercitiu 1
     var ex1 = function () {
         $.ajax({
-            type: "POST",
-            url: 'ajax/ajax.php',
-            dataType: "json",
-            data: {
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
 				action: 'ex1',
 				homework: 1
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex1 ================");
-                console.log("Cel mai mic numar pozitiv\t= ", data['lowest']);
-                console.log("Numarul de pasi\t\t\t= ", data['step']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex1 ================");
+				console.log("Cel mai mic numar pozitiv\t= ", data['lowest']);
+				console.log("Numarul de pasi\t\t\t= ", data['step']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
-                template.tables.base();
-                template.tables.content(
+				template.tables.base();
+				template.tables.content(
                     ["Cel mai mic numar pozitiv", "Numarul de pasi"],
                     [data['lowest'], data['step']]);
             }
@@ -33,22 +33,22 @@ var homework1 = (function (template, $) {
     var ex2 = function () {
 
         $.ajax({
-            type: "POST",
-            url: 'ajax/ajax.php',
-            dataType: "json",
-            data: {
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
 				action: 'ex2',
 				homework: 1
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex2 ================");
-                console.log("Numarul de pasi\t = ", data['step']);
-                console.log("Operand stanga\t = ", data['leftOperand']);
-                console.log("Operand dreapta\t =", data['rightOperand']);
-                console.log("a\t\t = ", data['a']);
-                console.log("b\t\t = ", data['c']);
-                console.log("c\t\t = ", data['c']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex2 ================");
+				console.log("Numarul de pasi\t = ", data['step']);
+				console.log("Operand stanga\t = ", data['leftOperand']);
+				console.log("Operand dreapta\t =", data['rightOperand']);
+				console.log("a\t\t = ", data['a']);
+				console.log("b\t\t = ", data['c']);
+				console.log("c\t\t = ", data['c']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
                 template.tables.base();
@@ -59,7 +59,7 @@ var homework1 = (function (template, $) {
         });
 
     };
-	
+
     //exercitiu 3
     var ex3 = function () {
 
@@ -74,17 +74,17 @@ var homework1 = (function (template, $) {
 				p: $('input[name="p"]').val()
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex3 ================");
-                console.log("Tan Lentz computed\t = ", data['aprox']);
-                console.log("Tan computed\t\t = ", data['tan']);
-                console.log("pi\t\t\t = ", data['pi']);
-                console.log("e\t\t\t = ", data['e']);
-                console.log("x\t\t\t = ", data['x']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex3 ================");
+				console.log("Tan Lentz computed\t = ", data['aprox']);
+				console.log("Tan computed\t\t = ", data['tan']);
+				console.log("pi\t\t\t = ", data['pi']);
+				console.log("e\t\t\t = ", data['e']);
+				console.log("x\t\t\t = ", data['x']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
-                template.tables.base();
-                template.tables.content(
+				template.tables.base();
+				template.tables.content(
                     ["Tangenta Lentz", "Tangenta php", "pi", "e", "x"],
                     [data['aprox'], data['tan'], data['pi'], data['e'], data['x']]);
             }
@@ -104,14 +104,14 @@ var homework1 = (function (template, $) {
                 matrice: $('textarea[name="matrice"]').val()
             },
             success: function (data) {
-                console.log("===========  Homework1 - Ex4 ================");
-                console.log("Vector\t\t = ", data['vector']);
-                console.log("Matrice\t\t = ", data['matrice']);
-                console.log("Vector Fisier\t = ", data['vectorf']);
-                console.log("Matrice Fisier\t = ", data['matricef']);
-                console.log("Vector Random\t = ", data['vectorr']);
-                console.log("Matrice Random\t = ", data['matricer']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex4 ================");
+				console.log("Vector\t\t = ", data['vector']);
+				console.log("Matrice\t\t = ", data['matrice']);
+				console.log("Vector Fisier\t = ", data['vectorf']);
+				console.log("Matrice Fisier\t = ", data['matricef']);
+				console.log("Vector Random\t = ", data['vectorr']);
+				console.log("Matrice Random\t = ", data['matricer']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
                 template.tables.base();
@@ -134,5 +134,6 @@ var homework1 = (function (template, $) {
     };
 // importam modulele folosite in modulul homework1
 })(templateSystem, jQuery);
+
 // exportam modulul homework1
 module.exports = homework1;

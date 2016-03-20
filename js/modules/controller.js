@@ -47,6 +47,8 @@ var controller = (function (h1, h2, h3) {
 						h3.Ex1();
 						break;
 					case '2':
+						h3.Ex2();
+						break;
 					case '3':
 					template.messages.orange("This homework is not implemented yet");
 					break;
