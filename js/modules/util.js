@@ -61,7 +61,21 @@ var util = (function () {
 						placeholder: "[x,y][x,y]"
 					},
 				}
-			}
+			},
+            ex2: {
+                input: {
+                    "A":{
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]"
+                    },
+                    "epsilon": {
+                        type:"text",
+                        name:"epsilon",
+                        placeholder: "10 to which power?"
+                    },
+                }
+            }
 		}
 	};
 
