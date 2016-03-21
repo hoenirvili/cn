@@ -14,9 +14,9 @@ var d = require('./dom.js');
 "use strict";
 var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
-
+var h3 = require("./homework3.js");
 // here we import all our homeworks modules
-var controller = (function (h1, h2) {
+var controller = (function (h1, h2, h3) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -46,17 +46,26 @@ var controller = (function (h1, h2) {
 						h2.Ex2();
 						break;
 					case '3':
-						template.messages.orange("This homework is not implemented yet");
 						h2.Ex3();
 						break;
 					case '4':
-						template.messages.orange("This homework is not implemented yet");
+                        h2.Ex4();
 						break;
 				}
 				break;
 			// tema 3
 			case '3':
-			template.messages.orange("This homework is not implemented yet");
+				switch(nX) {
+					case '1':
+						h3.Ex1();
+						break;
+					case '2':
+						h3.Ex2();
+						break;
+					case '3':
+					template.messages.orange("This homework is not implemented yet");
+					break;
+				}
 			break;
 			// tema 4
 			case '4':
@@ -83,11 +92,11 @@ var controller = (function (h1, h2) {
 		fn : fn
 	};
 
-})(h1,h2);
+})(h1,h2,h3);
 
 module.exports = controller;
 
-},{"./homework1.js":4,"./homework2.js":5}],3:[function(require,module,exports){
+},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6}],3:[function(require,module,exports){
 "use strict";
 
 // Toate modulele care le vom importa in modulul dom
@@ -129,6 +138,7 @@ var dom = (function ($, controller, template, utils) {
 		var inputs, // tempalte pentru input in functie de tema
 			key, // index pentru atribute din util.inputCfg
 			inp, // container pentru obiecte din util.inputCfg
+            value,// predefined value
 			placeholder; // stocheaza atributul placeholder din util.inputCfg
 
 		// adaugam valorile corespunzatoare
@@ -149,19 +159,25 @@ var dom = (function ($, controller, template, utils) {
 					placeholder = " placeholder='" + inp['placeholder'] + "' ";
 				else
 					placeholder = "";
+
+                if (inp['value'])
+                    value = inp['value'];
+                else
+                    value = "";
+
 				// daca containerul e de tip text
 				if (inp['type'] === 'text')
 					// introdu in html
 					$input.append(
 						'<label>' + key + '</label>'+
-						'<input '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
+						'<input value="'+value+'" '+ placeholder + ' class="form-control" name="' + inp['name'] + '" type="' + inp['type'] + '"/>'
 					);
 				// daca containerul e de tip textarea
 				if (inp['type'] === 'textarea')
 					// introdu in html
 					$input.append(
 					 '<label>' + key + '</label><textarea '+placeholder+
-					' class="form-control" name="' + inp['name'] + '"></textarea>'
+					' class="form-control" name="' + inp['name'] + '">'+value+'</textarea>'
 					);
 			}// for
 		}// if
@@ -194,7 +210,7 @@ var dom = (function ($, controller, template, utils) {
 // exportam modulul dom
 module.exports = dom;
 
-},{"./controller.js":2,"./template.js":6,"./util.js":7}],4:[function(require,module,exports){
+},{"./controller.js":2,"./template.js":7,"./util.js":8}],4:[function(require,module,exports){
 "use strict";
 
 var templateSystem 	= require('./template.js');
@@ -203,22 +219,22 @@ var homework1 = (function (template, $) {
     // exercitiu 1
     var ex1 = function () {
         $.ajax({
-            type: "POST",
-            url: 'ajax/ajax.php',
-            dataType: "json",
-            data: {
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
 				action: 'ex1',
 				homework: 1
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex1 ================");
-                console.log("Cel mai mic numar pozitiv\t= ", data['lowest']);
-                console.log("Numarul de pasi\t\t\t= ", data['step']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex1 ================");
+				console.log("Cel mai mic numar pozitiv\t= ", data['lowest']);
+				console.log("Numarul de pasi\t\t\t= ", data['step']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
-                template.tables.base();
-                template.tables.content(
+				template.tables.base();
+				template.tables.content(
                     ["Cel mai mic numar pozitiv", "Numarul de pasi"],
                     [data['lowest'], data['step']]);
             }
@@ -230,22 +246,22 @@ var homework1 = (function (template, $) {
     var ex2 = function () {
 
         $.ajax({
-            type: "POST",
-            url: 'ajax/ajax.php',
-            dataType: "json",
-            data: {
+			type: "POST",
+			url: 'ajax/ajax.php',
+			dataType: "json",
+			data: {
 				action: 'ex2',
 				homework: 1
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex2 ================");
-                console.log("Numarul de pasi\t = ", data['step']);
-                console.log("Operand stanga\t = ", data['leftOperand']);
-                console.log("Operand dreapta\t =", data['rightOperand']);
-                console.log("a\t\t = ", data['a']);
-                console.log("b\t\t = ", data['c']);
-                console.log("c\t\t = ", data['c']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex2 ================");
+				console.log("Numarul de pasi\t = ", data['step']);
+				console.log("Operand stanga\t = ", data['leftOperand']);
+				console.log("Operand dreapta\t =", data['rightOperand']);
+				console.log("a\t\t = ", data['a']);
+				console.log("b\t\t = ", data['c']);
+				console.log("c\t\t = ", data['c']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
                 template.tables.base();
@@ -256,7 +272,7 @@ var homework1 = (function (template, $) {
         });
 
     };
-	
+
     //exercitiu 3
     var ex3 = function () {
 
@@ -271,17 +287,17 @@ var homework1 = (function (template, $) {
 				p: $('input[name="p"]').val()
 			},
             success: function (data) {
-                console.log("===========  Homework1 - Ex3 ================");
-                console.log("Tan Lentz computed\t = ", data['aprox']);
-                console.log("Tan computed\t\t = ", data['tan']);
-                console.log("pi\t\t\t = ", data['pi']);
-                console.log("e\t\t\t = ", data['e']);
-                console.log("x\t\t\t = ", data['x']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex3 ================");
+				console.log("Tan Lentz computed\t = ", data['aprox']);
+				console.log("Tan computed\t\t = ", data['tan']);
+				console.log("pi\t\t\t = ", data['pi']);
+				console.log("e\t\t\t = ", data['e']);
+				console.log("x\t\t\t = ", data['x']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
-                template.tables.base();
-                template.tables.content(
+				template.tables.base();
+				template.tables.content(
                     ["Tangenta Lentz", "Tangenta php", "pi", "e", "x"],
                     [data['aprox'], data['tan'], data['pi'], data['e'], data['x']]);
             }
@@ -301,14 +317,14 @@ var homework1 = (function (template, $) {
                 matrice: $('textarea[name="matrice"]').val()
             },
             success: function (data) {
-                console.log("===========  Homework1 - Ex4 ================");
-                console.log("Vector\t\t = ", data['vector']);
-                console.log("Matrice\t\t = ", data['matrice']);
-                console.log("Vector Fisier\t = ", data['vectorf']);
-                console.log("Matrice Fisier\t = ", data['matricef']);
-                console.log("Vector Random\t = ", data['vectorr']);
-                console.log("Matrice Random\t = ", data['matricer']);
-                console.log("=============================================");
+				console.log("===========  Homework1 - Ex4 ================");
+				console.log("Vector\t\t = ", data['vector']);
+				console.log("Matrice\t\t = ", data['matrice']);
+				console.log("Vector Fisier\t = ", data['vectorf']);
+				console.log("Matrice Fisier\t = ", data['matricef']);
+				console.log("Vector Random\t = ", data['vectorr']);
+				console.log("Matrice Random\t = ", data['matricer']);
+				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
                 template.tables.base();
@@ -331,10 +347,11 @@ var homework1 = (function (template, $) {
     };
 // importam modulele folosite in modulul homework1
 })(templateSystem, jQuery);
+
 // exportam modulul homework1
 module.exports = homework1;
 
-},{"./template.js":6}],5:[function(require,module,exports){
+},{"./template.js":7}],5:[function(require,module,exports){
 "use strict";
 if (!window.cfg) {
     window.cfg = {};
@@ -389,12 +406,14 @@ var homework2 = (function(template, $) {
             data: {
                 action:		'ex2',
                 homework:	2,
+                n:			$('input[name="n"]').val(),
                 epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
                 matrice:	$('textarea[name="matrice"]').val()
             },
             // procesam aici raspunsul
             success: function(data) {
-                console.log("===========  Homework2 - Ex1 ================");
+                console.log("===========  Homework2 - Ex2 ================");
                 console.log("A \t= ", data['A']);
                 console.log("Precizia \t\t\t= ", data['epsilon']);
                 console.log("Q \t\t= ", data['Q']);
@@ -412,11 +431,82 @@ var homework2 = (function(template, $) {
 
 	var ex3 = function() {
 
-
+// trimite un POST request
+        // body-ul va contine data serializata
+        // json cu numarul execitiului si numarul temei
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:		'ex3',
+                homework:	2,
+                n:			$('input[name="n"]').val(),
+                epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
+                matrice:	$('textarea[name="matrice"]').val()
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework2 - Ex3 ================");
+                console.log("A \t= ", data['A']);
+                console.log("Precizia \t\t\t= ", data['epsilon']);
+                console.log("Q \t\t= ", data['Q']);
+                console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
+                console.log("Qlib \t\t= ", data['Qlib']);
+                console.log("Rlib \t\t= ", data['rlib']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("TimeH(n=25) \t\t= ", data['timeH']);
+                console.log("TimeQr(n=25) \t\t= ", data['timeQr']);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A","x","xlib","timeH(n=25)","timeQR(n=25)"],
+                    [data['A'],data["x"],data["xlib"],data['timeH'],data['timeQr']]);
+            }
+        });
 	};
 
 	var ex4 = function() {
-
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:		'ex4',
+                homework:	2,
+                n:			$('input[name="n"]').val(),
+                epsilon:	$('input[name="epsilon"]').val(),
+                arr:		$('textarea[name="array"]').val(),
+                matrice:	$('textarea[name="matrice"]').val()
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework2 - Ex4 ================");
+                console.log("A \t= ", data['A']);
+                console.log("Precizia \t\t\t= ", data['epsilon']);
+                console.log("Q \t\t= ", data['Q']);
+                console.log("R \t\t= ", data['r']);
+                console.log("X \t\t= ", data['x']);
+                console.log("Qlib \t\t= ", data['Qlib']);
+                console.log("Rlib \t\t= ", data['rlib']);
+                console.log("Xlib \t\t= ", data['xlib']);
+                console.log("norm1 \t\t= ", data['norm1']);
+                console.log("norm2 \t\t= ", data['norm2']);
+                console.log("norm3 \t\t= ", data['norm3']);
+                console.log("norm4 \t\t= ", data['norm4']);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A","x","Norm","Norm 2","Norm 3","Norm 4"],
+                    [data['A'],data["x"],data["norm1"],data['norm2'],data['norm3'],data['norm4']]);
+            }
+        });
 	};
 
 	return {
@@ -430,7 +520,82 @@ var homework2 = (function(template, $) {
 
 module.exports = homework2;
 
-},{"./template.js":6}],6:[function(require,module,exports){
+},{"./template.js":7}],6:[function(require,module,exports){
+"use strict";
+var tS = require('./template.js');
+
+var homework3 = (function(template, $) {
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/ajax.php',
+			dataType: 'json',
+			data: {
+				action:		'ex1',
+				homework:	3,
+				n:			$('input[name="n"]').val(),
+				epsilon:	$('input[name="epsilon"]').val(),
+				matrice:	$('textarea[name="matrice"]').val()
+			},
+			// procesam aici raspunsul
+			success: function(data) {
+                if (data['sts'] == 0) {
+                    console.log("===========  Homework3 - Ex1 ================");
+                    console.log("N\t= ", data['n']);
+                    console.log("Precizia \t\t\t= ", data['epsilon']);
+                    console.log("A \t\t= ", data['A']);
+                    console.log("Ae \t\t= ", data['Ae']);
+                    console.log("Inv \t\t= ", data["invA"]);
+                    console.log("=============================================");
+                    template.messages.green("Successfull compiled");
+                    template.messages.green("Check console and bottom page");
+                    template.tables.base();
+                    template.tables.content(
+                        ["N", "Precizia", "A", "Ae", "Inv"],
+                        [data['n'], data['epsilon'], data['A'], data['Ae'], data["invA"]]);
+                }else
+                {
+                    console.log("===========  Homework3 - Ex1 ================");
+                    console.log("N\t= ", data['n']);
+                    console.log("Precizia \t\t\t= ", data['epsilon']);
+                    console.log("A \t\t= ", data['A']);
+                    console.log("Ae \t\t= ", data['Ae']);
+                    console.log("Inv \t\t= ", data["invA"]);
+                    console.log("Det \t\t= ", data["det"]);
+                    console.log("Norm \t\t= ", data["norm"]);
+                    console.log("=============================================");
+                    template.messages.green("Successfull compiled");
+                    template.messages.green("Check console and bottom page");
+                    template.tables.base();
+                    template.tables.content(
+                        ["N", "Precizia", "A", "Ae", "Inv","Det","Norm"],
+                        [data['n'], data['epsilon'], data['A'], data['Ae'], data["invA"],data["det"],data["norm"]]);
+                }
+            }
+
+		});
+	};
+
+	var ex2 = function() {
+
+	};
+	var ex3 = function() {
+
+	};
+	return {
+		Ex1: ex1,
+		Ex2: ex2,
+		Ex3: ex3
+	};
+
+})(tS,jQuery);
+// export module
+module.exports = homework3;
+
+},{"./template.js":7}],7:[function(require,module,exports){
 "use strict";
 
 var template = (function($) {
@@ -522,11 +687,12 @@ var template = (function($) {
 
 module.exports = template;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 var util = (function () {
-	
+
+
 	// configurari pentru fiecare tema in parte
     var inputCfg = {
         h1: {
@@ -539,13 +705,12 @@ var util = (function () {
             ex3: {
                 input: {
                     "x": {
-                        type:"text",
-                        name:"x"
+                        type: "text",
+                        name: "x"
                     },
-                    "p":
-                    {
-                        type:"text",
-                        name:"p"
+                    "p": {
+                        type: "text",
+                        name: "p"
                     }
                 }
             },
@@ -554,63 +719,165 @@ var util = (function () {
                     Vector: {
                         type: 'textarea',
                         name: 'array',
-                        placeholder:"[x,y,z]"
+                        placeholder: "[x,y,z]"
                     },
                     Matrice: {
                         type: 'textarea',
                         name: 'matrice',
-                        placeholder:"[x,y][x,y]"
+                        placeholder: "[x,y][x,y]"
                     }
                 }
             },
         },//h1
-		h2: {
+        h2: {
+            ex1: {
+                input: {
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value: "[1,3,4]"
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+                }
+            },
+            ex2: {
+                input: {
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value: "[1,3,4]"
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+                }
+            },
+            ex3: {
+                input: {
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value: "[1,3,4]"
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+                }
+            },
+            ex4: {
+                input: {
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "s": {
+                        type: 'textarea',
+                        name: 'array',
+                        placeholder: "[x,y,z]",
+                        value: "[1,3,4]"
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[2,2,4]\n[2,4,2]\n[4,4,2]"
+                    },
+                }
+            }
+        },
+		h3: {
 			ex1: {
-				input: {
+				input:{
+                    "n": {
+                        type: "text",
+                        name: "n",
+                        value: 3
+                    },
+                    "epsilon": {
+                        type: "text",
+                        name: "epsilon",
+                        value: 2
+                    },
+                    "matrice patratica": {
+                        type: 'textarea',
+                        name: 'matrice',
+                        placeholder: "[x,y][x,y]",
+                        value: "[1,0,2]\n[0,1,0]\n[1,1,1]"
+                    },
+				}
+			},
+			ex2: {
+				input:{
 					"n": {
 						type:"text",
 						name:"n"
 					},
-					"epsilon": {
-						type:"text",
-						name:"epsilon"
-					},
-					"s": {
-						type: 'textarea',
-						name: 'array',
-						placeholder: "[x,y,z]"
-					},
-					"matrice patratica":{
-						type: 'textarea',
+					"A":{
+						type:'textarea',
 						name: 'matrice',
-						placeholder: "[x,y][x,y]"
-					},
+						placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]",
+					}
 				}
-			},
-            ex2: {
-                input: {
-                    "A":{
-                        type: 'textarea',
-                        name: 'matrice',
-                        placeholder: "[4,2,2]\n[2,4,2]\n[2,2,4]"
-                    },
-                    "epsilon": {
-                        type:"text",
-                        name:"epsilon",
-                        placeholder: "10 to which power?"
-                    },
-                }
-            }
+			}
 		}
 	};
-
-	// metode publice ale modulului util
-	return {
-		inputCfg: inputCfg
-	};
+    // metode publice ale modulului util
+    return {
+        inputCfg: inputCfg
+    };
 })();
 
 // exportam modulul util
 module.exports = util;
 
-},{}]},{},[3,1,2,6,7,4,5]);
+},{}]},{},[3,1,2,7,8,4,5,6]);
