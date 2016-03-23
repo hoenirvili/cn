@@ -116,8 +116,8 @@ class SinglyList implements LList{
 		// number of nodes that our LinklyList will store
 		$this->count = $count;
 		// create first entry on our list;
-		$this->$node = new Node($i, 1, null);
-		$tail = $node;
+		$node = new Node();
+		$this->tail = $node;
 
 		// traverse all nodes creating one by one
 		for ($i = 1; $i < $this->count; $i++) {
@@ -128,7 +128,7 @@ class SinglyList implements LList{
 		}
 
 		// save the current, last inserted node.
-		$head = $node;
+		$this->head = $node;
 	}
 
 	/**

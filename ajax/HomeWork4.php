@@ -2,17 +2,14 @@
 
 include_once("List.php");
 
-class HomeWork4 extends Node {
+class HomeWork4 extends SinglyList {
 	public static function ex1() {
 		header('Content-Type: application/json');
 
-		// while($crawl !== null) {
-		// 	echo "Value ".$crawl->Value();
-		// 	echo "Column ".$crawl->Column();
-		// 	$crawl = $crawl->Next();
-		// }
+		$list = new SinglyList(5);
 
-		// $node->$next->next = &new Node(3, null);
+		var_dump($list);
+
 
 
 		echo json_encode(array(
