@@ -15,8 +15,10 @@ var d = require('./dom.js');
 var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 var h3 = require("./homework3.js");
+var h4 = require("./homework4.js");
+
 // here we import all our homeworks modules
-var controller = (function (h1, h2, h3) {
+var controller = (function (h1, h2, h3, h4) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -69,7 +71,11 @@ var controller = (function (h1, h2, h3) {
 			break;
 			// tema 4
 			case '4':
-			template.messages.orange("This homework is not implemented yet");
+				switch(nX) {
+					case '1':
+						h4.Ex1();
+						break;
+				}
 			break;
 			// tema 5
 			case '5':
@@ -92,11 +98,11 @@ var controller = (function (h1, h2, h3) {
 		fn : fn
 	};
 
-})(h1,h2,h3);
+})(h1,h2,h3, h4);
 
 module.exports = controller;
 
-},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6}],3:[function(require,module,exports){
+},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6,"./homework4.js":7}],3:[function(require,module,exports){
 "use strict";
 
 // Toate modulele care le vom importa in modulul dom
@@ -210,7 +216,7 @@ var dom = (function ($, controller, template, utils) {
 // exportam modulul dom
 module.exports = dom;
 
-},{"./controller.js":2,"./template.js":7,"./util.js":8}],4:[function(require,module,exports){
+},{"./controller.js":2,"./template.js":8,"./util.js":9}],4:[function(require,module,exports){
 "use strict";
 
 var templateSystem 	= require('./template.js');
@@ -351,7 +357,7 @@ var homework1 = (function (template, $) {
 // exportam modulul homework1
 module.exports = homework1;
 
-},{"./template.js":7}],5:[function(require,module,exports){
+},{"./template.js":8}],5:[function(require,module,exports){
 "use strict";
 if (!window.cfg) {
     window.cfg = {};
@@ -520,7 +526,7 @@ var homework2 = (function(template, $) {
 
 module.exports = homework2;
 
-},{"./template.js":7}],6:[function(require,module,exports){
+},{"./template.js":8}],6:[function(require,module,exports){
 "use strict";
 var tS = require('./template.js');
 
@@ -542,7 +548,7 @@ var homework3 = (function(template, $) {
 			},
 			// procesam aici raspunsul
 			success: function(data) {
-                if (data['sts'] == 0) {
+                if (data['sts'] === 0) {
                     console.log("===========  Homework3 - Ex1 ================");
                     console.log("N\t= ", data['n']);
                     console.log("Precizia \t\t\t= ", data['epsilon']);
@@ -595,7 +601,46 @@ var homework3 = (function(template, $) {
 // export module
 module.exports = homework3;
 
-},{"./template.js":7}],7:[function(require,module,exports){
+},{"./template.js":8}],7:[function(require,module,exports){
+"use strict";
+var ts = require("./template.js");
+
+var h4 = (function(template, $){
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/ajax.php',
+			dataType: 'json',
+			data: {
+				action:	'ex1',
+				homework:	4
+			},
+			// procesam aici raspunsul
+			success: function(data) {
+				console.log("===========  Homework4 - Ex1 ================");
+				console.log("some_param\t= ", data['some_param']);
+				console.log("=============================================");
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
+				template.tables.base();
+				template.tables.content(
+					["Mesajul primit"],
+					[data["some_param"]]);
+			}
+		});
+	};
+
+	return {
+		Ex1: ex1
+	};
+})(ts, jQuery);
+
+module.exports = h4;
+
+},{"./template.js":8}],8:[function(require,module,exports){
 "use strict";
 
 var template = (function($) {
@@ -687,7 +732,7 @@ var template = (function($) {
 
 module.exports = template;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 var util = (function () {
@@ -869,6 +914,13 @@ var util = (function () {
 					}
 				}
 			}
+		},
+		h4: {
+			ex1: {
+				input:{
+					
+				}
+			}
 		}
 	};
     // metode publice ale modulului util
@@ -880,4 +932,4 @@ var util = (function () {
 // exportam modulul util
 module.exports = util;
 
-},{}]},{},[3,1,2,7,8,4,5,6]);
+},{}]},{},[3,1,2,8,9,4,5,6,7]);

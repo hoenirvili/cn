@@ -19,7 +19,7 @@ var homework3 = (function(template, $) {
 			},
 			// procesam aici raspunsul
 			success: function(data) {
-                if (data['sts'] == 0) {
+                if (data['sts'] === 0) {
                     console.log("===========  Homework3 - Ex1 ================");
                     console.log("N\t= ", data['n']);
                     console.log("Precizia \t\t\t= ", data['epsilon']);

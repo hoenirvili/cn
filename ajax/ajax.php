@@ -1,8 +1,11 @@
 <?php
+
 include_once('libs.php');
 include_once('HomeWork1.php');
 include_once('HomeWork2.php');
 include_once('HomeWork3.php');
+include_once('HomeWork4.php');
+
 if (isset($_POST['action'])) {
     if (isset($_POST['homework'])) {
         switch ($_POST['homework']) {
@@ -44,6 +47,12 @@ if (isset($_POST['action'])) {
 						HomeWork3::ex1();
 						break;
 
+				}
+			case 4:
+				switch($_POST['action']){
+					case 'ex1':
+						HomeWork4::ex1();
+						break;
 				}
 		}
 	}
