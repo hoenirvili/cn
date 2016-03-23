@@ -113,6 +113,9 @@ class SinglyList implements LList{
 	* @param int $count
 	*/
 	public function __construct($count = 1) {
+		if ($count === 0)
+			throw new Exception("Can't make a new LinkedList of 0 elements");
+
 		// number of nodes that our LinklyList will store
 		$this->count = $count;
 		// create first entry on our list;
@@ -137,7 +140,7 @@ class SinglyList implements LList{
 	* @return bool
 	*/
 	public function Empty() {
-		return ($count===0);
+		return ($this->count===0);
 	}
 	/**
 	* returns the newest entry node in the singly list
@@ -164,6 +167,25 @@ class SinglyList implements LList{
 		$this->head->SetNext(new Node($value, $column, null));
 		$this->head = $this->head->Next();
 	}
+	/**
+	* search the value, if we found the value return the node
+	* if the value dosen't exist, just return null
+	* @param int $value
+	* @return Node | null
+	*/
+	public function Find($value) {
+		$crawler = $this->tail;
+
+		while ($crawler !== null) {
+			if ($crawler->Value() === $value)
+				return $crawler;
+
+			$crawler = $crawler->Next();
+		}
+
+		return null;
+	}
+
 }
 
 
