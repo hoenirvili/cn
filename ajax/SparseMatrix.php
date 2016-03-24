@@ -5,8 +5,8 @@ class SparseMatrix {
 
 	protected $list;
 
-	public function __construct() {
-		//TODO build sparse(rare) matrix
+	public function __construct(LList $list) {
+		$this->list = $list;
 	}
 
 }
