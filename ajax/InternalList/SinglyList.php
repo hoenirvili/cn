@@ -94,18 +94,17 @@ class SinglyList implements LList{
 	* @param int $column
 	*/
 	public function Append($value = 0, $column = 0) {
-		//TODO FIX IT
 		// if the list is empty
 		if ($this->isEmpty()) {
 			$this->tail = new Node($value, $column, null);
 			$this->head = $this->tail;
 			$this->count ++;
+		} else {
+			// make a new node assigning to the newest node
+			$this->head->SetNext(new Node($value, $column, null));
+			$this->head = $this->head->Next();
+			$this->count++;
 		}
-		
-		// make a new node assigning to the newest node
-		$this->head->SetNext(new Node($value, $column, null));
-		$this->head = $this->head->Next();
-		$this->count++;
 	}
 	/**
 	* search the value, if we found the value return the node

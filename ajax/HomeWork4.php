@@ -1,24 +1,28 @@
 <?php
 
 include_once './InternalList/SinglyList.php';
+include_once './SparseMatrix.php';
 
 use \InternalList\SinglyList;
 
-class HomeWork4 extends SinglyList {
+
+class HomeWork4 {
 	
+	/**
+	 * define all paths
+	 */
+	const	A		= '../input/homework4/a.txt';
+	const 	B		= '../input/homework4/b.txt';
+	const 	AxB		= '../input/homework4/aorib.txt';
+	const 	AplusB	= '../input/homework4/aplusb.txt';
+
+
 	public static function ex1() {
 		header('Content-Type: application/json');
 
+		$matrix = new SparseMatrix(new SinglyList);
 
-		$list = new SinglyList;
-		$list->Append(1, 1);
-		$list->Append(2, 1);
-		$list->Append(6, 3);
-		$list->Append(10, 5);
-		$list->Append(5, 1);
-		$list->Append(111231,31231);
-
-		print_r($list);
+		$matrix->parseFile(self::B);
 
 		echo json_encode(array(
 				"some_param" => "do this"
