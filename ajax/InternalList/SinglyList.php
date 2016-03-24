@@ -1,17 +1,13 @@
 <?php
 
 
-namespace InternalList\SinglyList;
+namespace InternalList;
 
 require_once 'LList.php';
 require_once 'Node.php';
 
-// use the interface
-use \InternalList\LList;
 
-// use the Node object ;
-use \InternalList\Node;
-
+use Exception;
 
 /**
  * SinglyList datatype
@@ -37,6 +33,7 @@ class SinglyList implements LList{
 	* constructor for our internal implementation
 	* of nodes.
 	* @param int $count
+    * @throws Exception "Can't make new Linked list if it's set to 0
 	*/
 	public function __construct($count = 1) {
 		if ($count === 0)
@@ -65,7 +62,7 @@ class SinglyList implements LList{
 	* or false if it contains nodes
 	* @return bool
 	*/
-	public function Empty() {
+	public function isEmpty() {
 		return ($this->count===0);
 	}
 	/**

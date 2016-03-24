@@ -35,4 +35,5 @@ node_modules
 # Javascript autocomplete
 .tern-project
 .jshintrc
-.idea
+
+.idea/

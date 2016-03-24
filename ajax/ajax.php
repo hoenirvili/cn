@@ -48,12 +48,14 @@ if (isset($_POST['action'])) {
 						break;
 
 				}
+                break;
 			case 4:
 				switch($_POST['action']){
 					case 'ex1':
 						HomeWork4::ex1();
 						break;
 				}
+                break;
 		}
 	}
 }

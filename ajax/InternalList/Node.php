@@ -1,6 +1,6 @@
 <?php
 
-namespace InternalList\Node;
+namespace InternalList;
 
 class Node {
 	/**
@@ -23,7 +23,7 @@ class Node {
 	 * default:
 	 * @param $value int = 0;
 	 * @param $column int = 0;
-	 * @param $next pointer to next Node
+	 * @param $next Node pointer to next Node
 	 */
 	public function __construct($value = 0, $column = 0, $next = null) {
 		$this->value 	= $value;
