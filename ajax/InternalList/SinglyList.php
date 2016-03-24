@@ -6,7 +6,6 @@ namespace InternalList;
 require_once 'LList.php';
 require_once 'Node.php';
 
-
 use Exception;
 
 /**
@@ -30,15 +29,18 @@ class SinglyList implements LList{
 	*/
 	private $head = null;
 	/**
-	* constructor for our internal implementation
+	* abstract constructor for our internal implementation  of nodes.
+	*/
+	public function __construct() {}
+	/**
+	* init for our internal implementation
 	* of nodes.
 	* @param int $count
     * @throws Exception "Can't make new Linked list if it's set to 0
 	*/
-	public function __construct($count = 1) {
+	public function Init($count) {
 		if ($count === 0)
 			throw new Exception("Can't make a new LinkedList of 0 elements");
-
 		// number of nodes that our LinklyList will store
 		$this->count = $count;
 		// create first entry on our list;
@@ -56,14 +58,13 @@ class SinglyList implements LList{
 		// save the current, last inserted node.
 		$this->head = $node;
 	}
-
 	/**
 	* returns true if the SInglyList is empty
 	* or false if it contains nodes
 	* @return bool
 	*/
 	public function isEmpty() {
-		return ($this->count===0);
+		return ($this->count === 0);
 	}
 	/**
 	* returns the newest entry node in the singly list
@@ -80,15 +81,31 @@ class SinglyList implements LList{
 		return $this->tail;
 	}
 	/**
+	 * return the length of the singly list
+	 * @return int $count
+	 */
+	public function Count() {
+		return $this->count;
+	}
+	/**
 	* inserts a new node in to the singly list
 	* making a new head.
 	* @param int $value
 	* @param int $column
 	*/
 	public function Append($value = 0, $column = 0) {
+		//TODO FIX IT
+		// if the list is empty
+		if ($this->isEmpty()) {
+			$this->tail = new Node($value, $column, null);
+			$this->head = $this->tail;
+			$this->count ++;
+		}
+		
 		// make a new node assigning to the newest node
 		$this->head->SetNext(new Node($value, $column, null));
 		$this->head = $this->head->Next();
+		$this->count++;
 	}
 	/**
 	* search the value, if we found the value return the node
@@ -97,18 +114,39 @@ class SinglyList implements LList{
 	* @return Node | null
 	*/
 	public function Find($value) {
-		$crawler = $this->tail;
+		$crawler = $this->tail->Next();
 
-		while ($crawler !== null) {
+		if ($this->tail->Value() === $value)
+			return $this->tail;
+
+		if ($this->head->Value() === $value)
+			return $this->head;
+
+		for ($i = 1; $i < $this->count - 1; $i++) {
 			if ($crawler->Value() === $value)
 				return $crawler;
-
 			$crawler = $crawler->Next();
 		}
 
 		return null;
 	}
+	public function FindCol($col) {
+		$crawler = $this->tail->Next();
 
+		if ($this->tail->Column() === $col) {
+			return $this->Column();
+		}
+
+		if ($this->head->Column() === $col) {
+			return $this->Column();
+		}
+
+		for ($i = 0; $i < $this->count; $i++) {
+			if ($crawler->Column() === $col)
+				return $crawler;
+			$crawler = $crawler->Next();
+		}
+	}
 }
 
 

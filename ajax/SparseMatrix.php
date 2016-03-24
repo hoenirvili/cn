@@ -1,5 +1,6 @@
 <?php
 
+namespace Sparse;
 
 class SparseMatrix {
 
