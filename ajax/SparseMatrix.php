@@ -1,8 +1,9 @@
 <?php
+require_once 'InternalList/SinglyList.php';
 
-use \InternalList\LList;
+use InternalList\SinglyList;
 
-class SparseMatrix {
+class SparseMatrix extends SplFixedArray{
 	/**
 	 * Basic type list that implements the LList interface
 	 * @var LList
@@ -17,9 +18,17 @@ class SparseMatrix {
 	 * Use a special list
 	 * @param LList
 	 */
-	public function __construct(LList $list) {
-		$this->list = $list;
-	}
+	private $vector;
+	/**
+	 * SparseMatrix
+	 *
+	 * @param array of LList
+	 */
+	private $matrix;
+	/**
+	 * constructor
+	 */
+	public function __construct() {}
 	/**
 	 * Parse all the file
 	 * reading into the list
@@ -35,8 +44,9 @@ class SparseMatrix {
 			// parse one line
 			self::getN($fp);
 			// parse the rest of the file
-			self::parseEveryLine($fp);
-
+			self::vectorParse($fp);
+			// sparse matrix
+			self::sparseParse($fp);
 			// free mem
 			fclose($fp);
 		} else 
@@ -45,12 +55,48 @@ class SparseMatrix {
 	/**
 	 * @internal
 	 */
-	private function parseEveryLine($fp) {
+	private function vectorParse($fp) {
+		$i = 0;
 		while (!feof($fp)) {
+
+			if ($i === $this->n) 
+				break;
+
 			$line = fgets($fp);
-			echo $line;
+
+			if ( filter_var($line, 
+				FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE) !== null) {
+
+				 $this->vector[$i] = (float)$line;
+				 $i ++;
+			}
 		}
 	}
+	/**
+	 * @internal
+	 */
+	private function sparseParse($fp) {
+		$this->matrix = array();
+		$arr;
+
+		while (!feof($fp)) {
+			$line = fgets($fp);
+			$line = trim($line);
+			if (!$line) continue;
+
+			$arr = explode(',', $line);
+			if (
+				(filter_var($arr[0], FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE)	!== null) &&
+				(filter_var($arr[2], FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE)	!== null))
+				
+				$this->matrix[(int)$arr[1]] = new SinglyList;
+				$this->matrix[(int)$arr[1]]->Append ((float)$arr[0], (int)$arr[2]);
+		}
+		
+		print_r($this->matrix);
+		
+	}
+
 	/**
 	 * @internal
 	 */
@@ -58,12 +104,14 @@ class SparseMatrix {
 		if (!feof($fp)) {
 			$line = fgets($fp);
 			// validate that on the first line we have int
-			if (filter_var($line, FILTER_VALIDATE_INT) !== false) {
-				$this->n = $line;
+			if (filter_var($line, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE) !== null)
+			{
+				$this->n = (int)$line;
 			}
 		}
+		// amke array fixed size
+		$this->vector = new SplFixedArray($this->n);
 	}
 
 }
-
 ?>

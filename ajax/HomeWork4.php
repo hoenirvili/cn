@@ -20,7 +20,7 @@ class HomeWork4 {
 	public static function ex1() {
 		header('Content-Type: application/json');
 
-		$matrix = new SparseMatrix(new SinglyList);
+		$matrix = new SparseMatrix;
 
 		$matrix->parseFile(self::B);
 
