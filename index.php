@@ -1,4 +1,5 @@
-<!doctype html> <html lang="en">
+<!doctype html> 
+<html lang="en">
 <head>
     <title>NC</title>
     <meta name="description" content="Numeric Calculus Homework">
