@@ -5,7 +5,6 @@ include_once './SparseMatrix.php';
 
 use \InternalList\SinglyList;
 
-
 class HomeWork4 {
 	
 	/**
@@ -19,15 +18,16 @@ class HomeWork4 {
 
 	public static function ex1() {
 		header('Content-Type: application/json');
+		// Load files and parse them
+		$a = new SparseMatrix;
+		$b = new SparseMatrix;
+		$a = parseFile(self::A);
+		$b = parseFile(self::B);
 
-		$matrix = new SparseMatrix;
-
-		$matrix->parseFile(self::B);
-
+		
 		echo json_encode(array(
 				"some_param" => "do this"
 		));
 	}
 }
-
 ?>

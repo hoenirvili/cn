@@ -13,7 +13,6 @@ class HomeWork3 extends Util
         $A = self::getMatrixFromString($_POST['matrice']);
         $epsilon = $_POST['epsilon'];
         $Ae = self::appendIn($A, $n);
-
         $gauss=self::GaussElimination($Ae,$n,$epsilon);
         if($gauss[1]) //matrice singulara
         {
