@@ -40,7 +40,27 @@ class SparseMatrix extends SplFixedArray{
 	 * Get Matrix
 	 */
 	public function Matrix() {
-		return $this->vector;
+		return $this->matrix;
+	}
+	/**
+	 * Get the dimenstion
+	 */
+	public function Count() {
+		return $this->n;
+	}
+	/**
+	 * Set Vector
+	 * @param array $v vector holder
+	 */
+	public function SetVector($v) {
+		$this->vector = $v;
+	}
+	/**
+	 * set matrix
+	 * @param Node[] $m array of type Node
+	 */
+	public function SetMatrix($m) {
+		$this->matrix = $m;
 	}
 	/**
 	 * Parse all the file
@@ -64,8 +84,6 @@ class SparseMatrix extends SplFixedArray{
 			fclose($fp);
 		} else 
 			throw new Exception("Can't read this file ". $file);
-		var_dump($this->matrix);
-		// var_dump($this->vector);
 	}
 	/**
 	 * @internal
@@ -92,7 +110,7 @@ class SparseMatrix extends SplFixedArray{
 	private function sparseParse($fp) {
 		$this->matrix = array();
 		$arr;
-
+		$hold = -1;
 		while (!feof($fp)) {
 			$line = fgets($fp);
 			$line = trim($line);
@@ -103,7 +121,10 @@ class SparseMatrix extends SplFixedArray{
 				(filter_var($arr[0], FILTER_VALIDATE_FLOAT, FILTER_NULL_ON_FAILURE)	!== null) &&
 				(filter_var($arr[2], FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE)	!== null))
 				
-				$this->matrix[(int)$arr[1]] = new SinglyList;
+				if($hold !== (int)$arr[1]) {
+					$this->matrix[(int)$arr[1]] = new SinglyList;
+					$hold = (int)$arr[1];
+				}
 				$this->matrix[(int)$arr[1]]->Append((float)$arr[0], (int)$arr[2]);
 		}
 	}
