@@ -133,18 +133,19 @@ class SinglyList implements LList{
 		$crawler = $this->tail->Next();
 
 		if ($this->tail->Column() === $col) {
-			return $this->Column();
+			return $this->tail;
 		}
 
 		if ($this->head->Column() === $col) {
-			return $this->Column();
+			return $this->head;
 		}
 
-		for ($i = 0; $i < $this->count; $i++) {
+		for ($i = 0; $i < $this->count - 1; $i++) {
 			if ($crawler->Column() === $col)
 				return $crawler;
 			$crawler = $crawler->Next();
 		}
+		return null;
 	}
 }
 
