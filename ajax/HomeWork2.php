@@ -1,7 +1,6 @@
 <?php
 require_once("Util.php");
 
-
 class HomeWork2 extends Util
 {
     // ex1

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace InternalList;
 
 require_once 'LList.php';
@@ -36,7 +35,7 @@ class SinglyList implements LList{
 	* init for our internal implementation
 	* of nodes.
 	* @param int $count
-    * @throws Exception "Can't make new Linked list if it's set to 0
+	* @throws Exception "Can't make new Linked list if it's set to 0
 	*/
 	public function Init($count) {
 		if ($count === 0)
@@ -98,7 +97,7 @@ class SinglyList implements LList{
 		if ($this->isEmpty()) {
 			$this->tail = new Node($value, $column, null);
 			$this->head = $this->tail;
-			$this->count ++;
+			$this->count++;
 		} else {
 			// make a new node assigning to the newest node
 			$this->head->SetNext(new Node($value, $column, null));

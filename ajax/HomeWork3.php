@@ -1,6 +1,5 @@
 <?php
 
-
 class HomeWork3 extends Util
 {
     public static function Ex1()

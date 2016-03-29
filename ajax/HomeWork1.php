@@ -6,6 +6,7 @@ class HomeWork1 extends Util
     // Exercitiul 1
     public static function ex1()
     {
+		self::
         $u = 1;
         $lowest = $u;
         $step = 0;

@@ -1,5 +1,8 @@
 "use strict";
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var template = (function($) {
 	// messages object for creating
 	// message components
@@ -76,7 +79,8 @@ var template = (function($) {
 			}else {
 				messages.red("Can't construct table");
 			}
-		}
+		},
+	
 	};
 	// exportam toate functiile/obiectele publice
 	return {

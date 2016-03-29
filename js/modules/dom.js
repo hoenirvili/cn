@@ -4,7 +4,10 @@
 var ctrl 	= require('./controller.js');
 var tplate 	= require('./template.js');
 var utils 	= require('./util.js');
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var dom = (function ($, controller, template, utils) {
 	// variabile globale ale modulului
 	var submitButton, 			// butonul de submit

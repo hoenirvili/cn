@@ -1,11 +1,9 @@
 <?php
-
 include_once './InternalList/SinglyList.php';
 include_once './SparseMatrix.php';
 
 use \InternalList\SinglyList;
 use \InternalList\Node;
-
 
 class HomeWork4 {
 	
@@ -17,7 +15,6 @@ class HomeWork4 {
 	const 	AxB		= '../input/homework4/aorib.txt';
 	const 	AplusB	= '../input/homework4/aplusb.txt';
 
-
 	public static function ex1() {
 		header('Content-Type: application/json');
 		// Load files and parse them
@@ -27,15 +24,20 @@ class HomeWork4 {
 		$b->parseFile(self::B);
 		$aplusb = new SparseMatrix;
 		$aplusb->parseFile(self::AplusB);
-		self::plusMatrix($a->Matrix(), $b->Matrix());
 
+		$res = self::plusMatrix($a->Matrix(), $b->Matrix());
+		
+		echo self::matrix_to_json($res, $aplusb->Count());
 
-		echo json_encode(array(
-				"some_param" => "do this"
-		));
-	}
-
-	private static function plusMatrix($a,$b) {
+		}
+	/**
+	 * Adition method for two SparseMatrices
+	 * Sparse matrix addition
+	 * @param $a Node
+	 * @param @b Node
+	 * @return $array of object of type SparseMatrix
+	 */
+	private static function plusMatrix($a, $b) {
 		$n = count($a);
 		$m = count($b);
 		if ($n !== $m) {
@@ -51,29 +53,56 @@ class HomeWork4 {
 			// in this way we know how much to crawl
 			$countA = $a[$i]->Count();
 			$countB = $b[$j]->Count();
-
 			// create one singly list object per line
 			$result[$i] = new SinglyList;
 			// crawl and make the addition into result
 			self::crawl($a[$i], $b[$j], $result[$i]);
-			break;
 			$i++;
 			$j++;
-
 		}
-		//print_r($result);
-	}
 
+		return $result;
+	}
+	// TODO
+	public static function aorib($a, $b) {
+		$n = count($a);
+		$m = count($b);
+		if ($n !== $m) {
+			exit("Can't make multiply operation on this matrices");
+		}
+
+		$i = 0; 
+		$j = 0;
+		$result = array();
+
+		while (($i < $n) && ($j < $m)) {
+			$countA = $a[$i]->Count();
+			$countB = $b[$j]->Count();
+
+			$result[$i] = new SinglyList;
+			//todo
+			self::mulcrawl($a[$i], $b[$j], $result[$i]);
+			$i++;
+			$j++;
+		}
+	}
+	/**
+	 * Core method for crawling for every
+	 * list of type Node
+	 * @param $lA SinglyList
+	 * @param $lB SinglyList
+	 * @param result array
+	 */
 	private static function crawl(SinglyList $lA, SinglyList $lB, $result) {
 		$n = $lA->Count();
-
+		$m = $lB->Count();
+		
 		// take the tails
 		$crwA = $lA->Tail();
+		$crwB = $lB->Tail();
 		// for every element in list A
 		// $n and $m is the same number
 		for ($i=0; $i < $n; $i++) {
-
-			echo "\n".$crwA->Column();
 
 			$found = $lB->FindCol($crwA->Column());
 
@@ -84,54 +113,53 @@ class HomeWork4 {
 
 			$crwA = $crwA->Next();
 		}
+
+		// after the firts interations 
+		// now try to find the missing elements in 
+		// the lists that don't have the column the same with
+		// elements in the first matrix
+		for ($j=0; $j < $m; $j++) {
+			// try to find element with the column the same as in matrix a
+			$fount = $lA->FindCol($crwB->Column());
+			// we're interested in just the elements 
+			// that dosen't have the same column 
+			if ($found === null)
+				$result->Append($crwB->Value() + 0, $crwB->Column());
+
+			$crwB = $crwB->Next();
+		}
 	}
 
+	private static function pretty_print($result, $n) {
+		for ($i=0; $i<$n; $i++) {
+			$m = $result[$i]->Count();
+			$crawl = $result[$i]->Tail();
+			for($j=0; $j<$m; $j++) {
+				echo "Line : " . $i;
+				echo "\t\t Value : " . $crawl->Value();
+				echo "\t\t Column: " . $crawl->Column();
+				$crawl = $crawl->Next();
+				echo "\n";
+			}
+		}
+	}
 
-	// private static function crawl(SinglyList $lA, SinglyList $lB, $result) {
-	// 	$n = $lA->Count();
-	// 	$m = $lB->Count();
-    //
-	// 	// take the tails
-	// 	$crwA = $lA->Tail();
-	// 	$crwB = $lB->Tail();
-    //
-	// 	// we've not written anything yet
-	// 	$appended = false;
-	// 	// TODO:
-	// 	// for every element in list A
-	// 	// $n and $m is the same number
-	// 	// 
-	// 	for ($i=0; $i < $n; $i++) {
-	// 		// for every element in lit B
-	// 		for ($j = 0; $j < $m; $j++) {
-	// 			// test if we have the same column
-	// 			if ($crwA->Column() === $crwB->Column()) {
-	// 				// write the result
-	// 				$result->Append($crwA->Value() + $crwB->Value(), $crwA->Column());
-	// 				// set that was written
-	// 				$appended = true;
-	// 			}
-	// 			// go to the next node in list
-	// 			$crwB = $crwB->Next();
-	// 		} //for
-	// 		// after the for loop if 
-	// 		// the result was not found
-	// 		// A->Column not equal with B->Column 
-	// 		// that means that the B->Value() is 0
-	// 		// note that our parsing is sequentially and
-	// 		// that is why we pick A->Value()
-	// 		if (!$appended) {
-	// 			$result->Append($crwA->Value());
-	// 			$appended = false;
-	// 		} 
-    //
-	// 		$crwA = $crwA->Next();
-	// 		// reset node in list
-	// 		// start from the start again
-	// 		$crwB = $lB->Tail();
-	// 	} // for
-	// }
+	// TODO Ionut:
+	//
+	private static function matrix_to_json($result, $n) {
+		$arr = array();
 
+		for ($i = 0; $i < $n; $i++) {
+			$m = $result[$i]->Count();
+			$crawl = $result[$i]->Tail();
+
+			for ($j = 0; $j < $m; $j++) {
+				$arr[$crawl->Column()] = $crawl->Value();
+				$crawl = $crawl->Next();
+			}
+		}
+		return json_encode($arr, JSON_PRETTY_PRINT);
+	}
 }
 
 ?>

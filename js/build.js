@@ -1,5 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 "use strict";
+// Giulitti Salvatore Elio
 // all includes
 var d = require('./dom.js');
 
@@ -16,7 +17,10 @@ var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 var h3 = require("./homework3.js");
 var h4 = require("./homework4.js");
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 // here we import all our homeworks modules
 var controller = (function (h1, h2, h3, h4) {
 	var fn = function(nH, nX, template){
@@ -109,7 +113,10 @@ module.exports = controller;
 var ctrl 	= require('./controller.js');
 var tplate 	= require('./template.js');
 var utils 	= require('./util.js');
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var dom = (function ($, controller, template, utils) {
 	// variabile globale ale modulului
 	var submitButton, 			// butonul de submit
@@ -220,7 +227,10 @@ module.exports = dom;
 "use strict";
 
 var templateSystem 	= require('./template.js');
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var homework1 = (function (template, $) {
     // exercitiu 1
     var ex1 = function () {
@@ -362,7 +372,10 @@ module.exports = homework1;
 if (!window.cfg) {
     window.cfg = {};
 }
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var templateSystem = require('./template.js');
 
 var homework2 = (function(template, $) {
@@ -529,7 +542,9 @@ module.exports = homework2;
 },{"./template.js":8}],6:[function(require,module,exports){
 "use strict";
 var tS = require('./template.js');
-
+/*
+ * Calara Ionut
+ */
 var homework3 = (function(template, $) {
 	var ex1 = function() {
 		// trimite un POST request
@@ -604,7 +619,9 @@ module.exports = homework3;
 },{"./template.js":8}],7:[function(require,module,exports){
 "use strict";
 var ts = require("./template.js");
-
+/*
+ * Giulitti Salvatore Elio
+ */
 var h4 = (function(template, $){
 	var ex1 = function() {
 		// trimite un POST request
@@ -618,17 +635,19 @@ var h4 = (function(template, $){
 				action:	'ex1',
 				homework:	4
 			},
+			
 			// procesam aici raspunsul
 			success: function(data) {
 				console.log("===========  Homework4 - Ex1 ================");
-				console.log("some_param\t= ", data['some_param']);
+				console.log("A plus B\t= ", data);
 				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
 				template.tables.base();
 				template.tables.content(
-					["Mesajul primit"],
-					[data["some_param"]]);
+					["A plus B"],
+					data
+				);
 			}
 		});
 	};
@@ -642,7 +661,10 @@ module.exports = h4;
 
 },{"./template.js":8}],8:[function(require,module,exports){
 "use strict";
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var template = (function($) {
 	// messages object for creating
 	// message components
@@ -719,7 +741,8 @@ var template = (function($) {
 			}else {
 				messages.red("Can't construct table");
 			}
-		}
+		},
+	
 	};
 	// exportam toate functiile/obiectele publice
 	return {
@@ -734,7 +757,9 @@ module.exports = template;
 
 },{}],9:[function(require,module,exports){
 "use strict";
-
+/*
+ * Calara Ionut
+ */
 var util = (function () {
 
 

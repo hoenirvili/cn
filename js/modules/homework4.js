@@ -1,6 +1,8 @@
 "use strict";
 var ts = require("./template.js");
-
+/*
+ * Giulitti Salvatore Elio
+ */
 var h4 = (function(template, $){
 	var ex1 = function() {
 		// trimite un POST request
@@ -14,17 +16,19 @@ var h4 = (function(template, $){
 				action:	'ex1',
 				homework:	4
 			},
+			
 			// procesam aici raspunsul
 			success: function(data) {
 				console.log("===========  Homework4 - Ex1 ================");
-				console.log("some_param\t= ", data['some_param']);
+				console.log("A plus B\t= ", data);
 				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
 				template.tables.base();
 				template.tables.content(
-					["Mesajul primit"],
-					[data["some_param"]]);
+					["A plus B"],
+					data
+				);
 			}
 		});
 	};

@@ -1,7 +1,10 @@
 "use strict";
 
 var templateSystem 	= require('./template.js');
-
+/*
+ * Giulitti Salvatore Elio
+ * Calara Ionut
+ */
 var homework1 = (function (template, $) {
     // exercitiu 1
     var ex1 = function () {
