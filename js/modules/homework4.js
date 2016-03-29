@@ -20,14 +20,14 @@ var h4 = (function(template, $){
 			// procesam aici raspunsul
 			success: function(data) {
 				console.log("===========  Homework4 - Ex1 ================");
-				console.log("A plus B\t= ", data);
+				console.log("A plus B\t= ", data["aplusb"]);
 				console.log("=============================================");
 				template.messages.green("Successfull compiled");
 				template.messages.green("Check console and bottom page");
 				template.tables.base();
 				template.tables.content(
 					["A plus B"],
-					data
+					[data["aplusb"]]
 				);
 			}
 		});
