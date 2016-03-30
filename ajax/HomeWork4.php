@@ -28,6 +28,7 @@ class HomeWork4 {
 		$aplusb = new SparseMatrix;
 		$aplusb->parseFile(self::AplusB);
 		// print_r($a);
+		//
 		//$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
 		$res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
 			
@@ -99,11 +100,10 @@ class HomeWork4 {
 					if(($foundx !== null) && ($foundy !== null)) {
 						$holder += $foundx->Value() * $foundy->Value();
 					}
-				$result[$i]->Append($holder, $i);
 				} // for
+			$result[$i]->Append($holder, $i);
 			$holder = 0;
 		}	//for
-		var_dump($result);
 		
 		return $result;
 	}
