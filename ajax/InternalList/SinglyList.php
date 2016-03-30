@@ -128,6 +128,13 @@ class SinglyList implements LList{
 
 		return null;
 	}
+
+	/**
+	* search the column, if we found the column return the node
+	* if the column dosen't exist, just return null
+	* @param int $col
+	* @return Node | null
+	*/
 	public function FindCol($col) {
 		$crawler = $this->tail->Next();
 

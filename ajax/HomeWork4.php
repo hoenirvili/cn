@@ -80,38 +80,36 @@ class HomeWork4 {
 	 * @return array of SparseMatrix
 	 */
 	public static function multiplyMatrix($a, $b) {
+
 		$result = array();
 		$holder = 0;
+
 		$n = count($a);
 		$m = count($b);
-		$i = 0;
-		$j = 0;
 
-		//TODO call $crwb->Column == null
+
 		// for every line in matrix $A
-		for( $i = 0; $i < $n; $i++) {
+		for ($i = 0; $i < $n; $i++) {
 			$crwA = $a[$i]->Tail();
 			$result[$i] = new SinglyList;
 			// for every line in matrix $B
-			while ($j < $m) {
-				$crwB = $b[$j]->Tail();
-				// foe every element in list from matrix $B
-				while ($crwB !== null) {
-		
-					if ($i === $crwB->Column()) {
-						// multiply
-						$holder += $crwA->Value() * $crwB->Value();
-						break;
-					}
-					
-					$crwB = $crwB->Next();
-				} // while	
+			while($crwA !== null) {
 
-				$result[$i]->Append($holder, $crwB->Column());
+				for ($j = 0; $j < $m; $j++) {
+
+					$found = $b[$j]->FindCol($crwA->Column());
+
+					if($found !== null) {
+						$holder += $crwA->Value() * $found->Value();
+						$result[$i]->Append($holder, $found->Column());
+					}
+					// next element in list $a
+					echo $holder . "\n";
+				}
+
+				$holder = 0;
 				$crwA = $crwA->Next();
-				$j++;
-			} // while
-			break;
+			} // for
 		}	//for
 
 		return $result;
