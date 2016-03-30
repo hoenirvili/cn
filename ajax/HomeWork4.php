@@ -27,10 +27,10 @@ class HomeWork4 {
 		$b->parseFile(self::B);
 		$aplusb = new SparseMatrix;
 		$aplusb->parseFile(self::AplusB);
-
+		// print_r($a);
 		//$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
 		$res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
-		
+			
 		//TODO: response json
 		echo json_encode(
 			array(
@@ -90,28 +90,21 @@ class HomeWork4 {
 
 		// for every line in matrix $A
 		for ($i = 0; $i < $n; $i++) {
-			$crwA = $a[$i]->Tail();
 			$result[$i] = new SinglyList;
-			// for every line in matrix $B
-			while($crwA !== null) {
-
+	
 				for ($j = 0; $j < $m; $j++) {
 
-					$found = $b[$j]->FindCol($crwA->Column());
-
-					if($found !== null) {
-						$holder += $crwA->Value() * $found->Value();
-						$result[$i]->Append($holder, $found->Column());
+					$foundx = $b[$j]->FindCol($i);
+					$foundy = $a[$i]->FindCol($j);
+					if(($foundx !== null) && ($foundy !== null)) {
+						$holder += $foundx->Value() * $foundy->Value();
 					}
-					// next element in list $a
-					echo $holder . "\n";
-				}
-
-				$holder = 0;
-				$crwA = $crwA->Next();
-			} // for
+				$result[$i]->Append($holder, $i);
+				} // for
+			$holder = 0;
 		}	//for
-
+		var_dump($result);
+		
 		return $result;
 	}
 
