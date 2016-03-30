@@ -28,8 +28,9 @@ class HomeWork4 {
 		$aplusb = new SparseMatrix;
 		$aplusb->parseFile(self::AplusB);
 
-		$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
+		//$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
 		$res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
+		
 		//TODO: response json
 		echo json_encode(
 			array(
@@ -79,23 +80,41 @@ class HomeWork4 {
 	 * @return array of SparseMatrix
 	 */
 	public static function multiplyMatrix($a, $b) {
-		// number of lines
+		$result = array();
+		$holder = 0;
 		$n = count($a);
 		$m = count($b);
+		$i = 0;
+		$j = 0;
 
-		if ($n !== $m) {
-			exit("can't make plus operation on this matrices");
-		}
-		// create array to hold objects of  SparseMatrix
-		$result = array();
-		// for every line in $a
-		// for every column in $b
-		for ($i = 0; $i < $n; $i++) {
+		//TODO call $crwb->Column == null
+		// for every line in matrix $A
+		for( $i = 0; $i < $n; $i++) {
 			$crwA = $a[$i]->Tail();
-			for ($j = 0; $j < $m; $j++) {
+			$result[$i] = new SinglyList;
+			// for every line in matrix $B
+			while ($j < $m) {
 				$crwB = $b[$j]->Tail();
-			}
-		}
+				// foe every element in list from matrix $B
+				while ($crwB !== null) {
+		
+					if ($i === $crwB->Column()) {
+						// multiply
+						$holder += $crwA->Value() * $crwB->Value();
+						break;
+					}
+					
+					$crwB = $crwB->Next();
+				} // while	
+
+				$result[$i]->Append($holder, $crwB->Column());
+				$crwA = $crwA->Next();
+				$j++;
+			} // while
+			break;
+		}	//for
+
+		return $result;
 	}
 
 	/**

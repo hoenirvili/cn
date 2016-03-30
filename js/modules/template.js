@@ -1,8 +1,5 @@
 "use strict";
-/*
- * Giulitti Salvatore Elio
- * Calara Ionut
- */
+
 var template = (function($) {
 	// messages object for creating
 	// message components

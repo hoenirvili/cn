@@ -1,9 +1,8 @@
 "use strict";
 var ts = require("./template.js");
-/*
- * Giulitti Salvatore Elio
- */
+
 var h4 = (function(template, $){
+
 	var ex1 = function() {
 		// trimite un POST request
 		// body-ul va contine data serializata
@@ -15,8 +14,7 @@ var h4 = (function(template, $){
 			data: {
 				action:	'ex1',
 				homework:	4
-			},
-			
+			},	
 			// procesam aici raspunsul
 			success: function(data) {
 				console.log("===========  Homework4 - Ex1 ================");
@@ -36,6 +34,7 @@ var h4 = (function(template, $){
 	return {
 		Ex1: ex1
 	};
+
 })(ts, jQuery);
 
 module.exports = h4;

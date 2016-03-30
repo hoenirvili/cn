@@ -1,7 +1,5 @@
 "use strict";
-/*
- * Calara Ionut
- */
+
 var util = (function () {
 
 

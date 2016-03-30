@@ -1,5 +1,4 @@
 "use strict";
-// Giulitti Salvatore Elio
 // all includes
 var d = require('./dom.js');
 

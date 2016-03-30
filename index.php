@@ -1,4 +1,3 @@
-<!-- Giulitti Salvatore Elio A1 -->
 <!doctype html> 
 <html lang="en">
 <head>

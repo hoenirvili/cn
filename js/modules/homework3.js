@@ -1,8 +1,6 @@
 "use strict";
 var tS = require('./template.js');
-/*
- * Calara Ionut
- */
+
 var homework3 = (function(template, $) {
 	var ex1 = function() {
 		// trimite un POST request

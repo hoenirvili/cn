@@ -3,10 +3,7 @@ var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 var h3 = require("./homework3.js");
 var h4 = require("./homework4.js");
-/*
- * Giulitti Salvatore Elio
- * Calara Ionut
- */
+
 // here we import all our homeworks modules
 var controller = (function (h1, h2, h3, h4) {
 	var fn = function(nH, nX, template){

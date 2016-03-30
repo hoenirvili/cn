@@ -2,10 +2,7 @@
 if (!window.cfg) {
     window.cfg = {};
 }
-/*
- * Giulitti Salvatore Elio
- * Calara Ionut
- */
+
 var templateSystem = require('./template.js');
 
 var homework2 = (function(template, $) {
