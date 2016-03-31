@@ -27,11 +27,8 @@ class HomeWork4 {
 		$b->parseFile(self::B);
 		$aplusb = new SparseMatrix;
 		$aplusb->parseFile(self::AplusB);
-		// print_r($a);
-		//
+		
 		$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
-        print_r($res_aplusb);
-		//TODO: response json
 		echo json_encode(
 			array(
 				"aplusb" => json_encode($res_aplusb)
@@ -51,7 +48,7 @@ class HomeWork4 {
 
         $res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
         print_r($res_aorib);
-        //TODO: response json
+
         echo json_encode(
             array(
                 "aorib" => json_encode($res_aorib)
