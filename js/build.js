@@ -75,6 +75,13 @@ var controller = (function (h1, h2, h3, h4) {
 					case '1':
 						h4.Ex1();
 						break;
+                    case '2':
+                        h4.Ex2();
+                        break;
+                    case '3':
+                        h4.Ex3();
+                        break;
+
 				}
 			break;
 			// tema 5
@@ -635,9 +642,63 @@ var h4 = (function(template, $){
 		});
 	};
 
-	return {
-		Ex1: ex1
-	};
+    var ex2 = function() {
+
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:	'ex2',
+                homework:	4
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework4 - Ex2 ================");
+                console.log("A x B\t= ", data["aorib"]);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A x B"],
+                    [data["aorib"]]
+                );
+            }
+        });
+
+    };
+    var ex3 = function() {
+
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/ajax.php',
+            dataType: 'json',
+            data: {
+                action:	'ex3',
+                homework:	4
+            },
+            // procesam aici raspunsul
+            success: function(data) {
+                console.log("===========  Homework4 - Ex3 ================");
+                console.log("A * x\t= ", data["axb"]);
+                console.log("=============================================");
+                template.messages.green("Successfull compiled");
+                template.messages.green("Check console and bottom page");
+                template.tables.base();
+                template.tables.content(
+                    ["A * x"],
+                    [data["axb"]]
+                );
+            }
+        });
+
+    };
+    return {
+        Ex1: ex1,
+        Ex2: ex2,
+        Ex3: ex3
+    };
 
 })(ts, jQuery);
 
@@ -924,7 +985,17 @@ var util = (function () {
 				input:{
 					
 				}
-			}
+            },
+            ex2: {
+                input:{
+
+                }
+            },
+            ex3: {
+                input:{
+
+                }
+            }
 		}
 	};
     // metode publice ale modulului util

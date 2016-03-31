@@ -57,6 +57,7 @@ class SinglyList implements LList{
 		// save the current, last inserted node.
 		$this->head = $node;
 	}
+
 	/**
 	* returns true if the SInglyList is empty
 	* or false if it contains nodes

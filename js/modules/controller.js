@@ -62,6 +62,13 @@ var controller = (function (h1, h2, h3, h4) {
 					case '1':
 						h4.Ex1();
 						break;
+                    case '2':
+                        h4.Ex2();
+                        break;
+                    case '3':
+                        h4.Ex3();
+                        break;
+
 				}
 			break;
 			// tema 5

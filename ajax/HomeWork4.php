@@ -29,15 +29,57 @@ class HomeWork4 {
 		$aplusb->parseFile(self::AplusB);
 		// print_r($a);
 		//
-		//$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
-		$res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
-			
+		$res_aplusb = self::plusMatrix($a->Matrix(), $b->Matrix());
+        print_r($res_aplusb);
 		//TODO: response json
 		echo json_encode(
 			array(
-				"aplusb" => "do this"
+				"aplusb" => json_encode($res_aplusb)
 			));
 		}
+
+
+    public static function ex2() {
+        header('Content-Type: application/json');
+        // Load files and parse them
+        $a = new SparseMatrix;
+        $b = new SparseMatrix;
+        $a->parseFile(self::A);
+        $b->parseFile(self::B);
+        $aorib = new SparseMatrix;
+        $aorib->parseFile(self::AxB);
+
+        $res_aorib = self::multiplyMatrix($a->Matrix(), $b->Matrix());
+        print_r($res_aorib);
+        //TODO: response json
+        echo json_encode(
+            array(
+                "aorib" => json_encode($res_aorib)
+            ));
+    }
+
+
+    public static function ex3() {
+        header('Content-Type: application/json');
+        // Load files and parse them
+        $a = new SparseMatrix;
+        $b = new SparseMatrix;
+        $a->parseFile(self::A);
+        $b->parseFile(self::B);
+        $x=array();
+        $n=$a->Count();
+        for($i=0;$i<=$n;$i++)
+        {
+            $x[$i-1]=$i;
+        }
+        $res_aorix = self::multiplyMatrixWithVector($a->Matrix(), $x);
+        print_r($res_aorix);
+        //TODO: response json
+        echo json_encode(
+            array(
+                "axb" => json_encode($res_aorix)
+            ));
+    }
 
 	/**
 	 * Adition method for two SparseMatrices
@@ -84,29 +126,50 @@ class HomeWork4 {
 
 		$result = array();
 		$holder = 0;
-
-		$n = count($a);
-		$m = count($b);
-
-
+        $n=count($a);
 		// for every line in matrix $A
 		for ($i = 0; $i < $n; $i++) {
-			$result[$i] = new SinglyList;
-	
-				for ($j = 0; $j < $m; $j++) {
+            $result[$i] = new SinglyList;
+            for ($j = 0; $j < $n; $j++) {
+                    $foundy = $a[$i]->FindCol($j);
+                    if($foundy!==null) {
+                        $foundx = $b[$j]->FindCol($i);
+                        if (($foundx !== null)) {
+                            $holder += $foundx->Value() * $foundy->Value();
+                        }
+                    }
+                if ($holder!=0) {
+                    $result[$i]->Append($holder, $j);
+                    $holder = 0;
+                }
 
-					$foundx = $b[$j]->FindCol($i);
-					$foundy = $a[$i]->FindCol($j);
-					if(($foundx !== null) && ($foundy !== null)) {
-						$holder += $foundx->Value() * $foundy->Value();
-					}
-				} // for
-			$result[$i]->Append($holder, $i);
-			$holder = 0;
+            }
+
 		}	//for
 		
 		return $result;
 	}
+
+    public static function multiplyMatrixWithVector($a, $x) {
+
+        $n=count($a);
+        // for every line in matrix $A
+        for ($i = 0; $i < $n; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                $foundy = $a[$i]->FindCol($j);
+                if($foundy!==null) {
+                    $a[$i]->FindCol($j)->SetValue($foundy->Value()*$x[$j]);
+                }
+
+
+            }
+
+        }	//for
+
+        return $a;
+    }
+
+
 
 	/**
 	 * Core method for crawling for every

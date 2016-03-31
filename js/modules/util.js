@@ -185,7 +185,17 @@ var util = (function () {
 				input:{
 					
 				}
-			}
+            },
+            ex2: {
+                input:{
+
+                }
+            },
+            ex3: {
+                input:{
+
+                }
+            }
 		}
 	};
     // metode publice ale modulului util
