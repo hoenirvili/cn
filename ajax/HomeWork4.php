@@ -146,24 +146,24 @@ class HomeWork4 {
 		
 		return $result;
 	}
-
+	/**
+	 *
+	 */
     public static function multiplyMatrixWithVector($a, $x) {
-
+		$container = array();
         $n=count($a);
+
         // for every line in matrix $A
         for ($i = 0; $i < $n; $i++) {
-            for ($j = 0; $j < $n; $j++) {
-                $foundy = $a[$i]->FindCol($j);
-                if($foundy!==null) {
-                    $a[$i]->FindCol($j)->SetValue($foundy->Value()*$x[$j]);
-                }
-
-
-            }
-
+			$sum = 0;
+			$crwA = $a[$i]->Tail();
+			while($crwA !== null) {
+				$sum += $crwA->Value() * $x[$crwA->Column()];
+				$crwA = $crwA->Next();
+			}
+			$container[$i] = $sum;
         }	//for
-
-        return $a;
+        return $container;
     }
 
 
