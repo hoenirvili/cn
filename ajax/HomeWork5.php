@@ -22,6 +22,7 @@ class HomeWork5 extends Util
     {
         header('Content-Type: application/json');
         // Load files and parse them
+        define("TEST",1);
         $p = 7;
         $kmax = 10000;
         $epsilon = pow(10, -$p);
@@ -39,24 +40,31 @@ class HomeWork5 extends Util
         $B = array();
         $C = array();
         $a1->parseFile(self::RareM1);
-        //$a2->parseFile(self::RareM2);
-        //$a3->parseFile(self::RareM3);
-        //$a4->parseFile(self::RareM4);
+        if(!TEST) {
+            $a2->parseFile(self::RareM2);
+            $a3->parseFile(self::RareM3);
+            $a4->parseFile(self::RareM4);
+        }
         // Initialization
         $m[0] = $a1->Matrix();
-        //$m[1] = $a2->Matrix();
-        //$m[2] = $a3->Matrix();
-        //$m[3] = $a4->Matrix();
+        if(!TEST) {
+            $m[1] = $a2->Matrix();
+            $m[2] = $a3->Matrix();
+            $m[3] = $a4->Matrix();
+        }
         $b[0] = $a1->Vector();
-        //$b[1] = $a2->Vector();
-        //$b[2] = $a3->Vector();
-        //$b[3] = $a4->Vector();
+        if(!TEST) {
+            $b[1] = $a2->Vector();
+            $b[2] = $a3->Vector();
+            $b[3] = $a4->Vector();
+        }
         $n[0] = count($a1);
-        //$n[1] = count($a2);
-        //$n[2] = count($a3);
-        //$n[3] = count($a4);
+        if(!TEST) {
+            $n[1] = count($a2);
+            $n[2] = count($a3);
+            $n[3] = count($a4);
+        }
         $xc = array();
-        $xp = array();
         //Check elements on the diagonal and build the diagonal matrix at the same time
         for ($q = 0; $q < count($n); $q++) {
             for ($i = 0; $i < $n[$q]; $i++) {
@@ -99,39 +107,46 @@ class HomeWork5 extends Util
         unset($L);
         unset($U);
         unset($d);
-
         for ($q = 0; $q < count($n); $q++) {
             for ($i = 0; $i < $n[$q]; $i++) {
-                $xc[$q][0][$i] = $i+1;
-                //$xc[$q][0][$i] =0;
+                if (TEST) {
+                    $xc[$q][0][$i] = $i + 1;
+                } else {
+                    $xc[$q][0][$i] = 0;
+                }
             }
             $k = 0;
             do {
-                $xc[$q][$k + 1]=array();
+                $xc[$q][$k + 1] = array();
                 for ($i = 0; $i < $n[$q]; $i++) {
-                    $sub=self::computeBSubstraction($m[$q], $i, $xc[$q][$k + 1], $xc[$q][$k]);
+                    $sub = self::computeBSubstraction($m[$q], $i, $xc[$q][$k + 1], $xc[$q][$k]);
                     // cu plus primul x1 da ca in exemplu
-                    $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] + $sub)/$m[$q][$i]->FindCol($i)->Value(),$p);
-                    //$xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] - $sub)/$m[$q][$i]->FindCol($i)->Value(),$p);
+                    if(TEST) {
+                        $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] + $sub) / $m[$q][$i]->FindCol($i)->Value(), $p);
+                    }else {
+                        $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] - $sub)/$m[$q][$i]->FindCol($i)->Value(),$p);
+                    }
                 }
+                if(TEST) {
                 print_r($xc);
-                $dx = self::getStandardNorm(self::subtractVectors($xc[$q][$k+1], $xc[$q][$k], $n[$q],$p), $n[$q]);
+                }
+                $dx = self::getStandardNorm(self::subtractVectors($xc[$q][$k + 1], $xc[$q][$k], $n[$q], $p), $n[$q]);
                 $k++;
 
 
             } while ($dx >= $epsilon && $k <= $kmax && $dx <= $epsilon2);
             if ($dx < $epsilon) {
-                $resp[$q] =$xc[$q][$k-1];
+                $resp[$q] = $xc[$q][$k - 1];
             } else {
                 $resp[$q] = "divergenta";
             }
-            $norm=array();
+            $norm = array();
             for ($q = 0; $q < count($n); $q++) {
-                $norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q],$resp[$q]),$b[$q],$n[$q],$p);
+                $norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q], $resp[$q]), $b[$q], $n[$q], $p);
             }
 
         }
-        echo json_encode(array("resp"=>$resp,"norm"=>$norm));
+        echo json_encode(array("resp" => $resp, "norm" => $norm));
         die();
     }
 
@@ -245,7 +260,6 @@ class HomeWork5 extends Util
         $sum1 = 0;
         $sum2 = 0;
         $crwA = $a[$i]->Tail();
-
         while ($crwA !== null) {
             $j = $crwA->Column();
             if ($j > $i) {
@@ -255,7 +269,7 @@ class HomeWork5 extends Util
             }
             $crwA = $crwA->Next();
         }
-        $sum=$sum2-$sum1;
+        $sum = $sum2 - $sum1;
         return $sum;
 
 
