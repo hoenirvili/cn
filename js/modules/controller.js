@@ -3,9 +3,10 @@ var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 var h3 = require("./homework3.js");
 var h4 = require("./homework4.js");
+var h5 = require("./homework5.js");
 
 // here we import all our homeworks modules
-var controller = (function (h1, h2, h3, h4) {
+var controller = (function (h1, h2, h3, h4,h5) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -73,8 +74,12 @@ var controller = (function (h1, h2, h3, h4) {
 			break;
 			// tema 5
 			case '5':
-				template.messages.orange("This homework is not implemented yet");
-				break;
+                switch(nX) {
+                    case '1':
+                        h5.Ex1();
+                        break;
+                }
+                break;
 			case '6':
 				template.messages.orange("This homework is not implemented yet");
 				break;
@@ -92,6 +97,6 @@ var controller = (function (h1, h2, h3, h4) {
 		fn : fn
 	};
 
-})(h1,h2,h3, h4);
+})(h1,h2,h3,h4,h5);
 
 module.exports = controller;

@@ -16,9 +16,10 @@ var h1 = require('./homework1.js');
 var h2 = require('./homework2.js');
 var h3 = require("./homework3.js");
 var h4 = require("./homework4.js");
+var h5 = require("./homework5.js");
 
 // here we import all our homeworks modules
-var controller = (function (h1, h2, h3, h4) {
+var controller = (function (h1, h2, h3, h4,h5) {
 	var fn = function(nH, nX, template){
 		switch(nH) {
 			// tema 1
@@ -86,8 +87,12 @@ var controller = (function (h1, h2, h3, h4) {
 			break;
 			// tema 5
 			case '5':
-				template.messages.orange("This homework is not implemented yet");
-				break;
+                switch(nX) {
+                    case '1':
+                        h5.Ex1();
+                        break;
+                }
+                break;
 			case '6':
 				template.messages.orange("This homework is not implemented yet");
 				break;
@@ -105,11 +110,11 @@ var controller = (function (h1, h2, h3, h4) {
 		fn : fn
 	};
 
-})(h1,h2,h3, h4);
+})(h1,h2,h3,h4,h5);
 
 module.exports = controller;
 
-},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6,"./homework4.js":7}],3:[function(require,module,exports){
+},{"./homework1.js":4,"./homework2.js":5,"./homework3.js":6,"./homework4.js":7,"./homework5.js":8}],3:[function(require,module,exports){
 "use strict";
 
 // Toate modulele care le vom importa in modulul dom
@@ -223,7 +228,7 @@ var dom = (function ($, controller, template, utils) {
 // exportam modulul dom
 module.exports = dom;
 
-},{"./controller.js":2,"./template.js":8,"./util.js":9}],4:[function(require,module,exports){
+},{"./controller.js":2,"./template.js":9,"./util.js":10}],4:[function(require,module,exports){
 "use strict";
 
 var templateSystem 	= require('./template.js');
@@ -364,7 +369,7 @@ var homework1 = (function (template, $) {
 // exportam modulul homework1
 module.exports = homework1;
 
-},{"./template.js":8}],5:[function(require,module,exports){
+},{"./template.js":9}],5:[function(require,module,exports){
 "use strict";
 if (!window.cfg) {
     window.cfg = {};
@@ -533,7 +538,7 @@ var homework2 = (function(template, $) {
 
 module.exports = homework2;
 
-},{"./template.js":8}],6:[function(require,module,exports){
+},{"./template.js":9}],6:[function(require,module,exports){
 "use strict";
 var tS = require('./template.js');
 
@@ -608,7 +613,7 @@ var homework3 = (function(template, $) {
 // export module
 module.exports = homework3;
 
-},{"./template.js":8}],7:[function(require,module,exports){
+},{"./template.js":9}],7:[function(require,module,exports){
 "use strict";
 var ts = require("./template.js");
 
@@ -704,7 +709,55 @@ var h4 = (function(template, $){
 
 module.exports = h4;
 
-},{"./template.js":8}],8:[function(require,module,exports){
+},{"./template.js":9}],8:[function(require,module,exports){
+"use strict";
+var ts = require("./template.js");
+
+var h5 = (function(template, $){
+
+	var ex1 = function() {
+		// trimite un POST request
+		// body-ul va contine data serializata
+		// json cu numarul execitiului si numarul temei
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/ajax.php',
+			dataType: 'json',
+			data: {
+				action:	'ex1',
+				homework:	5
+			},	
+			// procesam aici raspunsul
+			success: function(data) {
+				console.log("===========  Homework5 - Ex1 ================");
+				console.log("Xc1\t= ",      data['resp'][0]);
+				console.log("Xc1 Norm\t= ", data['norm'][0]);
+                console.log("Xc2\t= ",      data['resp'][1]);
+                console.log("Xc2 Norm\t= ", data['norm'][1]);
+                console.log("Xc3\t= ",      data['resp'][2]);
+                console.log("Xc3 Norm\t= ", data['norm'][2]);
+                console.log("Xc4\t= ",      data['resp'][3]);
+                console.log("Xc4 Norm\t= ", data['norm'][3]);
+				console.log("=============================================");
+				template.messages.green("Successfull compiled");
+				template.messages.green("Check console and bottom page");
+				template.tables.base();
+				template.tables.content(
+					["Xc1","Xc1 norm","Xc2","Xc2 norm","Xc3","Xc3 norm","Xc4","Xc4 norm"],
+					[data['resp'][0],data['norm'][0],data['resp'][1],data['norm'][1],data['resp'][2],data['norm'][2],data['resp'][3],data['norm'][3]]
+				);
+			}
+		});
+	};
+
+    return {
+        Ex1: ex1,
+    };
+
+})(ts, jQuery);
+module.exports = h5;
+
+},{"./template.js":9}],9:[function(require,module,exports){
 "use strict";
 
 var template = (function($) {
@@ -797,7 +850,7 @@ var template = (function($) {
 
 module.exports = template;
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 var util = (function () {
@@ -996,7 +1049,14 @@ var util = (function () {
 
                 }
             }
-		}
+		},
+        h5: {
+            ex1: {
+                input:{
+
+                }
+            }
+        }
 	};
     // metode publice ale modulului util
     return {
@@ -1007,4 +1067,4 @@ var util = (function () {
 // exportam modulul util
 module.exports = util;
 
-},{}]},{},[3,1,2,8,9,4,5,6,7]);
+},{}]},{},[3,1,2,9,10,4,5,6,7]);

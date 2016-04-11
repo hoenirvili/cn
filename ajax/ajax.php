@@ -4,6 +4,7 @@ include_once('HomeWork1.php');
 include_once('HomeWork2.php');
 include_once('HomeWork3.php');
 include_once('HomeWork4.php');
+include_once('HomeWork5.php');
 
 if (isset($_POST['action'])) {
     if (isset($_POST['homework'])) {
@@ -61,6 +62,15 @@ if (isset($_POST['action'])) {
                         break;
 
 				}
+                break;
+            case 5:
+                switch($_POST['action']){
+                    case 'ex1':
+                        HomeWork5::ex1();
+                        break;
+
+
+                }
                 break;
 		}
 	}
