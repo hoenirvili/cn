@@ -66,7 +66,7 @@ class Node {
 		$this->next = &$next;
 	}
 	/**
-	* sets the column of a specific node
+	 * sets the column of a specific node
 	* @param int $column => default to 0
 	*/
 	public function SetColumn($column = 0) {
