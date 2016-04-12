@@ -65,8 +65,9 @@ class HomeWork5 extends Util
             $n[3] = count($a4);
         }
         $xc = array();
+		$nlen = count($n);
         //Check elements on the diagonal and build the diagonal matrix at the same time
-        for ($q = 0; $q < count($n); $q++) {
+        for ($q = 0; $q <$nlen; $q++) {
             for ($i = 0; $i < $n[$q]; $i++) {
                 $el = $m[$q][$i]->FindCol($i);
                 if (!$el) {
@@ -80,7 +81,7 @@ class HomeWork5 extends Util
         }
         $output = "";
         // build upper and lower matrix
-        for ($q = 0; $q < count($n); $q++) {
+        for ($q = 0; $q < $nlen; $q++) {
             for ($i = 0; $i < $n[$q]; $i++) {
                 $crwA = $m[$q][$i]->Tail();
                 $U[$q][$i] = new SinglyList;
@@ -100,14 +101,14 @@ class HomeWork5 extends Util
         }
         $resp = array();
         // build b & c matrixes
-        for ($q = 0; $q < count($n); $q++) {
+        for ($q = 0; $q < $nlen; $q++) {
             $B[$q] = self::plusMatrix($L[$q], self::multiplyMatrixWithScalar($diagonal[$q], round(5 / 6, $p)));
             $C[$q] = self::substractMatrixes(self::multiplyMatrixWithScalar($diagonal[$q], -round(1 / 6, $p)), $U[$q]);
         }
         unset($L);
         unset($U);
         unset($d);
-        for ($q = 0; $q < count($n); $q++) {
+        for ($q = 0; $q < $nlen; $q++) {
             for ($i = 0; $i < $n[$q]; $i++) {
                 if (TEST) {
                     $xc[$q][0][$i] = $i + 1;
@@ -141,7 +142,7 @@ class HomeWork5 extends Util
                 $resp[$q] = "divergenta";
             }
             $norm = array();
-            for ($q = 0; $q < count($n); $q++) {
+            for ($q = 0; $q < $nlen; $q++) {
                 $norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q], $resp[$q]), $b[$q], $n[$q], $p);
             }
 
