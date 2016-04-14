@@ -122,14 +122,14 @@ class HomeWork5 extends Util
                 for ($i = 0; $i < $n[$q]; $i++) {
                     $sub = self::computeBSubstraction($m[$q], $i, $xc[$q][$k + 1], $xc[$q][$k]);
                     // cu plus primul x1 da ca in exemplu
-                    if(TEST) {
+                    if (TEST) {
                         $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] + $sub) / $m[$q][$i]->FindCol($i)->Value(), $p);
-                    }else {
-                        $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] - $sub)/$m[$q][$i]->FindCol($i)->Value(),$p);
+                    } else {
+                        $xc[$q][$k + 1][$i] = -0.2 * $xc[$q][$k][$i] + 1.2 * round(($b[$q][$i] - $sub) / $m[$q][$i]->FindCol($i)->Value(), $p);
                     }
                 }
-                if(TEST) {
-                print_r($xc);
+                if (TEST) {
+                    print_r($xc);
                 }
                 $dx = self::getStandardNorm(self::subtractVectors($xc[$q][$k + 1], $xc[$q][$k], $n[$q], $p), $n[$q]);
                 $k++;
@@ -141,12 +141,13 @@ class HomeWork5 extends Util
             } else {
                 $resp[$q] = "divergenta";
             }
+        }
             $norm = array();
             for ($q = 0; $q < $nlen; $q++) {
                 @$norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q], $resp[$q]), $b[$q], $n[$q], $p);
             }
 
-        }
+
         echo json_encode(array("resp" => $resp, "norm" => $norm));
         die();
     }
