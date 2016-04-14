@@ -22,7 +22,7 @@ class HomeWork5 extends Util
     {
         header('Content-Type: application/json');
         // Load files and parse them
-        define("TEST",1);
+        define("TEST",0);
         $p = 7;
         $kmax = 10000;
         $epsilon = pow(10, -$p);
@@ -143,7 +143,7 @@ class HomeWork5 extends Util
             }
             $norm = array();
             for ($q = 0; $q < $nlen; $q++) {
-                $norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q], $resp[$q]), $b[$q], $n[$q], $p);
+                @$norm[$q] = self::subtractVectors(self::multiplyMatrixWithVector($m[$q], $resp[$q]), $b[$q], $n[$q], $p);
             }
 
         }
